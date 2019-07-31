@@ -6,27 +6,36 @@
     Es la utilizada tradicionalmente en los lenguajes de programacion, funciona utilizando el operador +. Ejemplo:
 
     'Jesus' + 'Millan'
-    
+
     \>> 'Jesus Millan'
 
 - Interpolacion:
-    Es una forma nueva de concatenar texto, y para en lo personal me parece mas facil y clara de leer. Funciona utilizando el operador comillas invertidas (``). Ejemplo:
+    Es una forma nueva de concatenar texto, y para en lo personal me parece mas facil y clara de leer. Funciona utilizando el operador comillas invertidas (` `). Ejemplo:
 
     var firstName = 'Jesus';
     var lastName  = 'Millan';
 
-    \`${firstName} ${lastName}`;
-    
+    \`${firstName} ${lastName}`
+
     \>> 'Jesus Millan'
-    
+
     **NOTA:** Dentro de las {} van codigo Js, el caracter para escapar texto es '\'.
 
 ## Depurar
 En ocasiones nuestro código puede fallar por errores de syntaxis o errores lógicos. En caso de que quieras verificar tu código, debes utilizar la palabra clave 'debugger'. El código se detiene cada vez que lee esta palabra.
 
+## Diferencia entre var, let y const
+- ““*var*”” es la manera más antigua de declarar variables. No es muy estricta en cuanto al alcance, ya que al declarar variables de esta forma, dichas variables podrán ser accedidas, e incluso modificaddas, tanto dentro como fuera de los bloques internos en una función.
+
+- ““*let*”” por otra parte, el alcance se reduce al bloque (las llaves) en el cual la variable fue declarada. Fuera de este bloque la variable no existe. Una vez declarada la variable con let, no se puede volver a declarar con en ninguna otra parte de la función.
+
+- ““*const*”” al igual que ““*let*”” se define en el contexto o alcance de un bloque, a diferencia de let y var, las varibles definidas como constantes (const), ya no podrán ser modificadas ni declaradas nuevamente, en ninguna otra parte de la función o el contexto en el que ya existen.
+
+La recomendación es reducir siempre al mínimo el alcance de nuestras variables, por lo que se debe usar let en lugar de var mientras sea posible.
+
 # Variables
 
-## Strings 
+## Strings
 
 Son cadenas de texto. Para indicar que estamos usando una cadena de texto debemos de colocar las comillas simples ('').
 
@@ -87,7 +96,7 @@ Existen al menos dos formas de acceder al valor de un atributo de un objeto:
 
 **NOTA:** Las últimas versiones de JavaScript nos permiten desglosar el objeto para acceder únicamente al atributo que nos interesa. Esto se consigue encerrando el nombre del atributo entre llaves { }.
 
-2. Es metodo de acceso es llamado *desestructurización*. Para no duplicar las variables se introduce el nombre de la variable como parámetro de la segunda variable. 
+2. Es metodo de acceso es llamado *desestructurización*. Para no duplicar las variables se introduce el nombre de la variable como parámetro de la segunda variable.
 Ejemplo: Las dos lineas de codigo siguiente son completamente analogas
 
 ``` [javascript]
@@ -262,7 +271,7 @@ Para definir un prototipo solo debemos definir una funcion. Ejemplo
 function prototypeName (parameters) {
     // this is code of builder
     this.attribute1 = value1
-    this.attribute2 = value2 
+    this.attribute2 = value2
 }
 
 // this is a method of the prototype
@@ -274,7 +283,7 @@ var obj = new prototypeName(parameters)
 ```
 
 ## A partir de ECMAScript2015
-A partir del 2015 las actualizaciones en l lenguaje trajeron consigo la palabra clave "class" y una forma mas sencilla de definir prototipos y de hacer "herencia" entre estos prototipo. 
+A partir del 2015 las actualizaciones en l lenguaje trajeron consigo la palabra clave "class" y una forma mas sencilla de definir prototipos y de hacer "herencia" entre estos prototipo.
 
 **Importante:** Se debe tener en cuenta que Js no cuenta con *clases*. ELo que se hizo fue una "mascara", pero en el fondo el lenguaje sigue trabajando con prototipos.
 
@@ -283,7 +292,7 @@ class prototypeName extends prototypePather {
     constructor (parameters){        
         super(parametersPather);
         this.attribute1 = value1;
-        this.attribute2 = value2; 
+        this.attribute2 = value2;
     }
 }
 
@@ -470,4 +479,46 @@ async function obtenerPersonajes() {
 }
 
 obtenerPersonajes()
+```
+# Memoizacion
+La memoización es una técnica de programación que nos permite ahorrar cómputo o procesamiento en JavaScript, al ir almacenando el resultado invariable de una función para que no sea necesario volver a ejecutar todas las instrucciones de nuevo, cuando se vuelva a llamar con los mismos parámetros. Es similar a usar memoria cache.
+Ejemplo:
+```[javaScript]
+function factorial(n) {
+  if (!this.cache) {
+    this.cache = {}
+  }
+
+  debugger
+  if (this.cache[n]) {
+    return this.cache[n]
+  }
+
+  if (n === 1) {
+    return 1
+  }
+
+  this.cache[n] = n * factorial(n - 1)
+  debugger
+  return this.cache[n]
+}
+```
+
+# Closure
+Un closure, básicamente, es una función que recuerda el estado de las variables al momento de ser invocada, y conserva este estado a través de reiteradas ejecuciones. Un aspecto fundamental de los closures es que son funciones que retornan otras funciones.
+Ejemplo:
+```[javaScript]
+function crearSaludo(finalDeFrase) {
+  return function (nombre) {
+    console.log(`Hola ${nombre} ${finalDeFrase}`)
+  }
+}
+
+const saludoArgentino = crearSaludo('che')
+const saludoMexicano = crearSaludo('güey')
+const saludoColombiano = crearSaludo('amigo')
+
+saludoArgentino('Sacha') // Hola Sacha che
+saludoMexicano('Sacha') // Hola Sacha güey
+saludoColombiano('Sacha') // Hola Sacha amigo
 ```
