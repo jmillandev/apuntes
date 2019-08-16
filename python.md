@@ -874,8 +874,6 @@ El módulo collections también nos ofrece otros primitivos que tienen la labor 
 ***En conclusión***, el módulo collections es una gran fuente de utilerías que nos permiten escribir código más “pythonico” y más eficiente.
 
 # Modulos
-Los modulos son librerias externas que nos seran de mucha utilidad. Para no "reinventar la rueda" o ecribir una misma declaracion en distintos archivos.
-
 Si sales del intérprete de Python y entrás de nuevo, las definiciones que hiciste (funciones y variables) se pierden. Por lo tanto, si querés escribir un programa más o menos largo. Es mejor crear un script que el interprete luego ejecutara.
 
 A medida que el progama va creciendo es comun ir separandolo en varios archivos para hacerlo mas practico y facil a la hora de mantenerlo.
@@ -890,11 +888,23 @@ Para utilizar cualquier modulo deberemos importarlo con la siguiente linea de co
 
 Una vez importado el modulo para hacer referencia a las funciones, objetos, variables definidos en dicho modulo deberemos hacer referencia de la siguiente manera:
 
-```
+``` [python]
 model_name.variable_name
 model_name.function_name
 model_name.class_name
 ```
+
+Si requerimos solamente el uso de ciertos metodos, del modulo podriamos importar exclusivamente esa definicion de la siguiente manera:
+
+``` [python]
+from model_name import function
+
+hola = funtion()
+```
+
+# Librerias Externas
+Son codigos de 3eros que nos facilitan el trabajo al no "reinvertar la rueda"
+Alguanas librerias son:
 
 ## OS
 
@@ -906,6 +916,27 @@ alguno de sus metodos son:
 
 * os.rename('old_name_fiel','new_name_file').
 
+## openpyxl
+Esta libreria nos permite la manipulacion de archivos en formato xls (hojas de calculo).
+ 
+ Codigo de interes:
+1. Lectura de archivos: 
+``` [pythom]
+from openpyxl import load_workbook
+
+FILE_PATH = 'test.xlsx'
+SHEET = 'Hoja 1'
+
+workbook = load_workbook(FILE_PATH, read_only = True)
+sheet = workbook[SHEET]
+
+
+for row in sheetiter_rows(min_row=2)
+    print(row[0].value)
+    print(row[1].value)
+    print(row[2].value)
+```
+***NOTA:*** El atributo min_row no es obligatorio, este indica a partir de cual fila comenzara al iteracion, para el ejemplo es la segunda fila. Por defecto es la primera
 # Scopes and NameSpace
 
 En Python, un **name**, también conocido como **identifier**, es simplemente una forma de otorgarle un nombre a un objeto. Mediante el nombre, podemos acceder al objeto. Vamos a ver un ejemplo:
