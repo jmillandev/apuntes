@@ -1,7 +1,7 @@
 # ¿Qué es Python?
-Python es un lenguaje de programación creado por [Guido Van Rossum](URL "https://en.wikipedia.org/wiki/Guido_van_Rossum"), con una sintaxis muy limpia, ideado para enseñar a la gente a programar bien. Se trata de un lenguaje interpretado o de script.
+Python es un lenguaje de programación creado por [Guido Van Rossum](https://en.wikipedia.org/wiki/Guido_van_Rossum), con una sintaxis muy limpia, ideado para enseñar a la gente a programar bien. Se trata de un lenguaje interpretado o de script.
 
-## Ventajas:
+## Ventajas
 * Legible: sintaxis intuitiva y estricta.
 * Productivo: ahorra mucho código.
 * Portable: para todo sistema operativo.
@@ -136,7 +136,7 @@ Dejar dos lineas de espacio entre declaracion de funciones
 
 * Son escritas en "snake-case".
  Ej:
-  `my-var = 5`
+  `my_var = 5`
 
 * Visibilidad
 En python *todas* las variables son visibles, aunque existe una sintaxis para diferencias, las variables, publicas, privadas y mega privada(estas jamas deben tocarse, de modificarse pueden comprometer el usu del software).
@@ -817,7 +817,7 @@ class Airplane:
 		pass
 
 
-airplane = Airplane(passengers=20, seats=30, pilots=[‘Tom’, ‘Billy’])
+airplane = Airplane(passengers=20, seats=30, pilots=['Tom', 'Billy'])
 airplane.passengers = 31
 airplane.takeoff()
 ```
@@ -874,11 +874,27 @@ El módulo collections también nos ofrece otros primitivos que tienen la labor 
 ***En conclusión***, el módulo collections es una gran fuente de utilerías que nos permiten escribir código más “pythonico” y más eficiente.
 
 # Modulos
-Los modulos son librerias externas que nos seran de mucha utilidad. Para no "reinventar la rueda".
+Los modulos son librerias externas que nos seran de mucha utilidad. Para no "reinventar la rueda" o ecribir una misma declaracion en distintos archivos.
 
-para utilizar cualquier modulo deberemos importarlo con la siguiente linea de codigo:
+Si sales del intérprete de Python y entrás de nuevo, las definiciones que hiciste (funciones y variables) se pierden. Por lo tanto, si querés escribir un programa más o menos largo. Es mejor crear un script que el interprete luego ejecutara.
+
+A medida que el progama va creciendo es comun ir separandolo en varios archivos para hacerlo mas practico y facil a la hora de mantenerlo.
+
+Para soportar esto, Python tiene una manera de poner *definiciones* en un archivo y usarlos en un script o en una instancia interactiva del intérprete. Tal archivo es llamado **módulo**; las definiciones de un módulo pueden ser *importadas* a otros módulos o al módulo principal (la colección de variables a las que tienes acceso en un script ejecutadolo en el nivel superior y en el modo calculadora).
+
+El *nombre del archivo es el nombre del módulo* con el sufijo `.py` agregado. Dentro de un módulo, el nombre del mismo (como una cadena) está disponible en el valor de la variable global __name__.
+
+Para utilizar cualquier modulo deberemos importarlo con la siguiente linea de codigo(puede ser directamente desde la consola o en un script):
 
 `import model_name`
+
+Una vez importado el modulo para hacer referencia a las funciones, objetos, variables definidos en dicho modulo deberemos hacer referencia de la siguiente manera:
+
+```
+model_name.variable_name
+model_name.function_name
+model_name.class_name
+```
 
 ## OS
 
@@ -1129,22 +1145,22 @@ En **CLI** por si te gusta trabajar en la nube y con datacenters, para sincroniz
 
 # ZEN de Python
 
-Beautiful is better than ugly.
-Explicit is better than implicit.
-Simple is better than complex.
-Complex is better than complicated.
-Flat is better than nested.
-Sparse is better than dense.
-Readability counts.
-Special cases aren't special enough to break the rules.
-Although practicality beats purity.
-Errors should never pass silently.
-Unless explicitly silenced.
-In the face of ambiguity, refuse the temptation to guess.
-There should be one-- and preferably only one --obvious way to do it.
-Although that way may not be obvious at first unless you're Dutch.
-Now is better than never.
-Although never is often better than *right* now.
-If the implementation is hard to explain, it's a bad idea.
-If the implementation is easy to explain, it may be a good idea.
-Namespaces are one honking great idea -- let's do more of those!
+Beautiful is better than ugly.  
+Explicit is better than implicit.  
+Simple is better than complex.  
+Complex is better than complicated.  
+Flat is better than nested.  
+Sparse is better than dense.  
+Readability counts.  
+Special cases aren't special enough to break the rules.  
+Although practicality beats purity.  
+Errors should never pass silently.  
+Unless explicitly silenced.  
+In the face of ambiguity, refuse the temptation to guess.  
+There should be one-- and preferably only one --obvious way to do it.  
+Although that way may not be obvious at first unless you're Dutch.  
+Now is better than never.  
+Although never is often better than *right* now.  
+If the implementation is hard to explain, it's a bad idea.  
+If the implementation is easy to explain, it may be a good idea.  
+Namespaces are one honking great idea -- let's do more of those!  
