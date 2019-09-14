@@ -607,3 +607,26 @@ fetch('https://randomuser.me/api/')
     console.log('algo falló')
   });
 ```
+
+# Selectores
+Un selector nos sirve para poder manipular un objeto del DOM, puedes buscar dicho objeto ya sea por su id, clase, atributo, etc.
+
+Dentro de JavaScript existen distintas funciones para hacer selectores, entre ellas se encuentra:
+
+- **getElementById('id')**: recibe como parámetro el id del objeto del DOM que estás buscando. Te regresa un solo objeto.
+- **getElementsByTagNamed('tag')**: recibe como parámetro el tag que estas buscando y te regresa una colección html de los elementos que tengan ese tag.
+- **getElementsByClassName('class')**: recibe como parámetro la clase y te regresa una colección html de los elementos que tengan esa clase.
+- **querySelector**: va a buscar el primer elemento que coincida con el selector(como los de css['.', '#', img, label, etc]) que le pases como parámetro.
+- **querySelectorAll**: va a buscar todos los elementos que coincidan con el selector que le pases como parámetro.
+
+Ejemplo:
+
+``` [JavaScript]
+  const $modal = document.getElementById('modal');
+  const $overlay = document.getElementById('overlay');
+  const $hideModal = document.getElementById('hide-modal');
+
+  const $modalTitle = $modal.querySelector('h1');
+  const $modalImage = $modal.querySelector('img');
+  const $modalDescription = $modal.querySelector('p');
+```
