@@ -571,3 +571,39 @@ saludoArgentino('Sacha') // Hola Sacha che
 saludoMexicano('Sacha') // Hola Sacha güey
 saludoColombiano('Sacha') // Hola Sacha amigo
 ```
+
+# Ajax
+Ajax recibe dos parámetros los cuales son la url de la API y un objeto donde pondrás la configuración que se usara para realizar la petición. En la configuración se añaden dos funciones para manejar cuando la petición se realizo correctamente y cuando falla. Esta es la forma como se realizaria con jQuery un ejemplo sencillo seria el siguiente:
+
+``` [javaScript]
+
+$.ajax('https://randomuser.me/api/ ', {
+  method: 'GET',
+  success: function(data) {
+    console.log(data)
+  },
+  error: function(error) {
+    console.log(error)
+  }
+})
+```
+
+Peeeeero en el mundo moderno *JavaScript* internamente cuenta con una función llamada **fetch** que también realiza peticiones a una API. Al igual que Ajax necesita dos parámetros, una url y una configuración, pero si solo le mandas la url fetch usará una configuración por defecto donde el método HTTP será GET.
+**fetch** te regresa una promesa, esa promesa al resolverse te da los datos de respuesta y tiene un método llamado json que te regresa otra promesa con los datos en formato JSON.
+
+Ejemplo:
+
+``` [javaScript]
+
+fetch('https://randomuser.me/api/')
+  .then(function (response) {
+    // console.log(response)
+    return response.json()
+  })
+  .then(function (user) {
+    console.log('user', user.results[0].name.first)
+  })
+  .catch(function() {
+    console.log('algo falló')
+  });
+```
