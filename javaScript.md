@@ -1,4 +1,4 @@
-# Aspectos Basicos
+ # Aspectos Basicos
 
 ## Concatenacion
 
@@ -130,7 +130,14 @@ const nameFunction = ( parameters ) => {
 
 const nameFunction = parameter => This is the value return
 ```
+# Librerias Standar de Js
 
+## Timer
+Los timer nos permiten ejecutar funciones despues de determinado tiempo. En js existen 2:
+
+1. setInterval(function, x) : Ejecuta una "function" cada "x" intervalo de milisegundos 
+
+2. setTimeout(functino ,x) : Ejecuta una "function" en "x" milisegundos
 
 # Comparaciones
 
@@ -357,16 +364,25 @@ Son valores que aun no conocemos. Las promesas tienen tres estados:
 Las promesas se invocan de la siguiente forma:
 
 ```[javaScript]
-new Promise( ( resolve, reject ) => {
+Promesa = new Promise( ( resolve, reject ) => {
   // --- llamado asíncrono
   if( todoOK ) {
      // -- se ejecutó el llamado exitosamente
-     resolve()
+     resolve(parm_okey_1, parm_okey_2)
   } else {
      // -- hubo un error en el llamado
-     reject()
+     reject(parm_fail_1, parm_okey_1)
   }
 } )
+
+Promesa
+  .then(function(parm_okey_1, parm_okey_2) {
+    // este codigo se ejecuta cuando "resolve()" es llamado
+  })
+  .catch(function(parm_okey_1, parm_okey_1) {
+    // este codigo se ejecuta cuando "reject()" es llamado
+  })
+
 ```
 ### En Serie
 A diferencia de los callbacks en el CallbackHell, que terminan estando anidados unos dentro de otros, cuando se usan Promesas la ejecución de las llamadas no se hacen de manera anidada sino de manera encadenada, al mismo nivel una debajo de la otra, lo que hace que el código sea mucho más legible y mantenible.
@@ -442,6 +458,39 @@ Promise
   .all(promesas)
   .then(personajes => console.log(personajes))
   .catch(onError)
+```
+### En carrera
+Permite ejecutar multiples promesas al mismo tiempo y ejecutar aquella que termine primero ejemplo:
+
+``` [javascript]
+const getUserAll = new Promise(function(todoBien, todoMal) {
+  // llamar a un api
+  setTimeout(function() {
+    // luego de 3 segundos
+    todoBien('se acabó el tiempo');
+  }, 5000)
+})
+
+const getUser = new Promise(function(todoBien, todoMal) {
+  // llamar a un api
+  setTimeout(function() {
+    // luego de 3 segundos
+    todoBien('se acabó el tiempo 3');
+  }, 3000)
+})
+
+Promise.race([
+  getUser,
+  getUserAll,
+])
+.then(function(message) {
+  console.log(message);
+})
+.catch(function(message) {
+  console.log(message)
+})
+
+// En este ejemplo solo se ejecutara getUser
 ```
 
 ## Async-await
