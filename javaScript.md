@@ -630,3 +630,75 @@ Ejemplo:
   const $modalImage = $modal.querySelector('img');
   const $modalDescription = $modal.querySelector('p');
 ```
+# Creacion/Edicion del DOM
+
+## Templates
+
+Desde ECMAScript 6 contamos con una nueva característica llamada template literals que se representan con las comillas invertidas ``, el ejemplo anterior pasaría a verse de esta forma:
+``` [JavaScript]
+`<div class=”container”>
+    <p id=${id}>Hola Mundo<p>
+<div>`
+```
+La forma en la que utilizamos los template en Js es:
+``` [JavaScript]
+  function videoItemTemplate(movie) {
+    return (
+      `<div class="primaryPlaylistItem">
+        <div class="primaryPlaylistItem-image">
+          <img src="${movie.medium_cover_image}">
+        </div>
+        <h4 class="primaryPlaylistItem-title">
+          ${movie.title}
+        </h4>
+      </div>`
+    )
+  }
+```
+### Implementando el template
+
+Para convertir nuestra plantilla de texto a un Document Object Model necesitamos crear dentro de memoria un documento HTML, esto es posible gracias al método **document.implementation.createHTMLDocument** . A este documento HTML le vamos a añadir al body, mediante **innerHTML**, nuestra plantilla de texto. 
+Este flujo es la magia que hay detrás de varias librerías y frameworks que nos ayudan a crear interfaces.
+
+Ejemplo:
+
+``` [JavaScript]
+  function createTemplate(HTMLString) {
+    const html = document.implementation.createHTMLDocument();
+    html.body.innerHTML = HTMLString;
+    return html.body.children[0];
+  }
+  function renderMovieList(list, $container) {
+    $container.children[0].remove();
+    list.forEach((movie) => {
+      const HTMLString = videoItemTemplate(movie);
+      const movieElement = createTemplate(HTMLString);
+      $container.append(movieElement);
+    })
+  }
+```
+## Creacion de elementos individuales
+Vamos a crear un elemento HTML sin usar un template string. Para crear el elemento desde cero vamos a usar el método **document.createElement**, este recibe como parámetro la etiqueta html del elemento que se quiere crear.
+*NOTA:* no funciona mandándole el template string.
+
+Para añadirle un atributo al elemento que acabamos de crear haremos uso del método **setAttribute**. Este recibe dos parámetros, uno indicando el nombre del atributo que vamos a añadir y el segundo parámetro indicando el valor de dicho atributo.
+Para añadir multiples atributos vamos a crear una función.
+
+Ejemplo:
+
+``` [javaScript]
+  function setAttributes($element, attributes) {
+    for (const attribute in attributes) {
+      $element.setAttribute(attribute, attributes[attribute]);
+    }
+  }
+
+    const $loader = document.createElement('img');
+    setAttributes($loader, {
+      src: 'src/images/loader.gif',
+      height: 50,
+      width: 50,
+    })
+
+```
+
