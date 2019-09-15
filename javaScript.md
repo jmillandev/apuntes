@@ -53,8 +53,12 @@ Son cadenas de texto. Para indicar que estamos usando una cadena de texto debemo
 - length:
     Nos indica la cantidad de caractéres que tiene un string.
 Para concatenar dos strings se utiliza el símbolo (+)
-var nombreCompleto = nombre + ’ ’ + apellido
-
+Ejemplo:
+`let nombreCompleto = nombre + ’ ’ + apellido`
+O carateres invertidos (`) delimitando las variables en ${}
+```
+let nombreCompleto =`${nombre} ${apellido}`
+```
 # Funciones
 Son fracciones de código reutilizable.
 
@@ -92,17 +96,30 @@ Un atributo se compone de una clave (key) y un valor (value), que se separan ent
 
 Existen al menos dos formas de acceder al valor de un atributo de un objeto:
 
-1. Escribir el nombre de un objeto separado por un punto del nombre de un atributo.
+### Comun
+ Escribir el nombre de un objeto separado por un punto del nombre de un atributo.Ejemplo
+ `var nombre = persona.nombre;`
 
-**NOTA:** Las últimas versiones de JavaScript nos permiten desglosar el objeto para acceder únicamente al atributo que nos interesa. Esto se consigue encerrando el nombre del atributo entre llaves { }.
+### Desestructuracion 
+Las últimas versiones de JavaScript nos permiten desglosar el objeto para acceder únicamente al atributo que nos interesa. Esto se consigue encerrando el nombre del atributo entre llaves { }.
+Para no duplicar las variables se introduce el nombre de la variable como parámetro de la segunda variable.
+Ejemplos: En los proximos ejemplo las dos lineas de codigo son completamente analogas
 
-2. Es metodo de acceso es llamado *desestructurización*. Para no duplicar las variables se introduce el nombre de la variable como parámetro de la segunda variable.
-Ejemplo: Las dos lineas de codigo siguiente son completamente analogas
-
+Ejemplo_1:
 ``` [javascript]
 var nombre = persona.nombre;
 var{ nombre } = persona;
 ```
+Ejemplo_2:
+``` [javascript]
+let alias = seccion.alumno.nombre;
+let {
+  section: {
+    nombre: alias
+    } 
+  } = section
+```
+
 ***IMPORTANTE***
     Javascript se comporta de manera distinta cuando le pasamos un objeto como parámetro.
 
@@ -716,3 +733,20 @@ Ejemplo:
 *NOTA:* La página se recarga al momento de ejecutarse el evento submit, para evitar esto debemos quitarle la acción por defecto que viene en submit usando el método event.preventDefault().
 
 *NOTA:* Se puede consultar los eventos disponibles para los elenmentos HTML desde [aqui](https://developer.mozilla.org/es/docs/Web/API/Event)
+
+# Formulario
+Algo muy comun en el desarrollo de aplicaciones en especial las CRUD es la intercacion con formularios para esto Js nos ofrece el metodo **FormData** el cual recibe como parametro un elemento HTML form para interactuar con sus datos.
+Sus principales metodos son **get('name')** y **set('name', 'value')** donde 'name' es el nombre del sub-elemento del formulario. Ejemplo:
+
+``` [Java Script]
+$form = document.getElementById('form_1');
+$serch = document.getElementById('buscador_peli');
+
+
+Data = new FormData($form);
+Data = set('buscador_peli','La momia');
+Data = get('buscador_peli'); // La momia
+
+$serch.dataset.atributte; // Valor de 'atribute'
+```
+
