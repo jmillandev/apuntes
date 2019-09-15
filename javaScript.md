@@ -702,3 +702,17 @@ Ejemplo:
 
 ```
 
+# Eventos 
+## Escuchar Evento
+Para que un elemento HTML pueda escuchar algún evento debemos usar el método **addEventListener**. Este método recibe dos parámetros, el nombre del evento que va a escuchar y la función que se va a ejecutar al momento de que se accione el evento.
+Ejemplo:
+```[JavaScript]
+  const $form = document.getElementById('form');
+
+  $form.addEventListener('submit', (event) => {
+    event.preventDefault();
+  })
+```
+*NOTA:* La página se recarga al momento de ejecutarse el evento submit, para evitar esto debemos quitarle la acción por defecto que viene en submit usando el método event.preventDefault().
+
+*NOTA:* Se puede consultar los eventos disponibles para los elenmentos HTML desde [aqui](https://developer.mozilla.org/es/docs/Web/API/Event)
