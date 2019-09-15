@@ -750,3 +750,22 @@ Data = get('buscador_peli'); // La momia
 $serch.dataset.atributte; // Valor de 'atribute'
 ```
 
+# Manejo de Errores
+Para el manejo de errores utilizamos el bloqu de codigo **try..catch**. Dentro de *try* va el vloque de codigo que se va a intentar correr, si sucede un error se ejecutara el bloque *catch*. Ejemplo:
+
+``` [JavaScript]
+try {
+  code..
+} catch (error)
+  code.. // el atributo 'error' contiene la informacion sobre el error ocurrido.
+```
+
+# localStorage y sessionStorage
+**sessionStorage** mantiene un área de almacenamiento separada para cada origen que está disponible mientras dure la sesión de la página (mientras el navegador esté abierto, incluyendo recargas de página y restablecimientos).
+**localStorage** hace lo mismo, pero persiste incluso cuando el navegador se cierre y se reabra.
+
+Estos estan disponibles están disponibles mediante las propiedades *Window.sessionStorage* y  *Window.localStorage*
+
+Estos mismos tiene los metodos *clear*, *setItem*  y *getItem* para elimirar, configurar y obtener sus valores respectivamente.
+
+***IMPORTANTE:*** Estos metodos solo permiten el almacenamiento de **texto plano**. Si deseamos almacenar objetos podemos utilizar el metodo *JSON.stringify({objec})* para hacer la transformacion. Para volder un texto plata un objeto utilizamos la funcion *JSON.paser('{"name":value}')*.
