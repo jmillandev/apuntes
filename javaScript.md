@@ -87,12 +87,125 @@ function nameFunction (var1, var2, ...,varn){
 ```
 **Nota:** JavaScript es un lenguaje interpretado, esto quiere decir que intentará ejecutar el código sin importar si los parámetros que le pasemos a la función estén invertidos o incluso incompletos.
 
-## ALcance
-Si una variable no está definida dentro del cuerpo de una función hablamos de una variable *global*. Por el contrario, una variable definida dentro de una función es una variable *local*.
+## Scope/ALcance
+El Scope o ámbito es lo que define el tiempo de vida de una variable, en que partes de nuestro código pueden ser usadas.
 
-Para que la ejecución de una función no modifique una variable *global* usamos parámetros en lugar de pasar directamente la variable.
 
-Es posible utilizar el mismo nombre para una variable global y para el parámetro de una función con un alcance local.
+Existen diferentes Scopes:
+1. **Global Scope**
+Variables disponibles de forma global se usa la palabra **var**, son accesibles por todos los scripts que se cargan en la página. Toda variable que está definida fuera del cuerpo de una funcion, bloque o modulo es una variable **global**.
+**IMPORTANTE:**Aquí hay mucho riesgo de sobreescritura. No deben utilizarse
+
+Ejemplo:
+``` [JavaScript]
+function printNumbers() {
+  for (var i = 0; i < 10; i++) {
+    setTimeout( () => console.log(i) , 100 )
+  }
+}
+```
+
+En el ejemplo anterio se utilizo *var* para definir la variable. Esto la convierte en una variable global. Llevandonos a un **ERROR** en lo que se desea que haga el codigo. Por este tipo de razones deben tratarse las variables globales con suma precaucion.
+
+2. **Function Scope**
+Variables declaradas dentro de una función, sólo visibles dentro de ella misma (incluyendo los argumentos que se pasan a la función).
+
+Ejemplo1:
+``` [JavaScript]
+function printNumbers() {
+  for (var i = 0; i < 10; i++) {
+    const eventuallyPrintNumber = (n) => setTimeout( () => console.log(n) , 100 )
+    eventuallyPrintNumber(i)
+  }
+}
+```
+El ejemplo anterior es un codigo correcto que hace lo que queremos, ya que al manejar la *variable* como un *parametro* esta pertenece al scope local de la funcion. recordando sus valores en cada iteracion.
+
+3. **Block Scope**
+Variables definidas dentro de un bloque, por ejemplo variables declaradas dentro un loop while o for. Se usa *let* y *const* para declarar este tipo de variables.
+
+``` [JavaScript]
+function printNumbers() {
+  for (let i = 0; i < 10; i++) {
+    setTimeout( () => console.log(i) , 100 )
+  }
+}
+```
+El codigo anterior hace exactamente lo que queremos que haga, con tan solo hacer el cambio de *var* a *let*, el codigo funciona a la perfeccion, ya que las variables declaradas con **let** y **const** trabajan sobre un bloque de ambito  local. Por lo que para cada iteracion el bloque recordara cual es la variable asignada para el.
+
+
+4. **Module Scope**
+Cuando se denota un **script** de tipo **module** con el atributo **type="module** las variables son limitadas al archivo en el que están declaradas. La forma de acceder a ellas desde otro ambito es por medio de la importacion del modulo.
+
+Ejemplo:
+
+Archivo1:  media-player.js
+``` [JavaScript]
+  import MediaPlayer from './MediaPlayer.js';
+
+  const video = document.querySelector('video');
+  const player = new MediaPlayer({ el: video });
+
+  const button = document.querySelector('button');
+  button.onclick = () => player.togglePlay();
+```
+
+Archivo2: index.js
+``` [JavaScript]
+function MediaPlayer(config) {
+  this.media = config.el;
+}
+
+MediaPlayer.prototype.play = function() {
+  this.media.play();
+};
+
+MediaPlayer.prototype.pause = function() {
+  this.media.pause();
+};
+
+MediaPlayer.prototype.togglePlay = function() {
+  if (this.media.paused) {
+    this.play();
+  } else {
+    this.pause();
+  }
+};
+
+export default MediaPlayer;
+```
+
+Archivo3: index.js 
+``` [HTML]
+<html>
+  <head>
+    <title>PlatziMediaPlayer.js</title>
+    <link
+      rel="stylesheet"
+      href="https://necolas.github.io/normalize.css/8.0.1/normalize.css"
+    />
+    <link rel="stylesheet" href="./assets/index.css" />
+  </head>
+
+  <body>
+    <header>
+      <h1>PlatziMediaPlayer.js</h1>
+      <p>An extensible media player.</p>
+    </header>
+
+    <main class="container">
+      <video class="movie">
+        <source src="./assets/BigBuckBunny.mp4" />
+      </video>
+
+      <button>Play/Pause</button>
+    </main>
+
+    <script src ="index.js"></script>
+  </body>
+</html>
+```
+
 
 # Objetos (JSON: JavaScript Object Notation)
 Un objeto nos permite la modelacion y abstracion de un "objeto" del mundo real.
