@@ -696,7 +696,26 @@ function factorial(n) {
 ```
 
 # Closure
-Un closure, básicamente, es una función que recuerda el estado de las variables al momento de ser invocada, y conserva este estado a través de reiteradas ejecuciones. Un aspecto fundamental de los closures es que son funciones que retornan otras funciones.
+Un closure, básicamente, es una función que recuerda el estado de las variables al momento de ser invocada, y conserva este estado a través de reiteradas ejecuciones.
+
+Estas nos sirven principalmente para tres cosas:
+1. **IIFE**(Immediately invoked function expression)
+Son funciones que se ejecutan tan pronto como se definen. Es un patrón de diseño también conocido cómo **función autoejecutable** (Self-Executing Anonymous Function  ) y se compone por dos partes.
+- La primera es la función anónima con alcance léxico encerrado por el  `Operador de Agrupación ()`. Esto impide accesar variables fuera del IIFE, así cómo contaminar el alcance (scope) global. 
+
+- La segunda parte crea la expresión de función cuya ejecución es inmediata (), siendo interpretado directamente en el engine de JavaScript.
+
+Ejemplo:
+``` [JavaScript]
+ (function() {
+  let color = 'green';
+  function printColor() {
+    console.log(color);
+  }
+```
+
+2. **Retornar funciones**
+Un aspecto *fundamental* de los **closures** es que son funciones que retornan otras funciones.
 Ejemplo:
 ```[javaScript]
 function crearSaludo(finalDeFrase) {
@@ -714,6 +733,29 @@ saludoMexicano('Sacha') // Hola Sacha güey
 saludoColombiano('Sacha') // Hola Sacha amigo
 ```
 
+3. **Variables privadas**
+Los **closures** nos sirven para tener algo *parecido* a variables privadas, característica que no tiene JavaScript por default. Es decir encapsulan variables que no pueden ser modificadas directamente por otros objetos, sólo por funciones pertenecientes al mismo.
+Ejemplo:
+``` [JavaScript]
+function makeCounter(n) {
+  let count = n;
+
+  return {
+    increase: function() {
+      count = count + 1;
+    },
+    decrease: function() {
+      count = count - 1;
+    },
+    getCount: function() {
+      return count;
+    },
+  };
+}
+
+let counter = makeCounter(7);
+```
+En el ejemplo anterior tener¿mos una objeto(recuerda que en Js las variables son objetos realmente). con un atributo interno privado.
 # Ajax
 Ajax recibe dos parámetros los cuales son la url de la API y un objeto donde pondrás la configuración que se usara para realizar la petición. En la configuración se añaden dos funciones para manejar cuando la petición se realizo correctamente y cuando falla. Esta es la forma como se realizaria con jQuery un ejemplo sencillo seria el siguiente:
 
