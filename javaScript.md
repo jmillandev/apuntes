@@ -71,6 +71,85 @@ O carateres invertidos (`) delimitando las variables en ${}
 ```
 let nombreCompleto =`${nombre} ${apellido}`
 ```
+
+# JSON: JavaScript Object Notation
+Un objeto nos permite la modelacion y abstracion de un "objeto" del mundo real.
+
+**NOTA:** Un objeto también se puede pasar como atributo en una función.
+
+## Definicion
+Se definen delimitados mediante llaves( {} )
+
+Un atributo se compone de una clave (key) y un valor (value), que se separan entre sí por dos puntos( : ). Los valores pueden ser de tipo *string*, *número*, *booleano*, etc. Cada atributo está separado del siguiente por una coma( , ). Un objeto puede tener todos los atributos que sean necesarios.
+
+## Acceso
+
+Existen al menos dos formas de acceder al valor de un atributo de un objeto:
+
+### Comun
+ Escribir el nombre de un objeto separado por un punto del nombre de un atributo.Ejemplo
+ `var nombre = persona.nombre;`
+
+### Desestructuracion 
+Las últimas versiones de JavaScript nos permiten desglosar el objeto para acceder únicamente al atributo que nos interesa. Esto se consigue encerrando el nombre del atributo entre llaves { }.
+Para no duplicar las variables se introduce el nombre de la variable como parámetro de la segunda variable.
+Ejemplos: En los proximos ejemplo las dos lineas de codigo son completamente analogas
+
+Ejemplo_1:
+``` [javascript]
+var nombre = persona.nombre;
+var{ nombre } = persona;
+```
+Ejemplo_2:
+``` [javascript]
+let alias = seccion.alumno.nombre;
+let {
+  section: {
+    nombre: alias
+    } 
+  } = section
+```
+
+***IMPORTANTE***
+    Javascript se comporta de manera distinta cuando le pasamos un objeto como parámetro.
+
+Cuando le pasamos un objeto a una funcion, este se pasan como una referencia del objeto, lo que significa que el objeto es modificado incluso fuera de la funciona.
+Para solucionar esto se puede crear un objeto diferente o auxiliar. Esto lo podemos hacer colocando tres puntos antes del nombre del objeto(lo cual crea un desgloce del objeto).
+Ejemplo:
+
+```
+aux = {
+       …persona,
+    }
+```
+
+# Librerias Standar de Js
+
+## Timer
+Los timer nos permiten ejecutar funciones despues de determinado tiempo. En js existen 2:
+
+1. setInterval(function, x) : Ejecuta una "function" cada "x" intervalo de milisegundos 
+
+2. setTimeout(functino ,x) : Ejecuta una "function" en "x" milisegundos
+
+# Comparaciones
+
+Existen varias maneras de comparar variables u objetos dentro de javascript.
+
+Imaginemos que le asignamos a una variable *X* un valor numérico y a una variable *Y* un string. Para poder compararlos debemos agregar dos signos de igual (==). Esto los convierte al mismo tipo de valor y permite que se puedan comparar.
+
+**NOTA:** Cuando realizamos operaciones es recomendable usar tres símbolos de igual (===). Esto permite que JavasScript no iguale las variables que son de distinto tipo. Es recomendado que se use el triple igual siempre que se estén comparando variables.
+
+Recuerda existen cinco tipos de datos que son primitivos:
+
+1. Boolean
+2. Null
+3. Undefined
+4. Number
+5. String
+
+***MUY IMPORTANTE:*** Cuando comparamos objetos en Js, lo que hacemos es preguntar por la *referenacia en memoria RAM a la(s) variable(s)* que estamos consultando.
+
 # Funciones
 Son fracciones de código reutilizable.
 
@@ -220,167 +299,6 @@ Archivo3: index.js
   </body>
 </html>
 ```
-
-
-# Objetos (JSON: JavaScript Object Notation)
-Un objeto nos permite la modelacion y abstracion de un "objeto" del mundo real.
-
-**NOTA:** Un objeto también se puede pasar como atributo en una función.
-
-## Definicion
-Se definen delimitados mediante llaves( {} )
-
-Un atributo se compone de una clave (key) y un valor (value), que se separan entre sí por dos puntos( : ). Los valores pueden ser de tipo *string*, *número*, *booleano*, etc. Cada atributo está separado del siguiente por una coma( , ). Un objeto puede tener todos los atributos que sean necesarios.
-
-## Acceso
-
-Existen al menos dos formas de acceder al valor de un atributo de un objeto:
-
-### Comun
- Escribir el nombre de un objeto separado por un punto del nombre de un atributo.Ejemplo
- `var nombre = persona.nombre;`
-
-### Desestructuracion 
-Las últimas versiones de JavaScript nos permiten desglosar el objeto para acceder únicamente al atributo que nos interesa. Esto se consigue encerrando el nombre del atributo entre llaves { }.
-Para no duplicar las variables se introduce el nombre de la variable como parámetro de la segunda variable.
-Ejemplos: En los proximos ejemplo las dos lineas de codigo son completamente analogas
-
-Ejemplo_1:
-``` [javascript]
-var nombre = persona.nombre;
-var{ nombre } = persona;
-```
-Ejemplo_2:
-``` [javascript]
-let alias = seccion.alumno.nombre;
-let {
-  section: {
-    nombre: alias
-    } 
-  } = section
-```
-
-***IMPORTANTE***
-    Javascript se comporta de manera distinta cuando le pasamos un objeto como parámetro.
-
-Cuando le pasamos un objeto a una funcion, este se pasan como una referencia del objeto, lo que significa que el objeto es modificado incluso fuera de la funciona.
-Para solucionar esto se puede crear un objeto diferente o auxiliar. Esto lo podemos hacer colocando tres puntos antes del nombre del objeto(lo cual crea un desgloce del objeto).
-Ejemplo:
-
-```
-aux = {
-       …persona,
-    }
-```
-
-# This
-*This* se refiere a un objeto, ese objeto es el que actualmente está ejecutando un pedazo de código.
-
-No se puede asignar un valor a this directamente y este depende de en que scope nos encontramos:
-
-- Cuando llamamos a this en el **Global Scope** o **Function Scope**, se hace referencia al objeto *window*. A excepción de - cuando estamos en *strict mode* que nos regresará undefined.
-- Cuando llamamos a this desde **una función** que está contenida en un objeto, this se hace referencia a *ese objeto*.
-- Cuando llamamos a this desde una **“clase”**, se hace referencia a la *instancia generada* por el *constructor*.
-
-## Métodos call, apply y bind
-Estas funciones nos sirven para establecer el valor de this, es decir cambiar el contexto que se va usar cuando la función sea llamada.
-
-Las funciones **call**, **apply** y **bind** son parte del prototipo Function. Toda función usa este prototipo y por lo tanto tiene estas tres funciones.
-
-- **functionName.call()**
-Ejecuta la función recibiendo como primer argumento el this y los siguientes son los argumentos que recibe la función que llamó a call.
-Ejemplo:
-``` [JavaScritp]
-  // Establece `this` usando `call`
-  function saludar() {
-    console.log(`Hola. Soy ${this.name} ${this.apellido}`);
-  }
-
-  const richard = {
-    name: 'Richard',
-    apellido: 'Kaufman López',
-  };
-
-  saludar.call(richard);
-
-  // Establece `this` usando `call` y pasar argumentos a la función
-  function caminar(metros, direccion) {
-    console.log(`${this.name} camina ${metros} metros hacia ${direccion}.`);
-  }
-
-  caminar.call(richard, 400, 'norte');
-
-```
-- **functionName.apply()**
-Ejecuta la función recibiendo como primer argumento el this y como segundo un arreglo con los argumentos que recibe la función que llamó a apply.
-Ejemplo:
-``` [JavaScript]
-  function caminar(metros, direccion) {
-    console.log(`${this.name} camina ${metros} metros hacia ${direccion}.`);
-  }
-
-  const richard = {
-    name: 'Richard',
-    apellido: 'Kaufman López',
-  };
-
-  // Establece `this` usando `apply` y pasar argumentos a la función
-  const valores = [800, 'noreste'];
-  caminar.apply(richard, valores);
-```
-
-- **functionName.bind()**
-Recibe como primer y único argumento el this. **No ejecuta la función**, sólo regresa otra función con el nuevo this integrado.
-``` [JavaScript]
-  function saludar() {
-    console.log(`Hola. Soy ${this.name} ${this.apellido}`);
-  }
-
-  const richard = {
-    name: 'Richard',
-    apellido: 'Kaufman López',
-  };
-
-  saludar.call(richard);
-
-  // Establecer `this` en una nueva función usando `bind`
-  
-  const daniel = { name: 'Daniel', apellido: 'Sánchez' };
-  const danielSaluda = saludar.bind(daniel);
-  danielSaluda();
-
-  const danielCamina = caminar.bind(daniel, 2000);
-  danielCamina('oeste');
-
-```
-
-# Librerias Standar de Js
-
-## Timer
-Los timer nos permiten ejecutar funciones despues de determinado tiempo. En js existen 2:
-
-1. setInterval(function, x) : Ejecuta una "function" cada "x" intervalo de milisegundos 
-
-2. setTimeout(functino ,x) : Ejecuta una "function" en "x" milisegundos
-
-# Comparaciones
-
-Existen varias maneras de comparar variables u objetos dentro de javascript.
-
-Imaginemos que le asignamos a una variable *X* un valor numérico y a una variable *Y* un string. Para poder compararlos debemos agregar dos signos de igual (==). Esto los convierte al mismo tipo de valor y permite que se puedan comparar.
-
-**NOTA:** Cuando realizamos operaciones es recomendable usar tres símbolos de igual (===). Esto permite que JavasScript no iguale las variables que son de distinto tipo. Es recomendado que se use el triple igual siempre que se estén comparando variables.
-
-Recuerda existen cinco tipos de datos que son primitivos:
-
-1. Boolean
-2. Null
-3. Undefined
-4. Number
-5. String
-
-***MUY IMPORTANTE:*** Cuando comparamos objetos en Js, lo que hacemos es preguntar por la *referenacia en memoria RAM a la(s) variable(s)* que estamos consultando.
-
 # Estructuras de Control
 
 ## Condicionales
@@ -486,7 +404,74 @@ newArray = array.map(function (parameters) {
 ### reduce
 El método reduce() nos permite reducir, mediante una función que se aplica a cada uno de los elemento del array, todos los elementos de dicho array, a un valor único.
 
-# Clases
+# Closure
+Un closure, básicamente, es una función que recuerda el estado de las variables al momento de ser invocada, y conserva este estado a través de reiteradas ejecuciones.
+
+Estas nos sirven principalmente para tres cosas:
+1. **IIFE**(Immediately invoked function expression)
+Son funciones que se ejecutan tan pronto como se definen. Es un patrón de diseño también conocido cómo **función autoejecutable** (Self-Executing Anonymous Function  ) y se compone por dos partes.
+- La primera es la función anónima con alcance léxico encerrado por el  `Operador de Agrupación ()`. Esto impide accesar variables fuera del IIFE, así cómo contaminar el alcance (scope) global. 
+
+- La segunda parte crea la expresión de función cuya ejecución es inmediata (), siendo interpretado directamente en el engine de JavaScript.
+
+Ejemplo:
+``` [JavaScript]
+ (function() {
+  let color = 'green';
+  function printColor() {
+    console.log(color);
+  }
+```
+
+2. **Retornar funciones**
+Un aspecto *fundamental* de los **closures** es que son funciones que retornan otras funciones.
+Ejemplo:
+```[javaScript]
+function crearSaludo(finalDeFrase) {
+  return function (nombre) {
+    console.log(`Hola ${nombre} ${finalDeFrase}`)
+  }
+}
+
+const saludoArgentino = crearSaludo('che')
+const saludoMexicano = crearSaludo('güey')
+const saludoColombiano = crearSaludo('amigo')
+
+saludoArgentino('Sacha') // Hola Sacha che
+saludoMexicano('Sacha') // Hola Sacha güey
+saludoColombiano('Sacha') // Hola Sacha amigo
+```
+
+3. **Variables privadas**
+Los **closures** nos sirven para tener algo *parecido* a variables privadas, característica que no tiene JavaScript por default. Es decir encapsulan variables que no pueden ser modificadas directamente por otros objetos, sólo por funciones pertenecientes al mismo.
+Ejemplo:
+``` [JavaScript]
+function makeCounter(n) {
+  let count = n;
+
+  return {
+    increase: function() {
+      count = count + 1;
+    },
+    decrease: function() {
+      count = count - 1;
+    },
+    getCount: function() {
+      return count;
+    },
+  };
+}
+
+let counter = makeCounter(7);
+```
+En el ejemplo anterior tenemos una objeto(recuerda que en Js las variables son objetos realmente). con un atributo interno privado.
+
+# Prototipos (Clases)
+En Javascript todo son objetos, no tenemos clases, no tenemos ese plano para crear objetos.
+
+Todos los objetos “heredan” de un prototipo que a su vez hereda de otro prototipo y así sucesivamente creando lo que se llama la **prototype chain**.
+
+La *keyword* **new** crea un nuevo objeto que “hereda” todas las propiedades del prototype de otro objeto. No confundir prototype con **proto** que es sólo una propiedad en cada instancía que apunta al prototipo del que hereda.
 
 ## Bases del leguaje
 Lo que se describe a continuacion es parte de las bases del lenguaje, dicha sintaxis ya no es muy utilizada, mas sin embargo es importante tener dichos conceptos claros.
@@ -517,7 +502,7 @@ var obj = new prototypeName(parameters)
 ## A partir de ECMAScript2015
 A partir del 2015 las actualizaciones en el lenguaje trajeron consigo la palabra clave "class" y una forma mas sencilla de definir prototipos y de hacer "herencia" entre estos prototipo.
 
-**Importante:** Se debe tener en cuenta que Js no cuenta con *clases*. ELo que se hizo fue una "mascara", pero en el fondo el lenguaje sigue trabajando con prototipos.
+**Importante:** Se debe tener en cuenta que Js no cuenta con *clases* ni con el *keyword new*. Estos son una "azucar sintactica", pero en el fondo el lenguaje sigue trabajando con prototipos.
 
 ``` [javascript]
 class prototypeName extends prototypePather {
@@ -535,6 +520,88 @@ methodName (parameters) {
 
 var obj = new prototypeName(parameters)
 ```
+
+# This
+*This* se refiere a un objeto, ese objeto es el que actualmente está ejecutando un pedazo de código.
+
+No se puede asignar un valor a this directamente y este depende de en que scope nos encontramos:
+
+- Cuando llamamos a this en el **Global Scope** o **Function Scope**, se hace referencia al objeto *window*. A excepción de - cuando estamos en *strict mode* que nos regresará undefined.
+- Cuando llamamos a this desde **una función** que está contenida en un objeto, this se hace referencia a *ese objeto*.
+- Cuando llamamos a this desde una **“clase”**, se hace referencia a la *instancia generada* por el *constructor*.
+
+## Métodos call, apply y bind
+Estas funciones nos sirven para establecer el valor de this, es decir cambiar el contexto que se va usar cuando la función sea llamada.
+
+Las funciones **call**, **apply** y **bind** son parte del prototipo Function. Toda función usa este prototipo y por lo tanto tiene estas tres funciones.
+
+- **functionName.call()**
+Ejecuta la función recibiendo como primer argumento el this y los siguientes son los argumentos que recibe la función que llamó a call.
+Ejemplo:
+``` [JavaScritp]
+  // Establece `this` usando `call`
+  function saludar() {
+    console.log(`Hola. Soy ${this.name} ${this.apellido}`);
+  }
+
+  const richard = {
+    name: 'Richard',
+    apellido: 'Kaufman López',
+  };
+
+  saludar.call(richard);
+
+  // Establece `this` usando `call` y pasar argumentos a la función
+  function caminar(metros, direccion) {
+    console.log(`${this.name} camina ${metros} metros hacia ${direccion}.`);
+  }
+
+  caminar.call(richard, 400, 'norte');
+
+```
+- **functionName.apply()**
+Ejecuta la función recibiendo como primer argumento el this y como segundo un arreglo con los argumentos que recibe la función que llamó a apply.
+Ejemplo:
+``` [JavaScript]
+  function caminar(metros, direccion) {
+    console.log(`${this.name} camina ${metros} metros hacia ${direccion}.`);
+  }
+
+  const richard = {
+    name: 'Richard',
+    apellido: 'Kaufman López',
+  };
+
+  // Establece `this` usando `apply` y pasar argumentos a la función
+  const valores = [800, 'noreste'];
+  caminar.apply(richard, valores);
+```
+
+- **functionName.bind()**
+Recibe como primer y único argumento el this. **No ejecuta la función**, sólo regresa otra función con el nuevo this integrado.
+``` [JavaScript]
+  function saludar() {
+    console.log(`Hola. Soy ${this.name} ${this.apellido}`);
+  }
+
+  const richard = {
+    name: 'Richard',
+    apellido: 'Kaufman López',
+  };
+
+  saludar.call(richard);
+
+  // Establecer `this` en una nueva función usando `bind`
+  
+  const daniel = { name: 'Daniel', apellido: 'Sánchez' };
+  const danielSaluda = saludar.bind(daniel);
+  danielSaluda();
+
+  const danielCamina = caminar.bind(daniel, 2000);
+  danielCamina('oeste');
+
+```
+
 # Asincronismo
 JavaScript sólo puede hacer una cosa a la vez, sin embargo; es capaz de delegar la ejecución de ciertas funciones a otros procesos. Este modelo de concurrencia se llama EventLoop.
 
@@ -778,67 +845,6 @@ function factorial(n) {
 }
 ```
 
-# Closure
-Un closure, básicamente, es una función que recuerda el estado de las variables al momento de ser invocada, y conserva este estado a través de reiteradas ejecuciones.
-
-Estas nos sirven principalmente para tres cosas:
-1. **IIFE**(Immediately invoked function expression)
-Son funciones que se ejecutan tan pronto como se definen. Es un patrón de diseño también conocido cómo **función autoejecutable** (Self-Executing Anonymous Function  ) y se compone por dos partes.
-- La primera es la función anónima con alcance léxico encerrado por el  `Operador de Agrupación ()`. Esto impide accesar variables fuera del IIFE, así cómo contaminar el alcance (scope) global. 
-
-- La segunda parte crea la expresión de función cuya ejecución es inmediata (), siendo interpretado directamente en el engine de JavaScript.
-
-Ejemplo:
-``` [JavaScript]
- (function() {
-  let color = 'green';
-  function printColor() {
-    console.log(color);
-  }
-```
-
-2. **Retornar funciones**
-Un aspecto *fundamental* de los **closures** es que son funciones que retornan otras funciones.
-Ejemplo:
-```[javaScript]
-function crearSaludo(finalDeFrase) {
-  return function (nombre) {
-    console.log(`Hola ${nombre} ${finalDeFrase}`)
-  }
-}
-
-const saludoArgentino = crearSaludo('che')
-const saludoMexicano = crearSaludo('güey')
-const saludoColombiano = crearSaludo('amigo')
-
-saludoArgentino('Sacha') // Hola Sacha che
-saludoMexicano('Sacha') // Hola Sacha güey
-saludoColombiano('Sacha') // Hola Sacha amigo
-```
-
-3. **Variables privadas**
-Los **closures** nos sirven para tener algo *parecido* a variables privadas, característica que no tiene JavaScript por default. Es decir encapsulan variables que no pueden ser modificadas directamente por otros objetos, sólo por funciones pertenecientes al mismo.
-Ejemplo:
-``` [JavaScript]
-function makeCounter(n) {
-  let count = n;
-
-  return {
-    increase: function() {
-      count = count + 1;
-    },
-    decrease: function() {
-      count = count - 1;
-    },
-    getCount: function() {
-      return count;
-    },
-  };
-}
-
-let counter = makeCounter(7);
-```
-En el ejemplo anterior tener¿mos una objeto(recuerda que en Js las variables son objetos realmente). con un atributo interno privado.
 # Ajax
 Ajax recibe dos parámetros los cuales son la url de la API y un objeto donde pondrás la configuración que se usara para realizar la petición. En la configuración se añaden dos funciones para manejar cuando la petición se realizo correctamente y cuando falla. Esta es la forma como se realizaria con jQuery un ejemplo sencillo seria el siguiente:
 
