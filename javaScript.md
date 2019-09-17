@@ -520,6 +520,15 @@ methodName (parameters) {
 
 var obj = new prototypeName(parameters)
 ```
+## Obtener prototipo
+La forma correcta de obterner y manejar el *prototype* de un *objeto* es atraves de `Object.getPrototyptOf(objeto)`
+
+## Herencia Prototipal
+Por default los objetos en JavaScript tienen cómo prototipo a **Object** que es el punto de partida de todos los objetos, es el prototipo padre. Object es la raíz de todo, por lo tanto tiene un prototipo padre undefined.
+
+Cuando se llama a una función o variable que no se encuentra en el mismo objeto que la llamó, se busca en toda la prototype chain hasta encontrarla o regresar undefined.
+
+La función **hasOwnProperty** sirve para verificar si una propiedad es parte del objeto o si viene heredada desde su prototype chain.
 
 # This
 *This* se refiere a un objeto, ese objeto es el que actualmente está ejecutando un pedazo de código.
@@ -880,8 +889,18 @@ fetch('https://randomuser.me/api/')
     console.log('algo falló')
   });
 ```
+# Manejo de Errores
+Para el manejo de errores utilizamos el bloqu de codigo **try..catch**. Dentro de *try* va el vloque de codigo que se va a intentar correr, si sucede un error se ejecutara el bloque *catch*. Ejemplo:
 
-# Selectores
+``` [JavaScript]
+try {
+  code..
+} catch (error)
+  code.. // el atributo 'error' contiene la informacion sobre el error ocurrido.
+```
+
+# Interaccion el DOM
+## Selectores
 Un selector nos sirve para poder manipular un objeto del DOM, puedes buscar dicho objeto ya sea por su id, clase, atributo, etc.
 
 Dentro de JavaScript existen distintas funciones para hacer selectores, entre ellas se encuentra:
@@ -903,9 +922,9 @@ Ejemplo:
   const $modalImage = $modal.querySelector('img');
   const $modalDescription = $modal.querySelector('p');
 ```
-# Creacion/Edicion del DOM
+## Creacion/Edicion del DOM
 
-## Templates
+### Templates
 
 Desde ECMAScript 6 contamos con una nueva característica llamada template literals que se representan con las comillas invertidas ``, el ejemplo anterior pasaría a verse de esta forma:
 ``` [JavaScript]
@@ -928,7 +947,7 @@ La forma en la que utilizamos los template en Js es:
     )
   }
 ```
-### Implementando el template
+#### Implementando el template
 
 Para convertir nuestra plantilla de texto a un Document Object Model necesitamos crear dentro de memoria un documento HTML, esto es posible gracias al método **document.implementation.createHTMLDocument** . A este documento HTML le vamos a añadir al body, mediante **innerHTML**, nuestra plantilla de texto. 
 Este flujo es la magia que hay detrás de varias librerías y frameworks que nos ayudan a crear interfaces.
@@ -950,7 +969,7 @@ Ejemplo:
     })
   }
 ```
-## Creacion de elementos HTML individuales
+### Creacion de elementos HTML individuales
 Vamos a crear un elemento HTML sin usar un template string. Para crear el elemento desde cero vamos a usar el método **document.createElement**, este recibe como parámetro la etiqueta html del elemento que se quiere crear.
 *NOTA:* no funciona mandándole el template string.
 
@@ -975,8 +994,8 @@ Ejemplo:
 
 ```
 
-# Eventos 
-## Escuchar Evento
+## Eventos 
+### Escuchar Evento
 Para que un elemento HTML pueda escuchar algún evento debemos usar el método **addEventListener**. Este método recibe dos parámetros, el nombre del evento que va a escuchar y la función que se va a ejecutar al momento de que se accione el evento.
 Ejemplo:
 ```[JavaScript]
@@ -990,7 +1009,7 @@ Ejemplo:
 
 *NOTA:* Se puede consultar los eventos disponibles para los elenmentos HTML desde [aqui](https://developer.mozilla.org/es/docs/Web/API/Event)
 
-# Formulario
+## Formulario
 Algo muy comun en el desarrollo de aplicaciones en especial las CRUD es la intercacion con formularios para esto Js nos ofrece el metodo **FormData** el cual recibe como parametro un elemento HTML form para interactuar con sus datos.
 Sus principales metodos son **get('name')** y **set('name', 'value')** donde 'name' es el nombre del sub-elemento del formulario. Ejemplo:
 
@@ -1006,16 +1025,6 @@ Data = get('buscador_peli'); // La momia
 $serch.dataset.atributte; // Valor de 'atribute'
 ```
 
-# Manejo de Errores
-Para el manejo de errores utilizamos el bloqu de codigo **try..catch**. Dentro de *try* va el vloque de codigo que se va a intentar correr, si sucede un error se ejecutara el bloque *catch*. Ejemplo:
-
-``` [JavaScript]
-try {
-  code..
-} catch (error)
-  code.. // el atributo 'error' contiene la informacion sobre el error ocurrido.
-```
-
 # localStorage y sessionStorage
 **sessionStorage** mantiene un área de almacenamiento separada para cada origen que está disponible mientras dure la sesión de la página (mientras el navegador esté abierto, incluyendo recargas de página y restablecimientos).
 **localStorage** hace lo mismo, pero persiste incluso cuando el navegador se cierre y se reabra.
@@ -1025,3 +1034,78 @@ Estos estan disponibles están disponibles mediante las propiedades *Window.sess
 Estos mismos tiene los metodos *clear*, *setItem*  y *getItem* para elimirar, configurar y obtener sus valores respectivamente.
 
 ***IMPORTANTE:*** Estos metodos solo permiten el almacenamiento de **texto plano**. Si deseamos almacenar objetos podemos utilizar el metodo *JSON.stringify({objec})* para hacer la transformacion. Para volder un texto plata un objeto utilizamos la funcion *JSON.paser('{"name":value}')*.
+
+# ¿Como funciona JavaScript?
+
+## Parsers y el Abstract Syntax Tree
+El JS Engine recibe el código fuente y lo procesa de la siguiente manera:
+
+- El **parser** descompone y [crea tokens](https://esprima.org/demo/parse.html) que integran el **[AST](https://astexplorer.net)**(Abstract syntax tree).
+- Se compila a **bytecode** y se ejecuta.
+- Lo que se pueda se **optimiza a machine code** y se reemplaza el código base.
+
+Un **SyntaxError** es lanzado cuando el motor JavaScript encuentra partes que no forman parte de la sintaxis del lenguaje y esto lo logra gracias a que se tiene un **AST** generado por el parser.
+
+El *parser* es del 15% al 20% del proceso de ejecución y es triste, pero la **mayoria** del JavaScript en una paga nunca se ejecuta.
+Por lo que *parsear* el código justo en el momento que lo necesitamos y no antes de saber si se va a usar o no es super importante. Esto lo podemos hacer por medio de **bundling** y **code splitting**.
+
+### Creacion de una regla para AST
+Vamos a usar el **AST** para crear una regla de **eslint**, este analizará estéticamente nuestro código a ver si hay que levantar un warning por violar la sintaxis. Muchas de estas reglas ya viene con e eslint, pero podemos agregar nuestras propias reglas. Vamos a usar la herramienta [AST Explorer](https://astexplorer.net/#/gist/16fc27fc420f705455f2b42b6c804aa1/42c2d7223f31edbb41bb9615f556d68cb7a793e4) para experimentar. Usaremos la configuración por defecto, veremos en la parte superior izquierda el código que vamos a ingresar, a la derecha el tree creado, en la parte inferior izquierda las funciones de las reglas(que crearemos) y a la derecha de eso la salida de nuestro código.
+
+#### Test
+En el **link** de **AST Explorer** ya tenemos un código escrito. Donde el la primera entrada tenemos las tareas que debe cumplir nuestro **fixer**.
+``` [JavaScript]
+const pi = 3.1415;
+const half_pi = 1.57075;
+// variable constantes
+// variables que guarden un numero
+
+// El nombre de la variable tiene que estar en UPPERCASE
+```
+A la derecha tenemos el árbol completo de todas estas declaraciones y gracias a el podemos manipular, detectar errores o interpretar lo que escribamos. Luego implementamos una función que recibe la declaración de la variable y accedemos a los datos que nos ofrece el AST para lograr cumplir con los requerimientos de nuestro solucionador.
+``` [JavaScript]
+export default function(context) {
+  return {
+    VariableDeclaration(node) {
+        // tipo de variable const
+          if (node.kind === "const") {
+          const declaration = node.declarations[0];
+
+          // asegurarnos que el valor es un numero
+          if (typeof declaration.init.value === "number") {
+            if (declaration.id.name !== declaration.id.name.toUpperCase()) {
+              context.report({
+                node: declaration.id,
+                message: "El nombre de la constante debe estar en mayúsculas",
+                fix: function(fixer) {
+                  return fixer.replaceText(declaration.id, declaration.id.name.toUpperCase())
+                }
+              })
+            }
+          }
+        }
+    }
+  };
+};
+```
+
+## Funcionamiento de JavaScript Engine
+Una vez tenemos el **AST** ahora hay que convertirlo a Bytecode.
+
+**Bytecode** es como el código assembler pero en lugar de operar en el procesador opera en la máquina virtual **V8** del navegador.
+
+**Machine code** es el más bajo nivel, es código binario que va directo al procesador.
+
+**El profiler** se sitúa en medio del bytecode y el optimizador
+
+Cada máquina virtual tiene sus particularidades, por ejemplo V8 tiene algo llamado **Hot Functions**.
+
+Cuando una sentencia función es ejecutada muy frecuentemente, V8 la denomina como una hot function y hace una optimización que consiste en convertirla a machine code para no tener que interpretarla de nuevo y agilizar su ejecución.
+
+Cada navegador tiene su implementación de JavaScript Engine:
+
+SpiderMonkey - Firefox
+Chackra - Edge
+JavaScriptCore - Safari
+V8 - Chrome
+Carakan - Opera
