@@ -1,4 +1,4 @@
- # Aspectos Basicos
+# Aspectos Basicos
 
 ## Como llega y corre un script en el navegador
 El **DOM** es la representación que hace el navegador de un documento HTML.
@@ -299,6 +299,7 @@ Archivo3: index.js
   </body>
 </html>
 ```
+
 # Estructuras de Control
 
 ## Condicionales
@@ -878,6 +879,7 @@ async function obtenerPersonajes() {
 
 obtenerPersonajes()
 ```
+
 # Memoizacion
 La memoización es una técnica de programación que nos permite ahorrar cómputo o procesamiento en JavaScript, al ir almacenando el resultado invariable de una función para que no sea necesario volver a ejecutar todas las instrucciones de nuevo, cuando se vuelva a llamar con los mismos parámetros. Es similar a usar memoria cache.
 Ejemplo:
@@ -937,6 +939,7 @@ fetch('https://randomuser.me/api/')
     console.log('algo falló')
   });
 ```
+
 # Manejo de Errores
 Para el manejo de errores utilizamos el bloqu de codigo **try..catch**. Dentro de *try* va el vloque de codigo que se va a intentar correr, si sucede un error se ejecutara el bloque *catch*. Ejemplo:
 
@@ -1082,6 +1085,64 @@ Estos estan disponibles están disponibles mediante las propiedades *Window.sess
 Estos mismos tiene los metodos *clear*, *setItem*  y *getItem* para elimirar, configurar y obtener sus valores respectivamente.
 
 ***IMPORTANTE:*** Estos metodos solo permiten el almacenamiento de **texto plano**. Si deseamos almacenar objetos podemos utilizar el metodo *JSON.stringify({objec})* para hacer la transformacion. Para volder un texto plata un objeto utilizamos la funcion *JSON.paser('{"name":value}')*.
+
+# Generadores
+Los generadores son funciones especiales, pueden **pausar** su ejecución y luego **volver** al punto donde se quedaron recordando su scope.
+
+Algunas de sus características:
+
+- Los generadores regresan una función.
+- Empiezan suspendidos y se tiene que llamar **next** para que ejecuten.
+- Regresan un *value* y un *boolean* **done** que define si ya terminaron.
+- **yield** es la instrucción que regresa un valor cada vez que llamamos a **next** y detiene la ejecución del generador.
+
+Los generadores se definen creando unas funcion seguida de un **\***. Ejemplo:
+``` [JavaScript]
+//Generator Basico
+function* simpleGenerator() {
+  console.log('GENERATOR START');
+  yield 1;
+  yield 2;
+  yield 3;
+  console.log('GENERATOR END');
+}
+
+// Podemos hacer generadores infinitos.
+function* idMaker() {
+  let id = 1;
+  while (true) {
+    yield id;
+    id = id + 1;
+  }
+}
+
+// Cuando llamamos next también podemos pasar valores que la función recibe.
+function* idMakerWithReset() {
+  let id = 1;
+  let reset;
+  while (true) {
+    reset = yield id;
+    if (reset) {
+      id = 1;
+    } else {
+      id = id + 1;
+    }
+  }
+}
+
+// Ahora hagamos un ejemplo un poco más complejo: la secuencia fibonacci
+function* fibonacci() {
+  let a = 1;
+  let b = 1;
+  while (true) {
+    const nextNumber = a + b;
+    a = b;
+    b = nextNumber;
+    yield nextNumber;
+  }
+}
+
+```
 
 # ¿Como funciona JavaScript?
 
