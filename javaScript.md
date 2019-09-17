@@ -87,7 +87,22 @@ function nameFunction (var1, var2, ...,varn){
 ```
 **Nota:** JavaScript es un lenguaje interpretado, esto quiere decir que intentará ejecutar el código sin importar si los parámetros que le pasemos a la función estén invertidos o incluso incompletos.
 
-## Scope/ALcance
+## Arrow Function
+
+Las Arrow Functions permiten una nomenclatura más corta para escribir expresiones de funciones. Este tipo de funciones deben definirse antes de ser utilizadas.
+
+Al escribir las Arrow Functions no es necesario escribir la palabra function, y en algunos casos tampoco la palabra return, ni las llaves. Ejemplo:
+
+``` [javascript]
+const nameFunction = ( parameters ) => {
+    code to executed ...
+    return ...
+}
+
+const nameFunction = parameter => This is the value return
+```
+
+# Scope/ALcance
 El Scope o ámbito es lo que define el tiempo de vida de una variable, en que partes de nuestro código pueden ser usadas.
 
 
@@ -258,20 +273,87 @@ aux = {
     }
 ```
 
-## Arrow Function
+# This
+*This* se refiere a un objeto, ese objeto es el que actualmente está ejecutando un pedazo de código.
 
-Las Arrow Functions permiten una nomenclatura más corta para escribir expresiones de funciones. Este tipo de funciones deben definirse antes de ser utilizadas.
+No se puede asignar un valor a this directamente y este depende de en que scope nos encontramos:
 
-Al escribir las Arrow Functions no es necesario escribir la palabra function, y en algunos casos tampoco la palabra return, ni las llaves. Ejemplo:
+- Cuando llamamos a this en el **Global Scope** o **Function Scope**, se hace referencia al objeto *window*. A excepción de - cuando estamos en *strict mode* que nos regresará undefined.
+- Cuando llamamos a this desde **una función** que está contenida en un objeto, this se hace referencia a *ese objeto*.
+- Cuando llamamos a this desde una **“clase”**, se hace referencia a la *instancia generada* por el *constructor*.
 
-``` [javascript]
-const nameFunction = ( parameters ) => {
-    code to executed ...
-    return ...
-}
+## Métodos call, apply y bind
+Estas funciones nos sirven para establecer el valor de this, es decir cambiar el contexto que se va usar cuando la función sea llamada.
 
-const nameFunction = parameter => This is the value return
+Las funciones **call**, **apply** y **bind** son parte del prototipo Function. Toda función usa este prototipo y por lo tanto tiene estas tres funciones.
+
+- **functionName.call()**
+Ejecuta la función recibiendo como primer argumento el this y los siguientes son los argumentos que recibe la función que llamó a call.
+Ejemplo:
+``` [JavaScritp]
+  // Establece `this` usando `call`
+  function saludar() {
+    console.log(`Hola. Soy ${this.name} ${this.apellido}`);
+  }
+
+  const richard = {
+    name: 'Richard',
+    apellido: 'Kaufman López',
+  };
+
+  saludar.call(richard);
+
+  // Establece `this` usando `call` y pasar argumentos a la función
+  function caminar(metros, direccion) {
+    console.log(`${this.name} camina ${metros} metros hacia ${direccion}.`);
+  }
+
+  caminar.call(richard, 400, 'norte');
+
 ```
+- **functionName.apply()**
+Ejecuta la función recibiendo como primer argumento el this y como segundo un arreglo con los argumentos que recibe la función que llamó a apply.
+Ejemplo:
+``` [JavaScript]
+  function caminar(metros, direccion) {
+    console.log(`${this.name} camina ${metros} metros hacia ${direccion}.`);
+  }
+
+  const richard = {
+    name: 'Richard',
+    apellido: 'Kaufman López',
+  };
+
+  // Establece `this` usando `apply` y pasar argumentos a la función
+  const valores = [800, 'noreste'];
+  caminar.apply(richard, valores);
+```
+
+- **functionName.bind()**
+Recibe como primer y único argumento el this. **No ejecuta la función**, sólo regresa otra función con el nuevo this integrado.
+``` [JavaScript]
+  function saludar() {
+    console.log(`Hola. Soy ${this.name} ${this.apellido}`);
+  }
+
+  const richard = {
+    name: 'Richard',
+    apellido: 'Kaufman López',
+  };
+
+  saludar.call(richard);
+
+  // Establecer `this` en una nueva función usando `bind`
+  
+  const daniel = { name: 'Daniel', apellido: 'Sánchez' };
+  const danielSaluda = saludar.bind(daniel);
+  danielSaluda();
+
+  const danielCamina = caminar.bind(daniel, 2000);
+  danielCamina('oeste');
+
+```
+
 # Librerias Standar de Js
 
 ## Timer
@@ -405,6 +487,7 @@ newArray = array.map(function (parameters) {
 El método reduce() nos permite reducir, mediante una función que se aplica a cada uno de los elemento del array, todos los elementos de dicho array, a un valor único.
 
 # Clases
+
 ## Bases del leguaje
 Lo que se describe a continuacion es parte de las bases del lenguaje, dicha sintaxis ya no es muy utilizada, mas sin embargo es importante tener dichos conceptos claros.
 
@@ -432,7 +515,7 @@ var obj = new prototypeName(parameters)
 ```
 
 ## A partir de ECMAScript2015
-A partir del 2015 las actualizaciones en l lenguaje trajeron consigo la palabra clave "class" y una forma mas sencilla de definir prototipos y de hacer "herencia" entre estos prototipo.
+A partir del 2015 las actualizaciones en el lenguaje trajeron consigo la palabra clave "class" y una forma mas sencilla de definir prototipos y de hacer "herencia" entre estos prototipo.
 
 **Importante:** Se debe tener en cuenta que Js no cuenta con *clases*. ELo que se hizo fue una "mascara", pero en el fondo el lenguaje sigue trabajando con prototipos.
 
@@ -861,7 +944,7 @@ Ejemplo:
     })
   }
 ```
-## Creacion de elementos individuales
+## Creacion de elementos HTML individuales
 Vamos a crear un elemento HTML sin usar un template string. Para crear el elemento desde cero vamos a usar el método **document.createElement**, este recibe como parámetro la etiqueta html del elemento que se quiere crear.
 *NOTA:* no funciona mandándole el template string.
 
