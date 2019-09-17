@@ -611,6 +611,32 @@ Recibe como primer y único argumento el this. **No ejecuta la función**, sólo
 
 ```
 
+# Getters y setters
+Los getters y setters son funciones que podemos usar en un objeto para tener propiedades virtuales. Se usan los keywords set y get para crear estas propiedades.
+
+Estas propiedades al ser funciones pueden llevar una validación de por medio y ser usadas con el operador de asignación como si fueran una variable más dentro del objeto.
+Tambien nos sirve para tener control sobre lo que  exponemos del objeto al Scope ya que no requerimos del keywork "this" para editar algun atributo.
+Ejemplo: 
+``` [JavaScript]
+let persona = {
+  nombre: 'Yeison',
+  apellido: 'Daza',
+  get nombreCompleto() {
+    return`${nombre} ${apellido}`
+  },
+  set nombreCompleto(nom) {
+    const palabras = nom.split(' ');
+    this.nombre = palabras[0] || '';
+    this.apellido = palabras[1] || '';
+  }
+}
+
+persona.nombreCompleto = 'Camilo Sanchez'
+
+console.log(persona.nombre); //camilo
+console.log(persona.apellido); //sanchez
+```
+
 # Asincronismo
 JavaScript sólo puede hacer una cosa a la vez, sin embargo; es capaz de delegar la ejecución de ciertas funciones a otros procesos. Este modelo de concurrencia se llama EventLoop.
 
@@ -656,7 +682,7 @@ obtener_personaje(1, function() {
 ```
 
 ## Promesas
-Son valores que aun no conocemos. Las promesas tienen tres estados:
+Son justamente eso, promesas de valores que aun no conocemos, pero prometemos conocer en un futuro. Las promesas tienen tres estados:
 
 - pending
 - fullfilled
@@ -1109,3 +1135,22 @@ Chackra - Edge
 JavaScriptCore - Safari
 V8 - Chrome
 Carakan - Opera
+
+## Event Loop
+El **Event Loop** hace que Javascript parezca ser multihilo a pesar de que corre en un solo proceso.
+
+Javascript se organiza usando dos principales estructuras de datos:
+
+1. **Stack**: comienza vacio y va apilando de forma organizada las diferentes instrucciones que se llaman. Lleva así un rastro de dónde está el programa, en que punto de ejecución nos encontramos. Este apunta a aspectos como el Scope
+2. **Memory Heap**: De forma desorganizada se guarda información de las variables y del scope.
+
+
+Para explicar como se ejecutan los procesor asincronos o progrmados es necesario definir que es un Queue. Un Queue es una estructura  de datos muy parecida a un stack.
+Los Queue utilizados por Js son:
+1.  **Schedule Tasks.** Aquí se agregan a la cola, las tareas programadas para su ejecución.
+2. **Task Queue**. Aquí se agregan las tareas que ya están listas para pasar al stack y ser ejecutadas. El stack debe estar vacío para que esto suceda.
+3. **MicroTask Queue**. Aquí se agregan las promesas. **Esta Queue es la que tiene mayor prioridad**.
+
+Todos estas estructuras de informacion trabajan de una forma fluida gracias al Event Loop.
+
+El Event Loop es un loop que está ejecutando todo el tiempo y pasa periódicamente revisando las queues y el stack moviendo tareas entre estas dos estructuras.
