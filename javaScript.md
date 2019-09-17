@@ -940,6 +940,35 @@ fetch('https://randomuser.me/api/')
   });
 ```
 
+Con **fetch** tenemos algo llamado **AbortController** que nos permite enviar una señal a una petición en plena ejecución para detenerla.
+
+Ejemplo: 
+
+``` [JAvaScript]
+loadButton.onclick = async function() {
+  startLoading();
+
+  controller = new AbortController();
+
+  try {
+    const response = await fetch(url, { signal: controller.signal });
+    const blob = await response.blob();
+    const imgUrl = URL.createObjectURL(blob);
+    img.src = imgUrl;
+  } catch (error) {
+    console.log(error.message);
+  }
+}
+
+stopButton.onclick = function() {
+  controller.abort();
+  stopLoading();
+};
+
+```
+En el codigo anterior tenemos un objeto **controloador**, que contiene una propiedad **signal** que nos servira para **cancelar** la peticion del fetch en el momento que lo necesitemos.
+Bastara con emitirle una señal al controlador con el metodo **abort**. Que en este caso es llamado a traves de un boton.
+
 # Manejo de Errores
 Para el manejo de errores utilizamos el bloqu de codigo **try..catch**. Dentro de *try* va el vloque de codigo que se va a intentar correr, si sucede un error se ejecutara el bloque *catch*. Ejemplo:
 
