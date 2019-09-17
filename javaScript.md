@@ -637,6 +637,28 @@ console.log(persona.nombre); //camilo
 console.log(persona.apellido); //sanchez
 ```
 
+# Proxy
+El objeto **[Proxy](https://developer.mozilla.org/es/docs/Web/JavaScript/Referencia/Objetos_globales/Proxy)** se usa para definir un comportamiento personalizado para operaciones fundamentales (por ejemplo, para observar propiedades, cuando se asignan, enumeración, invocación de funciones, etc).
+Sirve para interceptar la lectura de propiedades de un objeto (los get, y set) entre muchas otras funciones. Así, antes de que la llamada llegue al objeto podemos manipularla con una lógica que nosotros definamos. Esto lo hacemos por medio de "trampas"".
+Ejemplo:
+En este simple ejemplo el número **37** se devuelve como valor predeterminado cuando la propiedad `name` no se encuentra en el objeto. Se utilizando el manejador `get`.
+``` [JavaScript]
+var handler = {
+    get: function(target, name){
+        return name in target?
+            target[name] :
+            37;
+    }
+};
+
+var p = new Proxy({}, handler);
+p.a = 1;
+p.b = undefined;
+
+console.log(p.a, p.b); // 1, undefined
+console.log('c' in p, p.c); // false, 37
+```
+
 # Asincronismo
 JavaScript sólo puede hacer una cosa a la vez, sin embargo; es capaz de delegar la ejecución de ciertas funciones a otros procesos. Este modelo de concurrencia se llama EventLoop.
 
