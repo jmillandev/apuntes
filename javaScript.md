@@ -968,7 +968,7 @@ stopButton.onclick = function() {
 ```
 En el codigo anterior tenemos un objeto **controloador**, que contiene una propiedad **signal** que nos servira para **cancelar** la peticion del fetch en el momento que lo necesitemos.
 Bastara con emitirle una señal al controlador con el metodo **abort**. Que en este caso es llamado a traves de un boton.
-
+NOTA: El metodo *blob* del response, no da la respuesta en un binario.
 # Manejo de Errores
 Para el manejo de errores utilizamos el bloqu de codigo **try..catch**. Dentro de *try* va el vloque de codigo que se va a intentar correr, si sucede un error se ejecutara el bloque *catch*. Ejemplo:
 
@@ -1105,6 +1105,113 @@ Data = get('buscador_peli'); // La momia
 $serch.dataset.atributte; // Valor de 'atribute'
 ```
 
+## IntersectionObserver
+Sirve para observar elementos y ver cual es su posicion. En el caso de que cruzen un umbral que nosotros definimos nos lo va a notificar para tomar acción.
+
+El umbral se define por el porcentaje que tiene intersección con el viewport, con la parte visible de nuestra página.
+
+IntersectionObserver recibe dos parametros:
+- Handle : Sera la funcion que se ejecute al momento de que el observador nos notifiique.
+- config : Es un JSON que contiene las configuraciones del observador(threshold es una de ellas y la que nos dice en que pocentaje de interseccion nos notificara)
+
+Ejemplo:
+``` [JavaScript]
+class AutoPause {
+  constructor() {
+    this.threshold = 0.25;
+    this.handleIntersection = this.handleIntersection.bind(this);
+  }
+
+  run(player) {
+    this.player = player;
+
+    const observer = new IntersectionObserver(this.handleIntersection, {
+      threshold: this.threshold,
+    });
+
+    observer.observe(this.player.media);
+  }
+
+  handleIntersection(entries) {
+    const entry = entries[0];
+
+    const isVisible = entry.intersectionRatio >= this.threshold;
+
+    if (isVisible) {
+      this.player.play();
+    } else {
+      this.player.pause();
+    }
+  }
+}
+
+export default AutoPause;
+```
+
+## VisibilityChange
+El **visibilityChange** es un evento y forma parte del API del DOM llamado **Page Visibility** y nos deja saber si el elemento es visible, pude ser usado para ejecutar una acción cuando cambiamos de pestaña. Así podemos ahorrar batería y mejorar la UX.
+
+# Service Workers
+Sirven para hacer que nuestras aplicaciones funcionen Offline. 
+
+Muy usados en las **Progressive Web Apps **(PWA) los ServiceWorkers son una capa que vive entre el navegador y el Internet.
+
+Parecido a como lo hacen los proxys van a interceptar peticiones para guardar el resultado en cache y la próxima vez que se haga la petición tomar del cache ese resultado.
+
+Los Service workers se instalan en el navegador, aunque no funcionan como una APP
+
+Ejemplo de un Service Workers
+sw.js :
+``` [JavaScript]
+const VERSION = 'v1';
+
+self.addEventListener('install', event => {
+  event.waitUntil(precache());
+});
+
+self.addEventListener('fetch', event => {
+  const request = event.request;
+  // get
+  if (request.method !== 'GET') {
+    return;
+  }
+
+  // buscar en cache
+  event.respondWith(cachedResponse(request));
+
+  // actualizar el cache
+  event.waitUntil(updateCache(request));
+});
+
+async function precache() {
+  const cache = await caches.open(VERSION);
+  return cache.addAll([
+    '/',
+    '/index.html',
+    '/assets/index.js',
+    '/assets/MediaPlayer.js',
+    '/assets/plugins/AutoPlay.js',
+    '/assets/plugins/AutoPause.js',
+    '/assets/index.css',
+    '/assets/BigBuckBunny.mp4',
+  ]);
+}
+
+async function cachedResponse(request) {
+  const cache = await caches.open(VERSION);
+  const response = await cache.match(request);
+  return response || fetch(request);
+}
+
+async function updateCache(request) {
+  const cache = await caches.open(VERSION);
+  const response = await fetch(request);
+  return cache.put(request, response);
+}
+```
+
+**IMPORTANTE:** Es una caracteristica nueva por lo que no esta disponible aun en todoos los navegadores.
+**IMPORTANTE2:** Cuando estemos trabajando en desarrollo debemos habilitar la opcion "Update on reload" en la seccion de *Application > Service Workeers* que se encuentra en los Dev Tools
 # localStorage y sessionStorage
 **sessionStorage** mantiene un área de almacenamiento separada para cada origen que está disponible mientras dure la sesión de la página (mientras el navegador esté abierto, incluyendo recargas de página y restablecimientos).
 **localStorage** hace lo mismo, pero persiste incluso cuando el navegador se cierre y se reabra.
