@@ -179,14 +179,42 @@ Los patrones de diseño son soluciones de arquitectura de software aplicables a 
 
 Basicamente existen 3 tipos:
 
-- **Creacion:** Nos hablan de como de crean nuevas instancias de los objetos.
-- **Estructurales:** Nos hablan de como debemos estructurar nuestras clases.
-- **Comportamiento:** Hablan sobre como deben comportarse nuestros objetos.
+1. **Creacion:** Nos hablan de como de crean nuevas instancias de los objetos.
+Entre ellos encontramos:
+- Abstract Factory.
+- Builder.
+- Factory Method.
+- Prototype.
+- Singleton.
+
+2. **Estructurales:** Nos hablan de como debemos estructurar nuestras clases para crear estructuras flexibles y eficientes.
+Entre ellos encontramos:
+- Adapter.
+- Bridge.
+- Composite.
+- Decorator.
+- Facade.
+- Flyweight.
+- Proxy.
+
+
+3. **Comportamiento:** Hablan sobre como deben comportarse nuestros objetos. Gestionando algoritmos y responsabilidades entre ellos.
+Entre ellos encontramos:
+- Chain of Responsibility.
+- Command.
+- Interpreter.
+- Iterador.
+- Mediador.
+- Memento.
+- Observer.
+- State.
+- Tempalte Method.
+- Visitor.
 
 ***IMPORTANTE:*** Es importante recalcar que los patrones de diseño son para darte una idea de como diseñar tu aplicacion, no son un "copia y pega" pues no siempre son la mejor solucion que se adapta a tu problema en algunas cosos puede ponerte las cosas mas dificiles.
 
-## Singleton 
-Se puede pensar como un patron tanto de creacion como de comportamiento.
+## Creacionales 
+### Singleton 
 Permite restringir la creación de objetos pertenecientes a una clase o al valor de un tipo a un único objeto. Dicho de otra manera la idea es tener **una sola instancia** de la clase a lo largo de toda nuestra aplicacion.
 Ejemplo:
 ``` [PHP]
@@ -208,8 +236,8 @@ Como acabamos de ver solo puede existir una instancia de esta clase durante la v
 
 Un ejemplo de creacion por el patron Singleton son los *log de errores* de las aplicaciones.
 
-## Factory
-Es un patron creacional, se utiliza para ayudar a la creacion de nuevas instancias. Este patron es util cuando la **creacion** de un objeto es un proceso muy **complejo**
+### Factory
+Se utiliza para ayudar a la creacion de nuevas instancias. Este patron es util cuando la **creacion** de un objeto es un proceso muy **complejo**
 
 Ejemplo:
 ``` [PHP]
@@ -241,8 +269,13 @@ class AutomobileFactory
 $a = new Automobile('Renault', 2019);
 $b = AutomobileFactory::create('Toyota');
 ```
+## Estructurales
+### Decorador
+El patrón Decorator responde a la necesidad de añadir dinámicamente funcionalidad a un Objeto. Esto nos permite no tener que crear sucesivas clases que hereden de la primera incorporando la nueva funcionalidad, sino otras que la implementan y se asocian a la primera. 
 
-## Command
+ 
+## De Comportamiento
+### Command
 Es un patron de comportamiento. Se utiliza cuando hay una operacion, especialmente compleja, que debe ser realizada desde diferentes puntos de entrada.
 Tipicamente este sucede cuando realizando una app WEB se debe realizar la misma operacion desde consulta de algun visitante como desde la linea de comandos.
 Permite solicitar una operación a un objeto sin conocer realmente el contenido de esta operación, ni el receptor real de la misma. Para ello se encapsula la petición como un objeto, con lo que además facilita la parametrización de los métodos. Ejemplo:
@@ -254,6 +287,14 @@ interface CommandInterface
 ```
 Usualmente la interfaz va de esta manera simple. ¿Que es lo que hara el 'execute' en este caso?
 Bueno eso dependera del comando en especifico. pero de esta manera nos permite implementar facilmente el principio Open/Closed por ejemplo; Teniendo una lista de comando, ejecutarlos todos bajo un mismo metodo.
+
+### Observer
+El patrón observer se compone de un sujeto que ofrece mecanismos de suscripción y desuscripción a múltiples observadores que quieren ser notificados de los cambios en dicho sujeto. Cada observador expone un método de **update** que es usado por el sujeto para notificar cualquier cambio a todos los suscritos.
+
+Es uno de los patrones más utilizados, algunos ejemplos típicos son:
+Newsletter
+Sockets
+Listeners en páginas web
 
 # Documentacion
 Documentar es una de las mejores prácticas que podemos hacer cuando estamos en un equipo de trabajo.
