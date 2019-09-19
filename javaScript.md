@@ -90,7 +90,7 @@ Existen al menos dos formas de acceder al valor de un atributo de un objeto:
  Escribir el nombre de un objeto separado por un punto del nombre de un atributo.Ejemplo
  `var nombre = persona.nombre;`
 
-### Desestructuracion
+### Desestructuracion 
 Las últimas versiones de JavaScript nos permiten desglosar el objeto para acceder únicamente al atributo que nos interesa. Esto se consigue encerrando el nombre del atributo entre llaves { }.
 Para no duplicar las variables se introduce el nombre de la variable como parámetro de la segunda variable.
 Ejemplos: En los proximos ejemplo las dos lineas de codigo son completamente analogas
@@ -106,7 +106,7 @@ let alias = seccion.alumno.nombre;
 let {
   section: {
     nombre: alias
-    }
+    } 
   } = section
 ```
 
@@ -128,7 +128,7 @@ aux = {
 ## Timer
 Los timer nos permiten ejecutar funciones despues de determinado tiempo. En js existen 2:
 
-1. setInterval(function, x) : Ejecuta una "function" cada "x" intervalo de milisegundos
+1. setInterval(function, x) : Ejecuta una "function" cada "x" intervalo de milisegundos 
 
 2. setTimeout(functino ,x) : Ejecuta una "function" en "x" milisegundos
 
@@ -269,7 +269,7 @@ MediaPlayer.prototype.togglePlay = function() {
 export default MediaPlayer;
 ```
 
-Archivo3: index.js
+Archivo3: index.js 
 ``` [HTML]
 <html>
   <head>
@@ -411,7 +411,7 @@ Un closure, básicamente, es una función que recuerda el estado de las variable
 Estas nos sirven principalmente para tres cosas:
 1. **IIFE**(Immediately invoked function expression)
 Son funciones que se ejecutan tan pronto como se definen. Es un patrón de diseño también conocido cómo **función autoejecutable** (Self-Executing Anonymous Function  ) y se compone por dos partes.
-- La primera es la función anónima con alcance léxico encerrado por el  `Operador de Agrupación ()`. Esto impide accesar variables fuera del IIFE, así cómo contaminar el alcance (scope) global.
+- La primera es la función anónima con alcance léxico encerrado por el  `Operador de Agrupación ()`. Esto impide accesar variables fuera del IIFE, así cómo contaminar el alcance (scope) global. 
 
 - La segunda parte crea la expresión de función cuya ejecución es inmediata (), siendo interpretado directamente en el engine de JavaScript.
 
@@ -602,7 +602,7 @@ Recibe como primer y único argumento el this. **No ejecuta la función**, sólo
   saludar.call(richard);
 
   // Establecer `this` en una nueva función usando `bind`
-
+  
   const daniel = { name: 'Daniel', apellido: 'Sánchez' };
   const danielSaluda = saludar.bind(daniel);
   danielSaluda();
@@ -617,7 +617,7 @@ Los getters y setters son funciones que podemos usar en un objeto para tener pro
 
 Estas propiedades al ser funciones pueden llevar una validación de por medio y ser usadas con el operador de asignación como si fueran una variable más dentro del objeto.
 Tambien nos sirve para tener control sobre lo que  exponemos del objeto al Scope ya que no requerimos del keywork "this" para editar algun atributo.
-Ejemplo:
+Ejemplo: 
 ``` [JavaScript]
 let persona = {
   nombre: 'Yeison',
@@ -942,7 +942,7 @@ fetch('https://randomuser.me/api/')
 
 Con **fetch** tenemos algo llamado **AbortController** que nos permite enviar una señal a una petición en plena ejecución para detenerla.
 
-Ejemplo:
+Ejemplo: 
 
 ``` [JAvaScript]
 loadButton.onclick = async function() {
@@ -1029,7 +1029,7 @@ La forma en la que utilizamos los template en Js es:
 ```
 #### Implementando el template
 
-Para convertir nuestra plantilla de texto a un Document Object Model necesitamos crear dentro de memoria un documento HTML, esto es posible gracias al método **document.implementation.createHTMLDocument** . A este documento HTML le vamos a añadir al body, mediante **innerHTML**, nuestra plantilla de texto.
+Para convertir nuestra plantilla de texto a un Document Object Model necesitamos crear dentro de memoria un documento HTML, esto es posible gracias al método **document.implementation.createHTMLDocument** . A este documento HTML le vamos a añadir al body, mediante **innerHTML**, nuestra plantilla de texto. 
 Este flujo es la magia que hay detrás de varias librerías y frameworks que nos ayudan a crear interfaces.
 
 Ejemplo:
@@ -1074,7 +1074,7 @@ Ejemplo:
 
 ```
 
-## Eventos
+## Eventos 
 ### Escuchar Evento
 Para que un elemento HTML pueda escuchar algún evento debemos usar el método **addEventListener**. Este método recibe dos parámetros, el nombre del evento que va a escuchar y la función que se va a ejecutar al momento de que se accione el evento.
 Ejemplo:
@@ -1152,7 +1152,7 @@ export default AutoPause;
 El **visibilityChange** es un evento y forma parte del API del DOM llamado **Page Visibility** y nos deja saber si el elemento es visible, pude ser usado para ejecutar una acción cuando cambiamos de pestaña. Así podemos ahorrar batería y mejorar la UX.
 
 # Service Workers
-Sirven para hacer que nuestras aplicaciones funcionen Offline.
+Sirven para hacer que nuestras aplicaciones funcionen Offline. 
 
 Muy usados en las **Progressive Web Apps **(PWA) los ServiceWorkers son una capa que vive entre el navegador y el Internet.
 
@@ -1212,7 +1212,6 @@ async function updateCache(request) {
 
 **IMPORTANTE:** Es una caracteristica nueva por lo que no esta disponible aun en todoos los navegadores.
 **IMPORTANTE2:** Cuando estemos trabajando en desarrollo debemos habilitar la opcion "Update on reload" en la seccion de *Application > Service Workeers* que se encuentra en los Dev Tools
->>>>>>> 074c4e0d5e7c9e037e8edabc0f5d047db74cceff
 # localStorage y sessionStorage
 **sessionStorage** mantiene un área de almacenamiento separada para cada origen que está disponible mientras dure la sesión de la página (mientras el navegador esté abierto, incluyendo recargas de página y restablecimientos).
 **localStorage** hace lo mismo, pero persiste incluso cuando el navegador se cierre y se reabra.
