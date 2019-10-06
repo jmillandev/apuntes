@@ -166,3 +166,23 @@ Los hacemos de la misma manera como seria en codigo *HTML* pero esta vez encerra
     /* Asignacion de estilos */
 }
 ```
+
+# 3 Especificidad
+Al crecer nuestro codigo css es muy probable que tengamos problemas al asignarle dos estilos distintos a un mismo elemento. Esto es muy comun cuando utilizamos librerias de 3eros en nuestro codigo. Aqui es donde entra en juego la especificidad, que trata de ¿que tan espeficico es el selector que utilizamos?. Esto se calcula a traves de una suma, a continuacion una tabla con los elementos y su valor. El selector con mayor espeficidad gana.
+
+| Elemento   | Valor                           |
+| -----------|--------------------------------:|
+| Tag        | 1                               |
+| clases     | 10                              |
+| id         | 100                             |
+| inline     | 1000                            |
+| !important | Es el dios (no debe utilizarce) |
+
+**NOTA:** los selectores deberia ir escalando en su espeficidad a medida que crece el proyecto para evitar bugs.
+
+# 4 Cascada y Herencia
+Los que esta despues sobre escribe a lo que estaba antes. Tomando en cuenta que ambos selectores tienen la misma especificidad.
+
+Todos los elementos heredan estilos de sus padres, abuelos, y su asendencia. Estos son los estilos que se mostraran por defecto a menos que sean sobre escritos por el mismo. La herencia funciona como una cascada en el arbol DOM.
+
+**NOTA:** existen dos *keywords* que son **initial** y **inherit** que pueden  ser utilizadas como valor y lo que hacen respectivamente es inicializar(al valor por defecto) y forzar la herencia del padre respectivamente.
