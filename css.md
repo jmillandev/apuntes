@@ -81,11 +81,30 @@ p {
 
 *NOTA:* Debes tener cuidado de dejar el espacio en blanco entre los selectores, de no ser asi estas indicando que quieres seleccionar un elemento que cumple con TODAS las caracteristicas descritas(para el caso del ejemplo anterior, un parrafo que pertenece a la clase dashboard-dark).
 
-3. **Selector hijo directo:** ES utilizador para asignar estilo a un *hijo directo*(no nietos, ni hermanos, ni nada mas. Solo hijos directos) de otro elemento. Esto lo hacemos atraves del operador *mayor que(>)* Ejemplo:
+3. **Selector hijo directo:** Es utilizador para asignar estilo a un *hijo directo*(no nietos, ni hermanos, ni nada mas. Solo hijos directos) de otro elemento. Esto lo hacemos a traves del operador *mayor que(>)* Ejemplo:
 ```css
 /* En el siguiente codigo ocultaremos los formulario que sean hijo directos de un elemento de clase 'desabilitado' */
 
 .deshabilitado > form {
     display: none;
+}
+```
+
+4. **Selector hermano siguiente:** Es utilizado para asignarle estilo al hermano(del arbol DOM) que le sigue inmediatamente al primer elemento. Este lo hacemos a traves de el operador mas(+) Ejemplo:
+```css
+/* Si el elemento que sigue despues de un h1 es un parrafo este tendra una fuente color rojo */
+
+h1 + p {
+    color: red;
+}
+```
+
+5. **Selector hermanos siguientes:** Es utilizado para asignarle estilo a **todos** los hermanoz(del arbol DOM). Este lo hacemos a traves de el operador mas(~) Ejemplo:
+
+```css
+/* Todos los hermano de h1 que sigan despues de el y  tengan la clase bg-black tendra una un fondo negro */
+
+h1 ~ p {
+    background: red;
 }
 ```
