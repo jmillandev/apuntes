@@ -80,3 +80,12 @@ p {
 **IMPORTANTE:** esta debe ser una de las *ULTIMAS* opciones que utilicemos. Esto nos puede traer o ocasionar bugs.
 
 *NOTA:* Debes tener cuidado de dejar el espacio en blanco entre los selectores, de no ser asi estas indicando que quieres seleccionar un elemento que cumple con TODAS las caracteristicas descritas(para el caso del ejemplo anterior, un parrafo que pertenece a la clase dashboard-dark).
+
+3. **Selector hijo directo:** ES utilizador para asignar estilo a un *hijo directo*(no nietos, ni hermanos, ni nada mas. Solo hijos directos) de otro elemento. Esto lo hacemos atraves del operador *mayor que(>)* Ejemplo:
+```css
+/* En el siguiente codigo ocultaremos los formulario que sean hijo directos de un elemento de clase 'desabilitado' */
+
+.deshabilitado > form {
+    display: none;
+}
+```
