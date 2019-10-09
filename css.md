@@ -309,3 +309,81 @@ Funciona muy parecido al borde, con la diferencia que se dibuja por fuera de la 
 
 ## 6.5 box-shadow
 Los sombras son una de las caracteristicas mas facinantes de ccs. Todo esta en practicar y experimentar con ellas. sintaxis: `box-shadow: x-off y-offset blur spread color | inset(optional)`
+
+# 7 Fondos
+El background es una propiedad muy completa en css, sus propiedades son mostradas a continuacion.
+
+## 7.01 Color
+La propiedad es tan sencilla como puede ser posible, su sintaxis es: `background-color: color_value;`
+
+## 7.02 Image
+Sintaxis: `background-image: url(PATH)`
+
+## 7.03 Repeat
+Sintaxis: `background-repeat: value`
+
+Posibles valores:
+- repeat (por defecto)
+- no-repeat
+- repeat-x
+- repeat-y
+
+## 7.04 clip
+Indica que parte de la caja es cubierta por el fondo.
+Sintaxis: `background-clip: value`
+
+Posibles valores:
+- border-box(por defecto)
+- padding-box
+- content-box
+
+## 7.05 origin
+Indica desde parte caja se comienza a dibujar el fondo.
+Sintaxis: `background-origin: value`
+
+Posibles valores:
+- border-box(por defecto)
+- padding-box
+- content-box
+
+## 7.06 size
+Nosotros podemos modificar el tamaño a mostrar de una imagen con ccs. La sintaxis de esta propiedad es: `background-size: value`
+
+Posibles valores:
+- widht=height (un solo valor puede ser en px o %)
+- widht height (dos valores pueden  ser en px o %)
+- content (ajusta la imagen para que se muestre completa lo mas grande posible)
+- cover (ajusta la imagen para que se muestre en el 100% de la caja, sin deformar la imagen)
+- auto (esta es la opcion por defecto, muestra la imagen en su tamaño origina)
+
+## 7.07 position
+Esta propiedad es utilizada para especificar desde que coordenada se dibujara la imagen(la coordenadad [0,0] es igual a [left,right]). Sintaxis: `background-position: value`
+
+Posibles valores:
+- x (y se pone automaticamente, Puede ser en px o %)
+- x y (Puede ser en px o %)
+- left | center | right <unit> top | center | bottom <unit>
+
+## 7.08 attachment
+Esta propiedad nos permite  espeficicar la manera de mantener una imagen en el fondo.
+Sintaxis: `background-attachment: value`
+
+Posibles valores:
+- scroll (por defecto)
+- fixed
+- local
+
+## 7.09 multiples
+Es pusible tener multiples fondos en una sola caja. Para manipular las propiedades de cada imagen las dividimos a traves de comas(,) comenzando por la url. Ejemplo:
+```css
+body {
+    background-image: url(PATH_image1), url(PATH_image2), url(PATH_image3);
+    background-size: 10%, 50 px, content;
+}
+```
+
+## 7.10 shorthand
+la sintaxis del shorthand es la siguiente:
+`background: image position / size repeat attachment origin clip`
+
+Los valores pueden ir en cualquier posicion menos las propiedades **position / size** estas si deben ir en este orden especifico. Position seguido del size separaados por un /.
