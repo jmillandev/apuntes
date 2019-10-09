@@ -387,3 +387,191 @@ la sintaxis del shorthand es la siguiente:
 `background: image position / size repeat attachment origin clip`
 
 Los valores pueden ir en cualquier posicion menos las propiedades **position / size** estas si deben ir en este orden especifico. Position seguido del size separaados por un /.
+
+# 8 Textos
+
+## 8.1 Unidades
+### 8.1.1 em
+Es el tamaño de fuente del contexto(es variable depende del padre)
+**NOTA:** Si el padre es el body, em=rem.
+
+### 8.1.2 rem
+Es el tamaño de fuente del root(es ctte depende del html)
+
+## 8.2 Alineacion
+### 8.2.1 Direction
+Nos permite cambiar la direccion del texto. Su sintaxis es la siguiente: `direction: value;`.
+
+Sus posibles valores son:
+- ltr (left to right)
+- rtl (right to left)
+
+### 8.2.2 Indent
+Nos Permite modificar la indentacion de la primera linea de un texto.
+
+Sintaxis: `text-indent: value;`
+
+Valores en *px* y *relativos*(em o rem).
+
+### 8.2.3 Align
+Indica la alineacion del texto.
+
+Sintaxis: `text-align: value`
+
+Posibles Valores:
+- start (tiene que ver con direccion)
+- end (tiene que ver con la direccion)
+- left
+- center
+- right
+- justify (se considera mala practica. Se ve feo en algunas pantallas)
+
+**NOTA:** Exite una propiedad que es *text-align-last* que es para justificar la ultima linea.
+
+### 8.2.4 Line-height
+Indica la altura de linea.
+
+Sintaxis:`line-height: value`
+
+Los valores pueden ser relativos(em [no hace falta colocar la unidad]) o cttes(px)
+
+### 8.2.5 Alineacion vertical
+Sintaxis: `vertical-align: value`
+
+Posibles valores:
+- baseline (por defecto)
+- top
+- middle
+- bottom
+
+## 8.3 Flujo del Texto
+### 8.3.1 Letter spacing(Espaciado entre letras)
+Sintaxis: `letter-spacing: Value`
+
+El valor es relativo o ctte. Positivo o negativo
+### 8.3.2 Word spacing(Espaciado entre palabras)
+Sintaxis: `word-spacing: Value`
+
+El valor es relativo o ctte. Positivo o negativo
+
+## 8.4 Decoration
+Nos permita dibujar lineas en el texto
+### 8.4.1 line
+Nos indica el donde se ubicara la linea. Su sintaxis es:
+`text-decoration-line: value`
+
+Posibles valores:
+- underline
+- overline
+- line-through
+- none
+
+### 8.4.2 color
+Nos indica el color de la inea a dibujar. Sintaxis:
+`tect-decoration-color: value`
+
+### 8.4.3 style
+Nos indica el estilo de la linea(igual que en border). Sintaxis:
+`text-decoration-style: value`
+
+Posibes valores:
+- none.
+- hidden.
+- solid.
+- dotted.
+- dashed.
+- double.
+- groove.
+- ridge.
+- inset.
+- outset.
+
+### 8.4.4 shorthand
+Al igual que muschas propiedades en css existe un shorthand para decoration. Su sitaxis es: `text-decoration: value_line value_style value_color`
+
+**NOTA:** pueden asignarse varios valores de linea(arria, abajo, tachado)
+
+## 8.5 shadow
+
+Ee muy simlar al shadow de las border. Sintaxis: `text-shadow: h-offset v-offset blur color`.
+
+## 8.6 Espacios en blanco
+Esta propiedad trata del espacio en blanco cuanto tipiamos el en el codigo. nos permite o no escapar los espacios en blanco y los saltos de linea.
+
+Sintaxis: `white-space: value`
+
+Posibles valores:
+- normal (escapa saltos de linea y espacio en blanco)
+- pre (no escapa nada)
+- nowrap (escapa solo los espacios en blanco)
+- pre-wrap (salta de linea y conserva espacios)
+- pre-line(salta de linea y no conserva espacios)
+
+## 8.7 Desbordamiento
+Es util cuando los textos se 'desbordan' de las caja que los contiene
+
+### 8.7.1 break
+Divide la palabra y manda el resto a la siguiente linea. Sintaxis `wrop-break: value`
+
+Posibles valores:
+- normal
+- break-all
+- keep-all
+### 8.7.2 wrap
+Manda la palabra a la siguiente linea, sino cabe la pica. Sintaxis `wrop-wrap: value`
+
+Posibles valores:
+- normal
+- break-word
+### 8.7.3 overflow
+Nos sirve para indicar que el texto continua pero no cabe en la caja(colocando 3 puntos). Sintaxis 
+```css
+div {
+    overflow: hidden; // todo lo que se escapa de la caja se oculta
+    text-overflow: ellipsis;
+}
+```
+
+Posibles valores:
+- normal
+- break-word
+
+## 8.8 Transformacion
+Esta propiedad no sirve para pasar imprimir el texto en mayusculas o minusculas. Sintaxis: `text-transform: value`
+
+Posibles valores:
+- uppercase
+- lowercase
+- capitalize
+
+## 8.9 Fuentes
+### 8.9.1 Font-family
+**Familias de fuentes genericas**
+Las principales familias de fuentes son:
+
+1. **serif**
+2. **sans-serif**
+3. **monospace**
+4. **display**
+5. **cursive**
+
+Sintaxis: `font-family: option1, option2, option3, familia_generica;`
+
+### 8.9.2 Tamaño
+Sintaxis: `font-size: value;`
+
+Posibles valores:
+- porcentaje
+- pixeles
+- em
+- rem
+### 8.9.3 Grosor del trazo
+Sintaxis `font-weight: value`
+
+Posibles valores:
+- bold
+- normal
+- lighter
+- bolder
+
+**NOTA:** No es recomendable utilizar las palabras como valores. Lo recomentado es utilizar multiplos de 100 comprendidos entre 100 y 900
