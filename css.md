@@ -575,3 +575,60 @@ Posibles valores:
 - bolder
 
 **NOTA:** No es recomendable utilizar las palabras como valores. Lo recomentado es utilizar multiplos de 100 comprendidos entre 100 y 900
+
+# 9 Pseudoclases
+Estilos especiales dependiendo del conexto, posicion o estado.
+
+En su sintaxis vemos el nombre del elemento seguido por dos puntos (:) y luego el nombre de la seudoclase. Ejemplo: `article:hover {...}`
+Algunas seudoclases son:
+
+## 9.1 root
+Es una seudoclase que es equivalente al nodo *html* es decir, es el nodo principal. Es muy parecido al selector *html*, execto que su nivel de especificidad es mayor. Sirve para declarar variables CSS.
+
+## 9.2 hover
+Se presenta cuando el usuario coloca el puntero sobre algun elemento, pero no necesariamente esta activo. En pantallas touch *:hover* es problematico.
+
+## 9.3 active
+Esta cubre el caso en el que un elemento esta siendo activado por el usuario. Cuando se interactua con el raton. Corresponde al momento en el que el usuario presiona el raton hasta el momento en que lo suelta. A menudo es usado en los elementos <a> y <button> de HTML.
+El **orden** si **importa** al momento de declarar las siguientes Pseudo-clases:
+1. :link{ ... }
+2. :visited { ... }
+3. :hover { ... }
+4. active { ... }
+
+## 9.4 target
+Representa un elemento unico, si existe alguno.
+El id del elemento debe conincidir con el identificador de fragmentos de la URI del documento(href="#idOfElement")
+
+## 9.5 child
+Hay 3 tipos de hijos y estos hacen referencia al enesimo, al primero y al ultimo respectivamente:
+
+### 9.5.1 nth-child()
+Selecciona al elemento indicado que sea el n-esimo hijo de su elemento padre.
+
+**NOTA:** Si el atributo es (3n). los estilos indicados seran aplicados cada 3 hijos. Si es (odd) Sera aplicado a los elementos pares. Si es (even) Sera aplicado a los elementos impares.
+### 9.5.2 first-child
+Selecciona al elemento indicado que sea el primer hijo de su elemento padre
+### 9.5.3 last-child
+Selecciona al elemento indicado que sea el ultimo hijo de su elemento padre
+
+## 9.5 of type
+Hay 3 tipos de, funcionan muy similar a las pseudoclases hijas y estos hacen referencia al enesimo, al primero y al ultimo respectivamente:
+
+Puedes visualizar mejor las diferencias en [esta web](https://css-tricks.com/examples/nth-child-tester/)
+
+### 9.5.1 nth-of-type()
+Selecciona al elemento indicado que sea el n-esimo hijo de su elemento padre y del mismo tipo al elemento indicado.
+
+**NOTA:** Si el atributo es (3n). los estilos indicados seran aplicados cada 3 hijos. Si es (odd) Sera aplicado a los elementos pares. Si es (even) Sera aplicado a los elementos impares.
+### 9.5.2 first-child
+Selecciona al elemento indicado que sea el primer hijo de su elemento padre y del mismo tipo al elemento indicado.
+### 9.5.3 last-child
+Selecciona al elemento indicado que sea el ultimo hijo de su elemento padre y del mismo tipo al elemento indicado.
+
+## 9.6 not
+La pseudo-clase de negacion, es una notacion funcional que toma un selector simple X como argumento. Coincide con un elemento que no esta representado por el argumento. X no debe contener otro selector de negacion. 
+Es dicer, le aplicara los estilos a todos los elementos menos a los que se les espeficique con la pseudo-clase :not.
+
+## 9.7 empty
+Corresponde a un elemento sin ningun nodo hijo. Solo cuando hay nodos de elementos o texto con uno o mas caracteres dectro del elemento ese se convierte en no vacio. 
