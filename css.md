@@ -186,3 +186,126 @@ Los que esta despues sobre escribe a lo que estaba antes. Tomando en cuenta que 
 Todos los elementos heredan estilos de sus padres, abuelos, y su asendencia. Estos son los estilos que se mostraran por defecto a menos que sean sobre escritos por el mismo. La herencia funciona como una cascada en el arbol DOM.
 
 **NOTA:** existen dos *keywords* que son **initial** y **inherit** que pueden  ser utilizadas como valor y lo que hacen respectivamente es inicializar(al valor por defecto) y forzar la herencia del padre respectivamente.
+
+# 5 Box Model
+
+## 5.1 Introduccion
+El Box Model es el algoritmo a traves del cual el navegador dibuja las cajas en la pantalla. Para hablar del box model debemos tener presente alguno conceptos base:
+### 5.1.1 Layout
+Geometria de los elementosque se definen como, con que tamaño, com que separacion respecto a los elentos adyacentes y en que posicion se va adibujar en la pantalla.
+
+### 5.1.2 Elemento en linea y de bloque.
+Como ya debes saber HTML. Existen elemento de linea y de bloque por naturaleza. Nosotros en CSS podemos modificar la naturaleza de estos elementos(modificando su propiedad display). Algunas caracteristicas de estos elementos son las siguientes:
+
+1. **Inline:** 
+    - No crean nuevas lineas para cada elemento(los elementos se ajustan uno a los lados de los otros).
+    - No se les puede definir un alto ni un ancho. Este es automatico.
+    - Se ajustan a su contenido.
+
+2. **Block:**
+    - Crean una nueva linea para cada de elemento.
+    - Ocupan todo el espacio horizontal disponible
+    - Se les puede definir un alto y un ancho.
+
+En CSS tenemos un tercer tipo de elemento que es el **inline-block** que combina lo mejos de ambos mundo:
+- Tienen un alto y ancho que puede ser modificado.
+- No crean nuevas lineas para los elementos.
+
+## 5.2 Box Model
+El box model trata justamente del modelo o modelado de las cajas(ya imaginaras que este es un elemento de caja)
+
+**NOTA:** existe un atributo llamado **box-sizing**(sus valores son: *content-box*, *padding-box* y *border-box*).
+Con el cual le indicamos al navegador que caja tendra los valores de *width* y *height* del elemento(por defecto este esta en *content-box*).
+
+**NOTA IMPORTANTE:** Si el tamaño del alto del padre es automatico NO podremos utilizar porcentajes en el alto del elemento(no funcionara). Solo funcionan porcentaje en el alto del elemento si su padre tiene un alto definidos.
+### 5.2.1 Caja de contenido
+Content box. La definimos(por defecto, a menos que cambiemos el **box-sizing**) con las propiedades **width** y **height**.
+
+### 5.2.2 Caja de relleno
+Padding box. La definimos con la propiedad **padding**.
+La implementacion es muy similar a la del margin(seccion 5.2.4). Aun asi una diferencia **importante** a la hora de trabajar con porcentajes en el padding es que este toma como referencia al inverso del papa. Es decir que cuando si el padre de nuestro elemento tiene un ancho de 200px y hacemos `padding-botton: 10%` lo que estamos diciendo es que asigne al elemento un padding abajo de 20px. Esto lo podemos utilizar para hacer diseños a escaja.
+
+### 5.2.3 Caja del Borde
+Border box. La definimos con la propiedad **border**.
+
+### 5.2.4 Margin
+Separacion de la caja con las cajas adyacentes.
+#### 5.2.4.1 Propiedades
+Las propiedades que se encanrgan de modificar los valores del margen son:
+
+- **margin-top:** Valor_superior
+- **margin-right:** Valor_derecho
+- **margin-botton:** Valor_inferios
+- **margin-left:** Valor_izquierdo
+
+Ademas exites de un shorthand que es:
+
+- **margin:** el shorthand acepta de 1 a 4 valores. a continuacion una tabla que indica como son asignados los valores
+
+| N° Valores | Arriba | Derecha | Abajo | Izquiera |
+|------------|--------|---------|-------|---------:|
+| 4          | 1ero   | 2do     | 3ero  | 4to      |
+| 3          | 1ero   | 2do     | 3ero  | 2do      |
+| 2          | 1ero   | 2do     | 1ero  | 2do      |
+| 1          | 1ero   | 1ero    | 1ero  | 1ero     |
+
+**NOTA:** Los valores pueden ser en pixceles o en porcentaje. Tambien existe la opcion de colocar *auto*.
+
+# 6 Bordes y Sombras
+
+## 6.1 ¿Donde se Dibuja?
+El borde se dibuja siempre por dentro de la caja, recordemos que el unico elemento externo del model box es el margen.
+**NOTA:** una buena practica recordemos que es aconfigurar el `box-sizing: border-box;`. De esta manera no evitamos problemas con el maquetado ya que aunque el borde esta por dentro de nuestra caja si no hacemos esta configuracion ñe aumentara las dimensiones a la misma.
+
+## 6.2 Propiedades bases
+El borde tiene 3 propiedades bases:
+### 6.2.1 border-width
+Configura el grosor de la linea.
+### 6.2.2 border-style
+Indica el estilo que se le aplicara a la linea. Sus posibles valores son:
+- none(por defecto).
+- hidden.
+- solid.
+- dotted.
+- dashed.
+- double.
+- groove.
+- ridge.
+- inset.
+- outset.
+
+### 6.2.3 border-color
+EL color de la linea.
+
+### 6.2.4 Shorthands
+Existen distintos shortand para los border:
+
+1. **border:** *width_value* *style_value* *color_value*
+2. **border-top:** *width_value_top* *style_value_top* *color_value_top*
+3. **border-right:** *width_value_right* *style_value_right* *color_value_right*
+4. **border-botton:** *width_value_botton* *style_value_botton* *color_value_botton*
+5. **border-left:** *width_value_left* *style_value_left* *color_value_left*
+6. **border-width:** *width_value_top* *width_value_right* *width_value_botton* *width_value_left*
+7. **border-style:** *style_value_top* *style_value_right* *style_value_botton*
+*style_value_left*
+8. **border-color:** *color_value_top* *color_value_right* *color_value_botton*
+*color_value_left*
+
+## 6.3 border-radius
+Esta propiedad nos permite "recordar" un arco de circunferencia(de 45°) en las esquinas de nuestras cajas. 
+
+La sintaxis es la siguiente:
+
+- **border-top-left-radius:** *x_radius y_radius*;
+- **border-top-right-radius:** *x_radius y_radius*;
+- **border-botton-right-radius:** *x_radius y_radius*;
+- **border-botton-left-radius:** *x_radius y_radius*;
+- **border-radius:** *x_radius_top_left x_radius_top_right x_radius_botton_right x_radius_botton_left / y_radius_top_left y_radius_top_right y_radius_botton_right y_radius_botton_left*;
+
+**NOTA:** Los valores de los radios pueden darse en *px* o en *%*
+
+## 6.4 outline
+Funciona muy parecido al borde, con la diferencia que se dibuja por fuera de la caja. si sixtaxis es: `outline: width_value style_value color_value`
+
+## 6.5 box-shadow
+Los sombras son una de las caracteristicas mas facinantes de ccs. Todo esta en practicar y experimentar con ellas. sintaxis: `box-shadow: x-off y-offset blur spread color | inset(optional)`
