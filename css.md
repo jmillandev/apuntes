@@ -675,3 +675,57 @@ h3::before {
     content: close-quote;
 }
 ```
+# 11 Listas y Contadores
+
+## 11.1 Listas
+Las listas tienen 3 propiedades en CSS:
+
+**NOTA:** Podemos lograr que cualquier elementos "parezca" una lista con la propiedad `display: list-item`.
+
+### 11.1.1 Tipo
+El tipo o marca se refiere al tipo de viñeta que se le colocara o presedera a los elementos de las listas. Su sintaxis es:
+
+`list-style-type: value`
+
+Posibles valores:
+- disc (circulo relleno)
+- circle (circulo hueco)
+- square (cuadrado relleno)
+- decimal (numeros)
+- decimal-leading-zero (numero con un cero por delante)
+- lower-alpha (letras minusculas)
+- upper-alpha (letras mayusculas)
+
+### 11.1.2 Imagen
+Exites una proiedad `list-style-image` pero es mala practica utilizarla. Es recomendable utilizar el pseudo-elemento ::before y colocar la imagen ensu background.
+
+### 11.1.3 Posicion
+Esta propiedad indica si las propiedades estar por fuera de los <li> o por dentro. Sintaxis:`list-style-position: value`
+
+Posibles valores:
+- inside (dentro de los <li>)
+
+## 12 Contadores
+Los contadores en css son muy parecidos a los contadores en un lenguaje de programacion.
+Hay varias cosas a tener encuenta:
+1. Deben ser declarados(en la propiedad *counter-reset:*)
+2. Existen en el Scope que se les declara.
+3. Se incrementan con la propiedad *counter-increment:*
+
+Ejemplo
+```css
+.chapters {
+    counter-reset: countOfChapters; /* Se inicializa/declara/resetea la variable a 0 */
+}
+
+.chapter {
+    counter-increment: countOfChapters; /* Incremento el contador en cada elemento de la clase "chapter" */
+}
+
+.chapter::before {
+    content: counter(countOfChapters) '.'; /* Imprimo el contador con un punto delante del elemento de la clase "chapter" */
+}
+```
+
+**NOTA:** Para imprimir contadores en listas anidadas utilizamos la funcion de CSS *counters()* que recibe dos parametros el primero es el contador y el segundo es un string('') con el separador, ejemplo: `counters(countOfChapters, '.')`
+
