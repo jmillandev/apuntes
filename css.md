@@ -632,3 +632,46 @@ Es dicer, le aplicara los estilos a todos los elementos menos a los que se les e
 
 ## 9.7 empty
 Corresponde a un elemento sin ningun nodo hijo. Solo cuando hay nodos de elementos o texto con uno o mas caracteres dectro del elemento ese se convierte en no vacio. 
+
+# 10 Pseudo-elementos
+Son un tipo de "elementos falsos" pues en realidad estos no existen en el arbol DOM, sin embargo podemos manipularlos con CSS. Exiten varios, algunos de ellos son:
+
+Son representados por el nombre del elemento, seguido de 4 punto(::) y luego el nombre del Pseudo-elemento.
+
+## 10.1 Primera linea
+Es util en textos y como su nombre lo indica hace referencia a la primera linea de texto mostrada en pantalla. Su sintaxis es la siguiente: `::first-line{ ... }`
+
+**NOTA:** solo aplica para elementos de bloque.
+
+## 10.2 Primera letra
+Es util en palabras o textos y como su nombre lo indica hace referencia a la primera letra del texto mostrado en pantalla. Su sintaxis es la siguiente: `::first-letter { ... }`
+
+**NOTA:** solo aplica para elementos de bloque.
+
+## 10.3 before and after
+- Son elementos *inline* por defecto.
+- El contenido debe ser generado antes de ser manipulado.
+Ejemplo:
+```css
+h1::before {
+    content: 'Hola'; /* Inserta el string 'hola' delante del h1*/
+}
+h2::before {
+    content: attr(class); /* Inserta el valor del atributo 'class' del elemento delante del mismo*/
+}
+h3::before {
+    content: url(URI); /* Inserta la imagen de la ruta dada delante del elemento*/
+}
+
+.citas {
+    quotes: '\201C' '\201D'; /*Estableces los caracteres abrir y cerrar de las citas(en este caso son caracteres UNICODE)*/
+}
+
+.citas::before {
+    content: open-quote;
+}
+
+.citas::after {
+    content: close-quote;
+}
+```
