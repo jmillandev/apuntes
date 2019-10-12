@@ -589,7 +589,7 @@ Es una seudoclase que es equivalente al nodo *html* es decir, es el nodo princip
 Se presenta cuando el usuario coloca el puntero sobre algun elemento, pero no necesariamente esta activo. En pantallas touch *:hover* es problematico.
 
 ## 9.3 active
-Esta cubre el caso en el que un elemento esta siendo activado por el usuario. Cuando se interactua con el raton. Corresponde al momento en el que el usuario presiona el raton hasta el momento en que lo suelta. A menudo es usado en los elementos <a> y <button> de HTML.
+Esta cubre el caso en el que un elemento esta siendo activado por el usuario. Cuando se interactua con el raton. Corresponde al momento en el que el usuario presiona el raton hasta el momento en que lo suelta. A menudo es usado en los elementos <\a> y <\button> de HTML.
 El **orden** si **importa** al momento de declarar las siguientes Pseudo-clases:
 1. :link{ ... }
 2. :visited { ... }
@@ -700,12 +700,12 @@ Posibles valores:
 Exites una proiedad `list-style-image` pero es mala practica utilizarla. Es recomendable utilizar el pseudo-elemento ::before y colocar la imagen ensu background.
 
 ### 11.1.3 Posicion
-Esta propiedad indica si las propiedades estar por fuera de los <li> o por dentro. Sintaxis:`list-style-position: value`
+Esta propiedad indica si las propiedades estar por fuera de los <\li> o por dentro. Sintaxis:`list-style-position: value`
 
 Posibles valores:
-- inside (dentro de los <li>)
+- inside (dentro de los <\li>)
 
-## 12 Contadores
+## 11.2 Contadores
 Los contadores en css son muy parecidos a los contadores en un lenguaje de programacion.
 Hay varias cosas a tener encuenta:
 1. Deben ser declarados(en la propiedad *counter-reset:*)
@@ -728,4 +728,79 @@ Ejemplo
 ```
 
 **NOTA:** Para imprimir contadores en listas anidadas utilizamos la funcion de CSS *counters()* que recibe dos parametros el primero es el contador y el segundo es un string('') con el separador, ejemplo: `counters(countOfChapters, '.')`
+
+# 12 Colores y degradados
+## 12.1 Variables
+En CSS tenemos una variable(se puede decir que es de las primeras que existio en el lenguaje), que hace referencia al valor de la propiedad *color* y estas es *currentcolor*.
+
+## 12.2 Color keywords
+Existen diferentes y muy variados keyword para los colores puedes verlos aca:
+
+- **[Colores Basicos](https://www.w3.org/wiki/CSS/Properties/color/keywords)**
+
+- **[Colores X11](https://en.wikipedia.org/wiki/X11_color_names)**
+
+- transparent
+
+## 12.3 Modo de color RGB
+Caracteristicas:
+- El modo RGB es un modo de color aditivo(de luz).
+- Se basa en 3 canales; Rojo(R), Green(G), Blue(B).
+- Su valores van de 0 a 255 (1 Byte).
+- Los 3 canales en 255 dan blanco.
+- Los 3 canales en 0 dan negro.
+- Los 3 canales en el mismo nivel dan un tono de gris.
+
+### 12.3.1 Diferencia entre rgb y rgba
+La unica diferencia es que RGBA tiene un valor adiconal que hace referencia a alpha(transparencia), este valor va de 0 a 1(es un float).
+
+### 12.3.2 Notacion hexadecimal
+Es otra forma de denotar el modo de color:
+    #RRGGBB
+
+- Cada par de caracteres representa un canal.
+- Si los dos caracteres de un canal se repiten puede abreviarse:
+    #AA00EE = #A0E
+
+## 12.4 Modo de color HSL
+IMPORTANTE: **HSL no es HSB**.
+### 12.4.1 ¿Que significa el acronimo?
+- **Hue**(tonalidad de color,de 0 a 360, circulo cromatico).
+- **Saturacion**(intensidad del color, de gris[0%]al color puro [100%]).
+- **Luminosidad**(de negro [0%], color puro [50%], blanco[100%]).
+
+### 12.4.2 Notacion hsl yhsla
+- hsl(numero, porcentaje, porcentaje)
+- hsla(numero, porcentaje, porcentaje, transparencia)
+
+## 12.5 Degradados
+En esencia **son imagenes**. Por lo tanto cuenta todas sus propiedades(background-size, position, etc).
+
+### 12.5.1 Lineales
+
+Sintaxis(lo que esta entre [] son parametros opcionales): `linear-gradient([angle], color1 [stop], colo2[stop], ..., colorN[stop])`
+
+#### 12.5.1.1 Parametros opcionales:
+##### 12.5.1.1.1 Angulo:
+El angulo debe ser escribo seguido de las unidades 'deg'. Ejemplo: `270deg`.
+Otra opcion son las *keyword*:
+- to top
+- to left
+- to right
+- to bottom
+- to bottom rigth
+- to bottom left
+- to top left
+- to top right
+#### 12.5.1.1.1 Stops:
+Los stop nos indica en que punto empieza el degradado. Ejemplo:
+```css
+body {
+   linear-gradient(blue 50%, red 75%) /* Se creara una imagen donde el desde el inicio hasta el 50% sera azul, desde el 50% hasta el 75% sera un degradado y luego sera rojo */
+}
+```
+
+**NOTA:** para un degradado repetitivo la sintaxis es la siguiente: linear-gradient([angle], color1 stop, colo2 stop, ..., colorN stop)
+
+### 12.5.2 Radiales
 
