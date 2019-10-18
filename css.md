@@ -6,22 +6,40 @@ Puede echarle un vistazo a al vocabulario de css [aqui](http://apps.workflower.f
 
 `/* Esto es un comentario en CSS */`
 
-- Variable:
-```css
-/* Esta es la manera de declarar las variables en css: */
-:root {
-    --nameVar1: value;
-    --nameVar2: value;
-}
-/* Una ves declarada la variable la utilizamod escribiendo 'var(--nameVar)' */
-```
-
 ## 1.2 Estilos del navegador
 Por defecto cada browser contiene un estilo de css. Esto puede ocasionar distinta clase de problemas a la hora de nosotros implementar nuestros estilos.
 La manera de resolver esto es utilizando una libreria de terceros llamada [normalize](https://necolas.github.io/normalize.css/) que como su nombre lo indica nos normaliza los estilos por defecto que vayamos a utilizar.
 
 ## 1.3 Soporte
 En [esta pagina](https://caniuse.com) podemos buscar una caracteristica o propiedad y ver su soporte en los navegadores
+
+## 1.4 Variables
+Son espacios en memoria que almacenan un valor.
+### 1.4.1 Declaracion
+```css
+/* Esta es la manera de declarar y redefinir las variables en css: */
+:root {
+    --nameVar1: value;
+    --nameVar2: value;
+}
+```
+### 1.4.2 Llamado
+```css
+body {
+    --color: red;
+    background-color: var(--color, blue);
+}
+/* El segundo valor pasado a la funcion 'var()' es un failback, por si el primer parametro falla. */
+```
+### 1.4.3 Scope
+Tienen un scope de DOM. Tienen herencia y cacascada al igual que otras propiedades de CSS.
+
+### 1.4.4 Acceso a variables CSS desde Js
+1. La funcion **getComputedStyle(element)** nos **retorna un objeto** del elemento "element" una vez el navegador ya ha hecho todos los calculos respectivos para renderizar.
+
+2. Para leer una propiedad ejecutamos el siguiente metodo al objeto del paso anterior: `getPropertyValue('propertyName')`. Donde "propertyName" es el nombre de la propiedad a buscar.
+
+3. Para setear una variable: `element.style.setProperty('propertyName', 'Value')`.
 
 # 2 Selectores
 Se dividen esencialmente en 3 tipos:
