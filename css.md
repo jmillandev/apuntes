@@ -20,6 +20,9 @@ Puede echarle un vistazo a al vocabulario de css [aqui](http://apps.workflower.f
 Por defecto cada browser contiene un estilo de css. Esto puede ocasionar distinta clase de problemas a la hora de nosotros implementar nuestros estilos.
 La manera de resolver esto es utilizando una libreria de terceros llamada [normalize](https://necolas.github.io/normalize.css/) que como su nombre lo indica nos normaliza los estilos por defecto que vayamos a utilizar.
 
+## 1.3 Soporte
+En [esta pagina](https://caniuse.com) podemos buscar una caracteristica o propiedad y ver su soporte en los navegadores
+
 # 2 Selectores
 Se dividen esencialmente en 3 tipos:
 
@@ -810,3 +813,70 @@ Existen algunas keywords que podemos utilizar:
 
 #### 12.5.2.3 Repeat
 Sintaxis: `repeat-radial-gradient([size shape], [at xcenter ycenter], color1 stop1, color2 stop2, ..., colorN stopN)`
+
+# 13 Position
+Nos permite posicionar un elemento alterando como se muestra el flujo de elementos.
+
+## 13.1 Propiedad offset
+Mueven un elemento posicionado segun el borde indicado, sus sintaxis son:
+- `top: value`
+
+- `right: value`
+
+- `left: value`
+
+- `bottom: value`
+
+## 13.2 Valores de posicion
+Exiten varios tipos que nos permiten modificar el posicionamiento de un elemento, su sintaxis es:
+
+`position: valuePosition`
+
+### 13.2.1 Static
+Es el valor por defecto que tienen los elemento, Mantienen el posicionamiento por el flujo del HTML. A los elemento con ese valor no se les considera posicionados.
+
+### 13.2.2 Relative
+
+Caracteristicas:
+- Su referencia es su posicion inicial.
+- Aplicar `position: realtive` a un elemento no modifica en nada su layout.
+- Al moverlo, con las propiedades offset, reserva su espacio.
+
+### 13.2.3 Absolute
+Caracteristicas:
+- Pierde su posicion en el flujo y no reserva su espacio.
+- Si tenia dimensiones fijas se mantienen, si tiene dimensiones automaticas; se ajustaran a su contenido.
+- Su referencia es su ancestro *posicionado* mas cercano.
+
+### 13.2.4 Fixed
+Caracteristicas:
+- Fijo(no se mueve con el scroll), relativo al viewport.
+- Se ignora en el flujo.
+- Sus dimensiones automaticas se restringen a su contexto.
+
+### 13.2.5 Sticky
+Es una combinacion de Relative y Fixed.
+En este caso el *offset* indica en que instante el elemento pasara a ser fijo en pantalla. Ejemplo para un `top: 10px`. El elemento sera fijo cuando al hacer scroll este saliendo de pantalla, y se mantendra a *10px* del viewport en su parte superior.
+
+### 14 z-index
+Si nos imaginamos el origen de coordenadas en las esquina superior izquierda de nuestro computador. A medida que aumentamos coordenadas en z estas esta 'mas cerca de nosotros', Asi que podriamos decir que que los elementos con menor z-index(coordenadas en z) seran sobrepuestos por aquellos con un z-index mayor.
+
+- Por defecto *todos* los elemmentos tienen z-index = 0.
+- Para elementos con igual z-index se sobrepondran aquellos que aparezcan despues en el flujo(codigo HTML).
+
+Una estructura recomendada por el equipo de [EDteam](https://ed.team) es:
+```css
+    --z-back    : -10;
+    --z-normal  : 1;
+    --z-tooltip : 10;
+    --z-fixed   : 100;
+    --z-modal   : 1000;
+```
+
+Como ves es una buena practica utilizar una escala que nos permita tener valores intermedios para manejar nuestros valores, de una forma mas legible y practica
+
+Elementos aplicables:
+- Elementos posicionados.
+- Elementos Transformados.
+
+NOTA: si el papa tiene un z-index declarado el/los hijo(s) no pueden posicionarse detras de el.
