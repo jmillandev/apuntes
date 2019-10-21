@@ -900,6 +900,7 @@ Elementos aplicables:
 NOTA: si el papa tiene un z-index declarado el/los hijo(s) no pueden posicionarse detras de el.
 
 # 15 Flexbox
+Su principal funcion es de alineacion. Si bien podemos realizar algo del layout con este, solo podemos hacerlo en un solo eje(main axis).
 Utiliza siempre la relacion padre e hijos. No puede existir un flexbox sin este contexto.
 
 Los elementos padre son llamados **flex container** y tienen la propiedad **display: flex**
@@ -1083,3 +1084,140 @@ Sintaxis:
 
 Valores posibles:
 - Cualquier numero entero.
+
+# 16 Grid
+- Permite construis layouts a traves de dos ejes(horizontas y v ertivas | inline y block)).
+- No importa la posicion de un elemento en el codigo HTML para construir el layout.
+- Requiere un relacion de padre(grid-container) e hijos(grid-items)
+
+## 16.1 Grid-container
+### 16.1.1 display
+**Valores:**
+- grid.(Visualmente no altera en nada al elemento, es como si aplicaramos un position:relative).
+
+- inine-grid.
+
+## 16.2 Elementos abstractos(no existen en el DOM)
+Son definidos en las propiedades del grid-container.
+### 16.2.1 Grid-tracks
+Son las filas y las columnas.
+
+#### 16.2.1.1 Definiendo Tracks
+##### 16.2.1.1.1 Columnas
+Sintaxis:
+`grid-template-columns: width_column1 width_column2 ... width-columnN`
+
+Los valores adminitos:
+- Son cualquier valor para definir tamaño(em, rem. px, %).
+- fr: Son definidos como valores fracionarios. Tienen un comportamiento muy similar al valor de flex-grow.
+
+
+##### 16.2.1.1.2 Filas
+Sintaxis:
+`grid-template-rows: width_row1 width_row2 ... widthrowN`
+
+Los valores adminitos:
+- Son cualquier valor para definir tamaño(em, rem. px, %).
+- fr: Son definidos como valores fracionarios. Tienen un comportamiento muy similar al valor de flex-grow.
+
+##### 16.2.1.1.2 Gap
+Espeficican la separacion entre columnas o filas respectivamente:
+Columnas:
+`grid-column-gap: value`
+
+Filas:
+`grid-row-gap: value`
+
+Posibles valores:
+- Unidades fijas o relativas.
+
+Shorthand:
+`grip-gap: value_row value_column`
+
+### 16.2.2 Grid-lines 
+Se encuentran a los lados de los tracks:
+- Izquierda y derechas para columnas.
+- Arriba y abajo para filas.
+### 16.2.3 Grid-cells
+La Interseccion entre una fila y una columna.
+### 16.2.4 Grid-areas
+Cualquier area rectangular delimitada por 4 *grid-lines*
+
+## 16.3 Grid-items
+Se consideran como grid-items a los:
+- Hijos directos
+- Pseudoelementos ::before y ::after
+- Texto
+
+### 16.3.1 Posicionamiento
+Con css-grid podemos colocar un elemento donde queramos. Esto lo hacemos especificandole la linea donde inicia y donde termina dicho elemento.
+Para esto utilizamos las porpiedades:
+```CSS
+.element {
+    grid-column-start: value;   /* Linea vertical inicial */
+    grid-row-start: value;      /* Linea horizontal inicial */
+    grid-column-end: value;     /* Linea vertical final */
+    grid-row-end: value;        /* Linea horizontal final */
+    
+    /*
+    Shorthands
+    grid-row: value_start / value_end;
+    grid-column: value_start / value_end;
+
+    Nota: tambien podemos contar columnas o filas, utilizando las unidad 'span'. Ejemplo. una grilla que ocupe desde la linea 1 hasta la cuarta columna:
+    grid-column: 1 / span 4; 
+    */
+}
+```
+**NOTA1:** Los grid-items pueden ser a su vez grid-containers.
+
+**NOTA:2** Los grid container tambien manejan las propiedades  *justified-content* y *aling-items*.
+
+## 16.4 Alineacion
+
+### 16.4.1 Items
+Estas alineaciones son para alinear el contenido de cada track. Las propiedades son muy parecidas a las de flex.
+
+En horizontal(x o inline) tenemos las propiedades:
+- justift-items (todos)
+- justify.self (uno en particular)
+ 
+En Vertical(y o block) tenemos las propiedades: 
+- align-items (todos)
+- aling-self (uno en particular)
+
+**NOTA:** Tambien se pueden utilizar margenes para alinear elementos.
+
+### 16.4.2 Container
+Estas propiedades las utilizamos para mover la alineacion de los tracks respecto al contenedor. Las propiedades son muy parecidas a las de flex.
+
+En horizontal(x o inline) tenemos las propiedades:
+- justift-content
+ 
+En Vertical(y o block) tenemos las propiedades: 
+- align-content
+
+## 16.5 Placement
+Exites dos clases de Grid:
+
+- Explicitos: Aquellos que definimos en la grilla, con grid-template.
+
+- Implicitos: Aquellos que el navegador crea automaticamente cuando ya hemos llenado nuestra grilla totalmente.
+
+Por defecto los elemento implicitos se ajustan a su contenido. Podemos definir su tamaño con.
+
+```CSS
+.container {
+    grid-auto-rows: value_size;
+    grid-auto-colums: value_size;
+
+    grid-auto-flow: value [dense]; /* Valores: row(predeterminado) | column. Esta propieda especifica algo asi como el eje principal.
+    
+    *dense* es un valor opcional. Es utilizado para llenar huecos en la grilla en el dado caso de que haya un salto de linea por un columna que hayamos fijado.
+    */
+}
+
+
+
+
+```
