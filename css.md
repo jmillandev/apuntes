@@ -244,7 +244,7 @@ Content box. La definimos(por defecto, a menos que cambiemos el **box-sizing**) 
 
 ### 5.2.2 Caja de relleno
 Padding box. La definimos con la propiedad **padding**.
-La implementacion es muy similar a la del margin(seccion 5.2.4). Aun asi una diferencia **importante** a la hora de trabajar con porcentajes en el padding es que este toma como referencia al inverso del papa. Es decir que cuando si el padre de nuestro elemento tiene un ancho de 200px y hacemos `padding-botton: 10%` lo que estamos diciendo es que asigne al elemento un padding abajo de 20px. Esto lo podemos utilizar para hacer diseños a escaja.
+La implementacion es muy similar a la del margin(seccion 5.2.4). Aun asi una diferencia **importante** a la hora de trabajar con porcentajes en el padding es que este toma como referencia al inverso del papa. Es decir que cuando si el padre de nuestro elemento tiene un ancho de 200px y hacemos `padding-bottom: 10%` lo que estamos diciendo es que asigne al elemento un padding abajo de 20px. Esto lo podemos utilizar para hacer diseños a escaja.
 
 ### 5.2.3 Caja del Borde
 Border box. La definimos con la propiedad **border**.
@@ -373,7 +373,7 @@ Nosotros podemos modificar el tamaño a mostrar de una imagen con ccs. La sintax
 Posibles valores:
 - widht=height (un solo valor puede ser en px o %)
 - widht height (dos valores pueden  ser en px o %)
-- content (ajusta la imagen para que se muestre completa lo mas grande posible)
+- contain (ajusta la imagen para que se muestre completa lo mas grande posible)
 - cover (ajusta la imagen para que se muestre en el 100% de la caja, sin deformar la imagen)
 - auto (esta es la opcion por defecto, muestra la imagen en su tamaño origina)
 
@@ -876,7 +876,7 @@ Caracteristicas:
 Es una combinacion de Relative y Fixed.
 En este caso el *offset* indica en que instante el elemento pasara a ser fijo en pantalla. Ejemplo para un `top: 10px`. El elemento sera fijo cuando al hacer scroll este saliendo de pantalla, y se mantendra a *10px* del viewport en su parte superior.
 
-### 14 z-index
+# 14 z-index
 Si nos imaginamos el origen de coordenadas en las esquina superior izquierda de nuestro computador. A medida que aumentamos coordenadas en z estas esta 'mas cerca de nosotros', Asi que podriamos decir que que los elementos con menor z-index(coordenadas en z) seran sobrepuestos por aquellos con un z-index mayor.
 
 - Por defecto *todos* los elemmentos tienen z-index = 0.
@@ -898,3 +898,150 @@ Elementos aplicables:
 - Elementos Transformados.
 
 NOTA: si el papa tiene un z-index declarado el/los hijo(s) no pueden posicionarse detras de el.
+
+# 15 Flexbox
+Utiliza siempre la relacion padre e hijos. No puede existir un flexbox sin este contexto.
+
+Los elementos padre son llamados **flex container** y tienen la propiedad **display: flex**
+
+## 15.1 Ejes
+
+Tenemos dos ejes:
+- Eje principal(main axis): De manera predeterminada el eje principal es horizontal, de izquierda a derecha.
+
+- Eje transversal(cross axis): De manera predeterminada es vertical, de arriba hacia abajo.
+
+## 15.2 Flex Container(Padre)
+
+### 15.2.1 Display
+El flex container(El padre) tiene dos opciones en su display:
+
+1. `display: flex`. Se comporta como un elemento de bloque.
+2. `display: inline-flex`. Se comporta como un elemento de linea.
+
+### 15.2.2 Flex-direction
+Flex-direction nos permite especificar la direccion y el sentido del eje principal:
+
+#### 15.2.2.1 Sintaxis
+`flex-direction: value;`
+
+#### 15.2.2.2 Valores posibles
+- row (Predeterminado)
+- row-reverse (Horizontal, de derecha a izquierda)
+- column (Vertical, de arriba a abajo)
+- column-reverse (Vertical, de abajo a arriba)
+
+### 15.2.3 Flex-wrap
+Esta propiedad no especifica si el flexbox puede o no saltar de linea:
+
+#### 15.2.3.1 Sintaxis
+`flex-wrap: value`
+
+#### 15.2.3.2 Posibles Valores
+- nowrap(los hijos no pueden saltar de linea. Por defecto)
+- wrap (los hijos pueden saltar de linea)
+- wrap-reverse (los hijos pueden saltar de linea. Las lineas estan en el orden opuesto[el eje trasversal esta en reversa]).
+
+### 15.2.4 Flex-flow
+Es un shorthand que une a *flex-direction* y a *flex-wrap*.
+
+Sintasis: `flex-flow: value_direction value_wrap`
+
+### 15.2.5 Alineacion
+
+#### 15.2.5.1 Alineacion de Items
+
+##### 15.2.5.1.1 Justify-content
+Alinea los Items en el eje principal(main axis)
+Sintasis:
+`justify-content: value`
+
+Posibles Valores:
+- flex-start (Predeterminado)
+- flex-end
+- flex-center
+- space-between
+- space-around(Es parecido a un margen automatico)
+- space-evenly
+
+##### 15.2.5.1.2 Align-items
+Alinea los Items en el eje transversal(cross axis) dentro de la linea
+Sintasis:
+`align-items: value`
+
+Posibles Valores:
+- flex-start (Predeterminado)
+- flex-end
+- flex-center
+- baseline
+- stretch
+
+#### 15.2.5.2 Alineacion de Lineas
+##### 15.2.5.2.1 Align-content
+ALinea las lineas respecto al container
+
+Sintasis: 
+`align-content: value`
+
+Posibles valores:
+- flex-start (Predeterminado)
+- flex-end
+- flex-center
+- space-between
+- space-around
+- space-evenly
+- stretch
+
+## 15.3 Flex Items
+Los siguientes elementos son catalogados como items:
+- Hijos directos.
+- Pseudoelementos.
+- Texto
+
+### 15.3.1 Flex items posicionados
+Los elementos posicionados con absolute o fixed tienen las siguientes caracteristicas:
+
+- No participan en el flujo.
+- Son afectados por las propiedades de alineacion del container.
+
+### 15.3.2 Crecimiento o reduccion
+Los flex items pueden crecer(grow) o reducirse(shrink). Algo a tener en cuenta es que los margenes y paddings no se contraen
+
+### 15.3.3 Propiedades
+
+#### 15.3.3.1 flex-grow
+Flex-grow Indica el factor de crecimiento.
+
+- El Navegador Calcula el espacio disponible. Tomando en cuenta el tamaño inicial de cada elemento.
+- El navegador divide el espacio disponible entre la cantidad total de los factores de crecimiento.
+- Se le asigna a cada elemento el tamaño corespondiente a la cantidad de factores de crecimiento establecidas para el mismo.
+
+Sintaxis:
+`flex-grow: valor_del_factor_de_crecimiento`
+
+Valores Posibles:
+- Numero positivos(enteros o decimales). Por defecto es 0.
+
+#### 15.3.3.2 flex-shrink
+Flex-shrink Indica el factor de reduccion.
+
+- El Navegador Calcula el espacio sobrante. Tomando en cuenta el tamaño inicial de cada elemento.
+- El navegador divide el espacio sobrante entre la cantidad total de los factores de reduccion.
+- Se le reduce a cada elemento el tamaño correspondiente a la cantidad de factores de reduccion establecidos para el mismo.
+
+Sintaxis:
+`flex-shrink: valor_del_factor_de_reduccion`
+
+Valores Posibles:
+- Numero positivos(enteros o decimales). Por defecto, se distribuye uniformemente entre todos los elementos.
+
+#### 15.3.3.3 flex-basic
+Define el **tamaño inicial en el eje principal** puede ser width o height dependiendo del caso.
+
+Cuando esta asignado ignora la propiedad width o height(dependiendo del caso de como este configurado el eje principal).
+
+Sintaxis:
+`flex-basic: value`
+
+Posibles valores:
+- Recibe los mismos valores que una propiedad *size*.
