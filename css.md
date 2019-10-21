@@ -244,7 +244,7 @@ Content box. La definimos(por defecto, a menos que cambiemos el **box-sizing**) 
 
 ### 5.2.2 Caja de relleno
 Padding box. La definimos con la propiedad **padding**.
-La implementacion es muy similar a la del margin(seccion 5.2.4). Aun asi una diferencia **importante** a la hora de trabajar con porcentajes en el padding es que este toma como referencia al inverso del papa. Es decir que cuando si el padre de nuestro elemento tiene un ancho de 200px y hacemos `padding-botton: 10%` lo que estamos diciendo es que asigne al elemento un padding abajo de 20px. Esto lo podemos utilizar para hacer diseños a escaja.
+La implementacion es muy similar a la del margin(seccion 5.2.4). Aun asi una diferencia **importante** a la hora de trabajar con porcentajes en el padding es que este toma como referencia al inverso del papa. Es decir que cuando si el padre de nuestro elemento tiene un ancho de 200px y hacemos `padding-bottom: 10%` lo que estamos diciendo es que asigne al elemento un padding abajo de 20px. Esto lo podemos utilizar para hacer diseños a escaja.
 
 ### 5.2.3 Caja del Borde
 Border box. La definimos con la propiedad **border**.
@@ -373,7 +373,7 @@ Nosotros podemos modificar el tamaño a mostrar de una imagen con ccs. La sintax
 Posibles valores:
 - widht=height (un solo valor puede ser en px o %)
 - widht height (dos valores pueden  ser en px o %)
-- content (ajusta la imagen para que se muestre completa lo mas grande posible)
+- contain (ajusta la imagen para que se muestre completa lo mas grande posible)
 - cover (ajusta la imagen para que se muestre en el 100% de la caja, sin deformar la imagen)
 - auto (esta es la opcion por defecto, muestra la imagen en su tamaño origina)
 
@@ -876,7 +876,7 @@ Caracteristicas:
 Es una combinacion de Relative y Fixed.
 En este caso el *offset* indica en que instante el elemento pasara a ser fijo en pantalla. Ejemplo para un `top: 10px`. El elemento sera fijo cuando al hacer scroll este saliendo de pantalla, y se mantendra a *10px* del viewport en su parte superior.
 
-### 14 z-index
+# 14 z-index
 Si nos imaginamos el origen de coordenadas en las esquina superior izquierda de nuestro computador. A medida que aumentamos coordenadas en z estas esta 'mas cerca de nosotros', Asi que podriamos decir que que los elementos con menor z-index(coordenadas en z) seran sobrepuestos por aquellos con un z-index mayor.
 
 - Por defecto *todos* los elemmentos tienen z-index = 0.
@@ -898,3 +898,326 @@ Elementos aplicables:
 - Elementos Transformados.
 
 NOTA: si el papa tiene un z-index declarado el/los hijo(s) no pueden posicionarse detras de el.
+
+# 15 Flexbox
+Su principal funcion es de alineacion. Si bien podemos realizar algo del layout con este, solo podemos hacerlo en un solo eje(main axis).
+Utiliza siempre la relacion padre e hijos. No puede existir un flexbox sin este contexto.
+
+Los elementos padre son llamados **flex container** y tienen la propiedad **display: flex**
+
+## 15.1 Ejes
+
+Tenemos dos ejes:
+- Eje principal(main axis): De manera predeterminada el eje principal es horizontal, de izquierda a derecha.
+
+- Eje transversal(cross axis): De manera predeterminada es vertical, de arriba hacia abajo.
+
+## 15.2 Flex Container(Padre)
+
+### 15.2.1 Display
+El flex container(El padre) tiene dos opciones en su display:
+
+1. `display: flex`. Se comporta como un elemento de bloque.
+2. `display: inline-flex`. Se comporta como un elemento de linea.
+
+### 15.2.2 Flex-direction
+Flex-direction nos permite especificar la direccion y el sentido del eje principal:
+
+#### 15.2.2.1 Sintaxis
+`flex-direction: value;`
+
+#### 15.2.2.2 Valores posibles
+- row (Predeterminado)
+- row-reverse (Horizontal, de derecha a izquierda)
+- column (Vertical, de arriba a abajo)
+- column-reverse (Vertical, de abajo a arriba)
+
+### 15.2.3 Flex-wrap
+Esta propiedad no especifica si el flexbox puede o no saltar de linea:
+
+#### 15.2.3.1 Sintaxis
+`flex-wrap: value`
+
+#### 15.2.3.2 Posibles Valores
+- nowrap(los hijos no pueden saltar de linea. Por defecto)
+- wrap (los hijos pueden saltar de linea)
+- wrap-reverse (los hijos pueden saltar de linea. Las lineas estan en el orden opuesto[el eje trasversal esta en reversa]).
+
+### 15.2.4 Flex-flow
+Es un shorthand que une a *flex-direction* y a *flex-wrap*.
+
+Sintasis: `flex-flow: value_direction value_wrap`
+
+### 15.2.5 Alineacion
+
+#### 15.2.5.1 Alineacion de Items
+
+##### 15.2.5.1.1 Justify-content
+Alinea los Items en el eje principal(main axis)
+Sintasis:
+`justify-content: value`
+
+Posibles Valores:
+- flex-start (Predeterminado)
+- flex-end
+- flex-center
+- space-between
+- space-around(Es parecido a un margen automatico)
+- space-evenly
+
+##### 15.2.5.1.2 Align-items
+Alinea los Items en el eje transversal(cross axis) dentro de la linea
+Sintasis:
+`align-items: value`
+
+Posibles Valores:
+- flex-start (Predeterminado)
+- flex-end
+- flex-center
+- baseline
+- stretch
+
+#### 15.2.5.2 Alineacion de Lineas
+##### 15.2.5.2.1 Align-content
+ALinea las lineas respecto al container
+
+Sintasis: 
+`align-content: value`
+
+Posibles valores:
+- flex-start (Predeterminado)
+- flex-end
+- flex-center
+- space-between
+- space-around
+- space-evenly
+- stretch
+
+## 15.3 Flex Items
+Los siguientes elementos son catalogados como items:
+- Hijos directos.
+- Pseudoelementos.
+- Texto
+
+### 15.3.1 Flex items posicionados
+Los elementos posicionados con absolute o fixed tienen las siguientes caracteristicas:
+
+- No participan en el flujo.
+- Son afectados por las propiedades de alineacion del container.
+
+### 15.3.2 Crecimiento o reduccion
+Los flex items pueden crecer(grow) o reducirse(shrink). Algo a tener en cuenta es que los margenes y paddings no se contraen
+
+### 15.3.3 Propiedades
+
+#### 15.3.3.1 flex-grow
+Flex-grow Indica el factor de crecimiento.
+
+- El Navegador Calcula el espacio disponible. Tomando en cuenta el tamaño inicial de cada elemento.
+- El navegador divide el espacio disponible entre la cantidad total de los factores de crecimiento.
+- Se le asigna a cada elemento el tamaño corespondiente a la cantidad de factores de crecimiento establecidas para el mismo.
+
+Sintaxis:
+`flex-grow: valor_del_factor_de_crecimiento`
+
+Valores Posibles:
+- Numero positivos(enteros o decimales). Por defecto es 0.
+
+#### 15.3.3.2 flex-shrink
+Flex-shrink Indica el factor de reduccion.
+
+- El Navegador Calcula el espacio sobrante. Tomando en cuenta el tamaño inicial de cada elemento.
+- El navegador divide el espacio sobrante entre la cantidad total de los factores de reduccion.
+- Se le reduce a cada elemento el tamaño correspondiente a la cantidad de factores de reduccion establecidos para el mismo.
+
+Sintaxis:
+`flex-shrink: valor_del_factor_de_reduccion`
+
+Valores Posibles:
+- Numero positivos(enteros o decimales). Por defecto, se distribuye uniformemente entre todos los elementos.
+
+#### 15.3.3.3 flex-basis
+Define el **tamaño inicial en el eje principal** puede ser width o height dependiendo del caso.
+
+**IMPORTANTE:** Cuando esta asignado ignora la propiedad width o height(dependiendo del caso de como este configurado el eje principal).
+
+Sintaxis:
+`flex-basis: value`
+
+Posibles valores:
+- Recibe los mismos valores que una propiedad *size*.
+
+#### 15.3.3.4 Flex
+Flex es un shorthand que agrupa a **flex-grow**, **flex-shrink** y **flex-basis**
+
+**Sintaxis:**
+`flex: value-grow value-shrink value-basis`
+
+**Keywords:**
+
+- initial (0 1 auto). Estos son los valores por defecto.
+- auto(1 1 auto)
+- none(0 0 auto)
+- n (n 0 0). Siendo *n* un numero positivo.
+
+#### 15.3.3.5 aling-self
+Nos sirve para linear un items en especifico. Lo podriamos utilizar en conjunto con la pseudoclase *nth-child()*.
+
+Sintasis:
+`align-self: value`
+
+Valores Posibles:
+- auto(por defecto. Sigue el flujo definido en el contenedor)
+- flex-start
+- flex-end
+- center
+- baseline
+- stretch
+
+#### 15.3.3.6 Order
+Nos permite colocar un elemento en la parte que deseemos. Sin importar el flujo del HTML.
+
+Se parece un poco a un *z-index*. Por defecto todos los elemento tienen un order:0.
+
+Sintaxis:
+`order: value`
+
+Valores posibles:
+- Cualquier numero entero.
+
+# 16 Grid
+- Permite construis layouts a traves de dos ejes(horizontas y v ertivas | inline y block)).
+- No importa la posicion de un elemento en el codigo HTML para construir el layout.
+- Requiere un relacion de padre(grid-container) e hijos(grid-items)
+
+## 16.1 Grid-container
+### 16.1.1 display
+**Valores:**
+- grid.(Visualmente no altera en nada al elemento, es como si aplicaramos un position:relative).
+
+- inine-grid.
+
+## 16.2 Elementos abstractos(no existen en el DOM)
+Son definidos en las propiedades del grid-container.
+### 16.2.1 Grid-tracks
+Son las filas y las columnas.
+
+#### 16.2.1.1 Definiendo Tracks
+##### 16.2.1.1.1 Columnas
+Sintaxis:
+`grid-template-columns: width_column1 width_column2 ... width-columnN`
+
+Los valores adminitos:
+- Son cualquier valor para definir tamaño(em, rem. px, %).
+- fr: Son definidos como valores fracionarios. Tienen un comportamiento muy similar al valor de flex-grow.
+
+
+##### 16.2.1.1.2 Filas
+Sintaxis:
+`grid-template-rows: width_row1 width_row2 ... widthrowN`
+
+Los valores adminitos:
+- Son cualquier valor para definir tamaño(em, rem. px, %).
+- fr: Son definidos como valores fracionarios. Tienen un comportamiento muy similar al valor de flex-grow.
+
+##### 16.2.1.1.2 Gap
+Espeficican la separacion entre columnas o filas respectivamente:
+Columnas:
+`grid-column-gap: value`
+
+Filas:
+`grid-row-gap: value`
+
+Posibles valores:
+- Unidades fijas o relativas.
+
+Shorthand:
+`grip-gap: value_row value_column`
+
+### 16.2.2 Grid-lines 
+Se encuentran a los lados de los tracks:
+- Izquierda y derechas para columnas.
+- Arriba y abajo para filas.
+### 16.2.3 Grid-cells
+La Interseccion entre una fila y una columna.
+### 16.2.4 Grid-areas
+Cualquier area rectangular delimitada por 4 *grid-lines*
+
+## 16.3 Grid-items
+Se consideran como grid-items a los:
+- Hijos directos
+- Pseudoelementos ::before y ::after
+- Texto
+
+### 16.3.1 Posicionamiento
+Con css-grid podemos colocar un elemento donde queramos. Esto lo hacemos especificandole la linea donde inicia y donde termina dicho elemento.
+Para esto utilizamos las porpiedades:
+```CSS
+.element {
+    grid-column-start: value;   /* Linea vertical inicial */
+    grid-row-start: value;      /* Linea horizontal inicial */
+    grid-column-end: value;     /* Linea vertical final */
+    grid-row-end: value;        /* Linea horizontal final */
+    
+    /*
+    Shorthands
+    grid-row: value_start / value_end;
+    grid-column: value_start / value_end;
+
+    Nota: tambien podemos contar columnas o filas, utilizando las unidad 'span'. Ejemplo. una grilla que ocupe desde la linea 1 hasta la cuarta columna:
+    grid-column: 1 / span 4; 
+    */
+}
+```
+**NOTA1:** Los grid-items pueden ser a su vez grid-containers.
+
+**NOTA:2** Los grid container tambien manejan las propiedades  *justified-content* y *aling-items*.
+
+## 16.4 Alineacion
+
+### 16.4.1 Items
+Estas alineaciones son para alinear el contenido de cada track. Las propiedades son muy parecidas a las de flex.
+
+En horizontal(x o inline) tenemos las propiedades:
+- justift-items (todos)
+- justify.self (uno en particular)
+ 
+En Vertical(y o block) tenemos las propiedades: 
+- align-items (todos)
+- aling-self (uno en particular)
+
+**NOTA:** Tambien se pueden utilizar margenes para alinear elementos.
+
+### 16.4.2 Container
+Estas propiedades las utilizamos para mover la alineacion de los tracks respecto al contenedor. Las propiedades son muy parecidas a las de flex.
+
+En horizontal(x o inline) tenemos las propiedades:
+- justift-content
+ 
+En Vertical(y o block) tenemos las propiedades: 
+- align-content
+
+## 16.5 Placement
+Exites dos clases de Grid:
+
+- Explicitos: Aquellos que definimos en la grilla, con grid-template.
+
+- Implicitos: Aquellos que el navegador crea automaticamente cuando ya hemos llenado nuestra grilla totalmente.
+
+Por defecto los elemento implicitos se ajustan a su contenido. Podemos definir su tamaño con.
+
+```CSS
+.container {
+    grid-auto-rows: value_size;
+    grid-auto-colums: value_size;
+
+    grid-auto-flow: value [dense]; /* Valores: row(predeterminado) | column. Esta propieda especifica algo asi como el eje principal.
+    
+    *dense* es un valor opcional. Es utilizado para llenar huecos en la grilla en el dado caso de que haya un salto de linea por un columna que hayamos fijado.
+    */
+}
+
+
+
+
+```
