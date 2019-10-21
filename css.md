@@ -1035,13 +1035,51 @@ Sintaxis:
 Valores Posibles:
 - Numero positivos(enteros o decimales). Por defecto, se distribuye uniformemente entre todos los elementos.
 
-#### 15.3.3.3 flex-basic
+#### 15.3.3.3 flex-basis
 Define el **tamaño inicial en el eje principal** puede ser width o height dependiendo del caso.
 
-Cuando esta asignado ignora la propiedad width o height(dependiendo del caso de como este configurado el eje principal).
+**IMPORTANTE:** Cuando esta asignado ignora la propiedad width o height(dependiendo del caso de como este configurado el eje principal).
 
 Sintaxis:
-`flex-basic: value`
+`flex-basis: value`
 
 Posibles valores:
 - Recibe los mismos valores que una propiedad *size*.
+
+#### 15.3.3.4 Flex
+Flex es un shorthand que agrupa a **flex-grow**, **flex-shrink** y **flex-basis**
+
+**Sintaxis:**
+`flex: value-grow value-shrink value-basis`
+
+**Keywords:**
+
+- initial (0 1 auto). Estos son los valores por defecto.
+- auto(1 1 auto)
+- none(0 0 auto)
+- n (n 0 0). Siendo *n* un numero positivo.
+
+#### 15.3.3.5 aling-self
+Nos sirve para linear un items en especifico. Lo podriamos utilizar en conjunto con la pseudoclase *nth-child()*.
+
+Sintasis:
+`align-self: value`
+
+Valores Posibles:
+- auto(por defecto. Sigue el flujo definido en el contenedor)
+- flex-start
+- flex-end
+- center
+- baseline
+- stretch
+
+#### 15.3.3.6 Order
+Nos permite colocar un elemento en la parte que deseemos. Sin importar el flujo del HTML.
+
+Se parece un poco a un *z-index*. Por defecto todos los elemento tienen un order:0.
+
+Sintaxis:
+`order: value`
+
+Valores posibles:
+- Cualquier numero entero.
