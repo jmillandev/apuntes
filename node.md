@@ -1,0 +1,83 @@
+# 1 Instalaciones Recomendadas
+
+1. [Postman](https://link): Para inspeccionar las peticiones al servidor.
+
+2. [VScode](https://link): No es obligatorio. Tambien se recomiendan las siguientes extensiones:
+- HTML CSS Support.
+- JavaScript(ES6) code snippets.
+- JS_CSS_HTML Formatter.
+- Terminal.
+- TypeScript Importer.
+
+3. [Git](https://link): Es un manejador de versiones.
+
+# 2 Paquetes Recomendados
+## 2.1 Nodemon
+[Nodemon](https://link): Este paquete nos sera de mucha ayuda para no tener que bajar y subir el servidor manualmente cada vez que hagamos un cambio. Este hara el reinicio automaticamente cuando note un cambio en alguno de los archivos.
+
+## 2.2 Yargs
+[Yargs](https://link): Nos sirve para manejar los argumentos de entrada en una app de linea de comandos.
+
+## 2.3 Request
+[Request](https://link): Nos sirve para hacer peticiones HTTP utilizando callbacks.
+**NOTA:** El metodo [encodeUrl()](https://link) nos puede servir de mucha ayuda. Sirve para escapar strign a uri amigables.
+
+## 2.4 Axios
+[Axios](https://link): Nos sirve para hacer peticiones HTTP utilizando promesas.
+**NOTA:** El metodo [encodeUrl()](https://link) nos puede servir de mucha ayuda. Sirve para escapar strign a uri amigables.
+
+## 2.5 EXPRESS
+[Express](https://link): Nos permite montar un servidor HTTP. Esta basado en la libreria HTTP que viene por defecto en node.
+
+## 2.6 Handlebars
+[hbs](https://link): Es un motor de platatillas(template engine) para express.
+
+## 2.7 Body-parser
+[text](https://link): No ayuda a leer mensajes serializados desde la URL(como por ejemplo los que son mandados por POST o PUT)
+
+# 2.8 Mongoose
+[Mongoose](https://link): Nos permite conectarnos a una base de datos NoSQL(MongoDB)
+
+# 2.9 Moogoose-unique-validator
+Nos permite mostrar de una manera mas amigable los errores.
+
+# 2.10 Bcrypt
+Nos sirve para ecriptar mensajes.
+
+# 3 Requireds
+Tenemos 3 tipos de required:
+
+1. De un proyecto propio de node: Son librerias que ya existen en node. No requieren de ningun paso adicional.
+Podemos encontrar dichas librerias en la [documentacion de node](https://link).
+Ejemplo:
+
+`const fs = require('fs')`
+
+2. Libreria externas. Paquetes que no son nativos de node.
+
+3. Archivos de nuestro proyecto. Ejemplos
+```javascript
+const module1 = require('./module1')
+const module2 = require('../modules/module2')
+```
+
+**NOTA:** los modulos se exportan a traves del metodo exports del objeto module. Este objeto esta disponible a en todo el proyecto. Dicho metodo recibe un JSON con las funciones,objetos,variable, etc a exportar.
+
+# 4 Objetos de NODE
+Durando el ciclo de vida de un programa en node hay varios objetos que corren en este. Algunos son:
+
+- module: Este contine valores como cuales son los modulos disponibles o exportados durante nuestra app.
+
+- process: Contiene muchos datos interesantes. Sobre que SO esta corriendo la app, arquitectura del procesaro,argumentos(argv), etc.
+
+# 5 proyecto con npm
+Podemos compartir y tener un control de versiones de las dependencias con npm como lo hariamos con composer en PHP.
+
+**NOTA:** Esto es muy importante hacerlo antes de instalar dependencias
+Sintasis: `npm init`
+
+# 5.1 script
+Al instalar o iniciar un proyecto. en el fichero package.json tenemos un atributo o propiedad *script*. En este estan todos los comando que podremos ejecutar desde nuestra app en produccion.
+Para correr un comando la sintaxis seria: `npm run name_comand`
+
+**NOTA:** Si montamos una app en Heroku por defecto esta ejecutara el servidor desde el script *start*.
