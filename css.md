@@ -1216,8 +1216,133 @@ Por defecto los elemento implicitos se ajustan a su contenido. Podemos definir s
     *dense* es un valor opcional. Es utilizado para llenar huecos en la grilla en el dado caso de que haya un salto de linea por un columna que hayamos fijado.
     */
 }
-
-
-
-
 ```
+
+# 17 Animaciones
+
+## 17.1 Triggers
+Los triggers son los cambios que ocurren en el navegador cuando una porpiedad de CSS es cambiada.
+
+Cuando se cambia una propiedad CSS, el navegador necesita reaccionar a ese cambio. Los tipos de cambios son de mayor a menor costo de recursos:
+
+1. Layout: Geometria y posicion de los elementos(muy costoso en recursos)
+
+2. Paint: Pintar los pixeles de los elementos(Cuesta menos que el layout pero de igual manera consume muchos recursos).
+
+3. Composite: Combina y dibuja las capas en pantalla(es el mas liviano de todos)
+    - Solo opacity y transform desencadenan composicion.
+    - Se fea una capa que almacena al objeto y solo esa capa es transformada(en lugar de repintar todos los elementos).
+
+Puedes observar con mas detalle la lista de elementos disparadores [acá](https://csstriggers.com). 
+
+NOTA: Existe una extension de VScode llamada css-triggers muy util. Esta basada en la lista del link de arriba.
+
+## 17.2 Valores iniciales
+Todas las porpiedades CSS tiene un valor inicial por defecto, asi no se lo asignemos. Este valor debe ser numerico para que para que pueda ejecutarse la animacion. De lo contrario el navegador no pueder calcular los valores intermedios de la animacion.
+
+NOTA: Hay elementos animables y otro que no lo son. Buscar tabla en MDN.
+
+## 17.3 Transiciones
+Las transiciones son los cambios(transiciones) que ocurren de una propiedad a otra en un determinado periodo de tiempo.
+
+### 17.3.1 Caracteristicas
+
+- Permiten que las propiedades CSS cam,bien suavemente en un periodo de tiempo determinado.
+- Se pueden definir multiples transiciones separadas por comas.
+Si los numeros de transiciones no coinciden con las multiples propiedades se hacen conincidir repitiendolas.
+
+### 17.3.2 Propiedades
+- nombre-propiedad: posible-valor | posible-valor | posible-valor | ...
+
+1. `transition-property: all | none | propiedad[,propiedad]`
+
+2. `transition-duration : 0s | time[,time]`. No se permiten valores negativos 
+
+3. `transition-delay: 0s.`Indica cuando la transicion iniciara, por defecto es 0s.
+
+4. `transition-timing-function: ease | linear | ease-in | ease-out | ease-in-out | step-start | step-out | steps()`. Como se calcula cada valor intermedio mientras dura la transción. Los **steps** Son muy utiles en el uso de sprites.
+
+5. `transition: transition-property transition-duration- transition-delay transition-time-function`. Es un shorthand.
+
+## 17.4 Animaciones
+Permiten cambiar propiedades CSS a traves de momentos en el tiempo definidos como **keyframes**. A diferencia de las *transiciones* que requieren de un cambio de propiedad para ejecutarse, las animaciones ejecutan por si mismas esos cambios de propiedades.
+
+### 17.4.1 Propiedades
+Se pueden iniciar varias animaciones separandolas por comas.
+
+**Propiedades minimas para animar:**
+- propiedades: posible-valor(valor por defecto) | posible-valor[,valor-opcional] | posible-valor
+
+1. `animation-name: none | nombre-animacion;`
+
+2. `animation-duration: 0s | time;` No se aceptan valores negativos.
+
+**Otras propiedades:**
+
+3. `animation-iteration-count: 1 | number | infinite;` Acepta numeros no enteros.
+
+4. `animation-timing-function: ease | ease-in |  ease-in-out |ease-out | linear | steps | cubic-bezier()`
+
+5. `animation-direction: normal | reverse | alternate | alternate-reverse`
+
+6. `animation-play-state: running | paused` Una animacion CSS no puede reiniciarse sin JS.
+
+7. `animation-delay: 0s | time` Acepta valores negativos.
+
+8. `animation-fill-mode: none | forwards | backwards | both`
+
+9.  `animation: values` Es un shorthand. La unica condicion en el orden de valores es que *animation-duration* va primero que *animation-delay*
+
+#### 17.4.1.1 CSS Timing Function
+
+##### 17.4.1.1.1 Cubic-bezier()
+Esta basada en una [curva bezier](https://link) como las utilizadas en programas de diseño para dibujar vectores.
+
+Es un concepto usado para indicar una relacion entre valores. En este caso es una curva que controla la relacion tiemp/cambio en la animacion:
+- Eje X(horizontal): Tiempo.
+- Eje Y (vertical) cambio de propiedades.
+
+**La Funcion cubic-bezier()** recibe cuatro parametros que son las coordenadas de los puntos de control de la curva:
+- animation-timing-function: cubic-bezier(P1x, P1y, P2x, P2y)
+- transition-timing-function: cubic-bezier(P!x, P1y, P2x, P2y)
+
+Posibles valores:
+- Los valores van de 0 a 1
+- Pueden ser mayores que 1(o negativos) en el eje Y(nunca en X porque es el tiempo)creando interesantes efectos.
+
+[Referencias](https://www.w3.org/TR/css-easing-1/)
+
+[Herramienta en linea](https://cubic-bezier.com/#.17,.67,.83,.67). Loas navegadores tambien tienen un editor en las herramientas de desarrolladores
+### 17.4.2 at-rule keyframes
+
+```CSS
+@keyframes nombre-animacion {
+
+    porcentaje | from | to { /* from=0% y to=100%*/
+        propiedad: valor;
+    }
+
+    50% { /* A mitad de la animacion llegara a este estado */
+        propiedad: valor;
+    }
+    to { /* Al final de la animacion llegara a este estado */
+        propiedad:valor;
+    }
+
+}
+```
+
+- Debe especificarse cada keyframe con el signo de %.
+- Los keyframe actuan como selectores por lo cual pueden agruparse con comas.
+- 0% no especificado: El navegador crea un keyframe 0% con los valores iniciales del elemento.
+- 100% no especificado: El navegador crea un keyframe 100% con los valores iniciales del elemento.
+- Las propiedades no animables cambian, pero sin animacion.
+- No tienen cascada, por lo tanto una animacion nunca tomara keyframe de mas de una at-rule keyframes.
+
+### 17.4.3 Controlar animaciones con JS
+#### 17.4.3.1 Evento animation
+Exites tres eventos con los cuales podemos interactuar desde Js con las animaciones en css:
+
+- animationstart: Al inicio de la animacion.
+- animationend: Al final de la animacion.
+- animationiteration: Al comenzar una nueva animacion.
