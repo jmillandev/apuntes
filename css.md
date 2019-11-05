@@ -1218,9 +1218,43 @@ Por defecto los elemento implicitos se ajustan a su contenido. Podemos definir s
 }
 ```
 
-# 17 Animaciones
+# 17 Transfromaciones
 
-## 17.1 Triggers
+## 17.1 Transfromaciones en 2D
+
+### 17.1.1 Coordenadas
+- X (Horizontal, izquierda hacia derecha).
+- Y (Vertical, arriba hacia abajo).
+
+El punto (0,0) es la esquina superior izquierda.
+
+Propiedad:
+- `transform-origin: x y`. Nos indica el origen de coordenadas para escalar y rotar un objeto, NO para trasladar. Su valores son cualquier unidad de tamaño y las keyword: left, right, bottom, top.
+### 17.1.2 Funciones transformacion
+Importante: El especio disponible del elemento transfromado siempre queda reservado.
+
+- Translate:
+`translate(x | x,y) | translateX() | translateY()`
+
+- Scale:
+`scale(x=y | x,y) | scaleX() | scaleY()`
+
+- Skew:
+`skew(x | x,y) | skewX() | skewY()`
+
+- Rotate: `rotate(<angle>)`.
+    Unidades de rotacion: 
+    - deg(360deg)
+    - grad(400grad)
+    - rad(6,2832rad)
+    - turn(1turn)
+
+
+## 17..2 Transformaciones en 3D
+
+# 18 Animaciones
+
+## 18.1 Triggers
 Los triggers son los cambios que ocurren en el navegador cuando una porpiedad de CSS es cambiada.
 
 Cuando se cambia una propiedad CSS, el navegador necesita reaccionar a ese cambio. Los tipos de cambios son de mayor a menor costo de recursos:
@@ -1237,21 +1271,21 @@ Puedes observar con mas detalle la lista de elementos disparadores [acá](https:
 
 NOTA: Existe una extension de VScode llamada css-triggers muy util. Esta basada en la lista del link de arriba.
 
-## 17.2 Valores iniciales
+## 18.2 Valores iniciales
 Todas las porpiedades CSS tiene un valor inicial por defecto, asi no se lo asignemos. Este valor debe ser numerico para que para que pueda ejecutarse la animacion. De lo contrario el navegador no pueder calcular los valores intermedios de la animacion.
 
 NOTA: Hay elementos animables y otro que no lo son. Buscar tabla en MDN.
 
-## 17.3 Transiciones
+## 18.3 Transiciones
 Las transiciones son los cambios(transiciones) que ocurren de una propiedad a otra en un determinado periodo de tiempo.
 
-### 17.3.1 Caracteristicas
+### 18.3.1 Caracteristicas
 
 - Permiten que las propiedades CSS cam,bien suavemente en un periodo de tiempo determinado.
 - Se pueden definir multiples transiciones separadas por comas.
 Si los numeros de transiciones no coinciden con las multiples propiedades se hacen conincidir repitiendolas.
 
-### 17.3.2 Propiedades
+### 18.3.2 Propiedades
 - nombre-propiedad: posible-valor | posible-valor | posible-valor | ...
 
 1. `transition-property: all | none | propiedad[,propiedad]`
@@ -1264,10 +1298,10 @@ Si los numeros de transiciones no coinciden con las multiples propiedades se hac
 
 5. `transition: transition-property transition-duration- transition-delay transition-time-function`. Es un shorthand.
 
-## 17.4 Animaciones
+## 18.4 Animaciones
 Permiten cambiar propiedades CSS a traves de momentos en el tiempo definidos como **keyframes**. A diferencia de las *transiciones* que requieren de un cambio de propiedad para ejecutarse, las animaciones ejecutan por si mismas esos cambios de propiedades.
 
-### 17.4.1 Propiedades
+### 18.4.1 Propiedades
 Se pueden iniciar varias animaciones separandolas por comas.
 
 **Propiedades minimas para animar:**
@@ -1293,9 +1327,9 @@ Se pueden iniciar varias animaciones separandolas por comas.
 
 9.  `animation: values` Es un shorthand. La unica condicion en el orden de valores es que *animation-duration* va primero que *animation-delay*
 
-#### 17.4.1.1 CSS Timing Function
+#### 18.4.1.1 CSS Timing Function
 
-##### 17.4.1.1.1 Cubic-bezier()
+##### 18.4.1.1.1 Cubic-bezier()
 Esta basada en una [curva bezier](https://link) como las utilizadas en programas de diseño para dibujar vectores.
 
 Es un concepto usado para indicar una relacion entre valores. En este caso es una curva que controla la relacion tiemp/cambio en la animacion:
@@ -1313,7 +1347,7 @@ Posibles valores:
 [Referencias](https://www.w3.org/TR/css-easing-1/)
 
 [Herramienta en linea](https://cubic-bezier.com/#.17,.67,.83,.67). Loas navegadores tambien tienen un editor en las herramientas de desarrolladores
-### 17.4.2 at-rule keyframes
+### 18.4.2 at-rule keyframes
 
 ```CSS
 @keyframes nombre-animacion {
@@ -1339,8 +1373,8 @@ Posibles valores:
 - Las propiedades no animables cambian, pero sin animacion.
 - No tienen cascada, por lo tanto una animacion nunca tomara keyframe de mas de una at-rule keyframes.
 
-### 17.4.3 Controlar animaciones con JS
-#### 17.4.3.1 Evento animation
+### 18.4.3 Controlar animaciones con JS
+#### 18.4.3.1 Evento animation
 Exites tres eventos con los cuales podemos interactuar desde Js con las animaciones en css:
 
 - animationstart: Al inicio de la animacion.
