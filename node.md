@@ -27,7 +27,8 @@
 **NOTA:** El metodo [encodeUrl()](https://link) nos puede servir de mucha ayuda. Sirve para escapar strign a uri amigables.
 
 ## 2.5 EXPRESS
-[Express](https://link): Nos permite montar un servidor HTTP. Esta basado en la libreria HTTP que viene por defecto en node.
+[Express](https://www.npmjs.com/package/express): Nos permite montar un servidor HTTP. Esta basado en la libreria HTTP que viene por defecto en node.
+
 
 ## 2.6 Handlebars
 [hbs](https://link): Es un motor de platatillas(template engine) para express.
@@ -39,6 +40,7 @@
 [Mongoose](https://link): Nos permite conectarnos a una base de datos NoSQL(MongoDB)
 
 # 2.9 Moogoose-unique-validator
+[Mongoose-unique-validator](https://www.npmjs.com/package/mongoose-unique-validator)
 Nos permite mostrar de una manera mas amigable los errores.
 
 # 2.10 Bcrypt
@@ -46,6 +48,9 @@ Nos sirve para ecriptar mensajes.
 
 # 2.11 Jsonwebtoken
 Nos sirve para la genereacio y firma de JWT.
+
+# 2.12 express-fileupload
+Bueno, como su nombre indidca este paquete nos ayudara a la subida de archivos a nuestro servidor.
 
 # 3 Requireds
 Tenemos 3 tipos de required:
