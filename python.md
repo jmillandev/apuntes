@@ -622,7 +622,9 @@ En este caso, la función range es un iterable que regresa un nuevo valor en cad
 
 Los generators son simplemente una forma rápida de crear iterables sin la necesidad de declarar una clase que implemente el protocolo de iteración. Para crear un generator simplemente declaramos una función y utilizamos el keyword **yield** en vez de return para regresar el siguiente valor en una iteración. Por ejemplo,
 
-```[python]
+Los generadores pueden ser muy aparecidos a las listas. Una de las diferencias es que los generadores ocupan menos espacio en memoria, ya que van "llamando" un elemento a su vez.
+
+```python
 def fibonacci(max):
     a, b = 0, 1
     while a < max:
@@ -632,12 +634,33 @@ def fibonacci(max):
 
 ***Es importante*** recalcar que una vez que se ha agotado un generator ya no podemos utilizarlo y debemos crear una nueva instancia. Por ejemplo,
 
-```[python]
+```python
 fib1 = fibonacci(20)
 fib_nums = [num for num in fib1]
 ...
 double_fib_nums = [num * 2 for num in fib1] # no va a funcionar
 double_fib_nums = [num * 2 for num in fibonacci(30)] # sí funciona
+```
+
+### Yield From
+
+Una caracteristica de los generadores en python poco conocida/utilizada son los `yield from` Estos nos permiten "insertar" generadores dentro de otro.
+
+```python
+def frutas():
+    for fruta in ('manzana','pera','limon','patilla'):
+	yield fruta
+
+def comestibles():
+    for comestible in ('pan','arepa','tamal',pasta'):
+	yield comestible
+
+    yield from frutas()
+
+    yield 'arroz'
+
+list(comestible())
+# ['pan','arepa','tamal',pasta','manzana','pera','limon','patilla','arroz']
 ```
 
 # Comprehensions
