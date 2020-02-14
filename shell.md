@@ -75,9 +75,9 @@ forma recursiva
     - -name: Nombre del fichero.
     - -mtime: Delta de la fecha de modificacion del fichero.
 
-- **grep** [SEARCH] [PATH]: Busca segun una determinada condicion palabras en un fichero o path.
+- **grep** [PATTERN] [PATH]: Busca segun un patron en un fichero o path.
     - -w: Busca una palabra aislada. 
-
+    - -v: Retorna las lineas que no coinciden con el patron.
 - **diff** [FILE1] [FILE2]: Muestra las diferencias entre dos ficheros linea a linea.
 
 - **wc** < [FILE] : Word Count, Retorna el numero de lineas, de palabras y de caracteres contenidos en FILE.
@@ -201,6 +201,19 @@ var #Valor de la variable var si esta esta definida.
 {var+valor} #Usa valor si la variable var esta difinida.
 ```
 
+# Metacaracteres
+- *: Coincide con cualquier cadena.
+- ?: Coincide con un caracter.
+- [xyz]: Uno de los caracteres del conjunto.
+- [a-z]: Uno de los caracteres del rango.
+- \c: Coincide con c literalmente.
+- 'cadena': Coincide con una cadena literalmente.
+- "cadena": Coincide con una cadena literalmente salvo variables de shell que se susituyen por su valor.
+
+**SOLO DE USO EN CASE:**
+- patron1|patron2 : Coincide con uno(cualquiera) de los dos patrones.
+
+
 # Inicializacion de la Shell
 Cuando se ejecuta una shell interactiva esta ejecuta unos scripts de inicializacion que asignan valores predeterminados por el usuario para variables especiales y de entorno, y ejecutan comandos.
 
@@ -231,13 +244,87 @@ acabado de ejecutarse.
 ## Estructura
 Los shell scripts son script de alto nivel y permiten la utilizacion de una estructura bastante comun en lenguajes de programacion:
 
-- Bucles.
-- Interaciones.
-- Bifurcacion.
-- Definicion de funciones.
-- Evaluacion de expreciones.
-- Manejo de I/O.
-- Manejo de interrucciones y control de procesos.
+### Bucles.
+### Interaciones.
+### Bifurcacion.
+Tenemos dos casos:
+1. CASE:
+**NOTAS:**
+- El comando de cierre es 'case' al reves es decir esac.
+- La lista de comando termina con un ';;'
+- La lista de comando esta separada por  newline o ';'
+- Los patrones especifican un conjunto de cadenas.
+- valor, Suele ser del tipo $variable.
+- El ultima patron suele ser *, para indicar una accion por defecto.
+
+```shell
+case valor in
+    patron1) lista de comnados 1;;
+    patron2) lista de comandos 2;;
+    ....
+    patronN) lista de comando n;;
+esac
+```
+
+2. If
+```shell
+If condicion
+then
+    lista de comandos 1
+elif
+    lista de comando 2
+...
+else
+    lista de comando n
+fi
+```
+Las comprobaciones se realizan con el comando `test` de las siguiente manera
+
+```shell
+test condition
+[ condition ]
+
+# Ambas sentencias son analogas. Fijese en los dos espacios en blancos en ls lados internos de los [], Estos son de vital importancia.
+```
+#### Comprobaciones con test
+Evalua una condicion devuelve un **cero** como un valor **verdadero**. En caso de una condicion falsa devuelve un valor distinto de 0.
+
+1. Comprobaciones de ficheros:
+
+- -d [FICHERO]: El fichero existe y es un directorio
+- -f [FICHERO]: El fichero existe y es un fichero
+- -r [FICHERO]: El fichero existe y tiene permisos de lectura
+- -s [FICHERO]: El fichero existe y tiene una longitud mayor a cero
+- -w [FICHERO]: El fichero existe y tiene permisos de escritura
+- -x [FICHERO]: El fichero existe y tiene permisso de ejecucion
+
+2. Comprobaciones para cadenas:
+
+- cadena: cadena no nula
+- -n cadena la cadena es de longitud mayor a 0.
+- -z la cadena es de longitud 0.
+- cadena 1 = cadena2:  Las dos cadenas son identicas
+- cadena 1 != cadena2:  Las dos cadenas no son identicas
+
+3. Comprobaciones con enteros.
+
+- n1 -eq n2 : n1 es igual a n2
+- n1 -neq n2 : n1 no es igual a n2
+- n1 -gt n2 : n1 es mayor que n2
+- n1 -lt n2 : n1 es menor que n2
+- n1 -le n2 : n1 es menor o igual que n2
+
+4. Expresiones:
+
+- ! expr : Negacion de una exprecion
+- (...) : Agrupacion de expresiones.
+- e1 -a e2 : And logico
+- e1 -o e2 : Or logico.
+
+### Definicion de funciones.
+### Evaluacion de expreciones.
+### Manejo de I/O.
+### Manejo de interrucciones y control de procesos.
 
 ## Pasos para hacer un shell script
 1. Editar el fichero:
@@ -246,7 +333,7 @@ Los shell scripts son script de alto nivel y permiten la utilizacion de una estr
 2. Dar permisos de ejecucion la fichero:
 `chmod +x script`
 
-3. Ejecutar y probar el script:
+3. Ejecutar y probar el script: el parametro -x es para hacer debug
 `bash -x script [opciones] [argumentos]`
 
 4. Usar el script:
@@ -286,47 +373,5 @@ comando: a
 ### Al comienzo de la nueva linea:
 comando: o
 
-## Cómo salir de VI/VIM
-En el modo comandos
-1. salir guardando los cambios. Comando: :wq! ó ZZ
-2. salir sin guardar cambios. Comando: :q!
-## Moverse un espacio a la derecha
-comando: l
-## Copiar linea
-comando: yy
-## Borrar linea
-comando: dd
-## Borrar carácter
-comando: x
-## Pegar linea
-comando: [SHIFT] + p
 
-## Pegar portapapeles
-comando: [SHIFT] + Insert
 
-## Supender edicion
-comando: ^Z
-**NOTA:** Se recupera con fg
-
-## Deshacer ultimo cambio
-comando: u
-
-## Buscar <Texto> hacia adelante:
-comando: /<Texto>
-
-## Insertar el contenido de un fichero:
-comando: :r [FICHERO]
-
-## Opciones(Banderas):
-- -r [FILE] :Recupera y edita "FILE" despues de una caida del sistema o del editor VI/VIM.
-- +n: Edita el fichero en la linea n.
-
-# Directorios de interes:
-
-- **/bin, /usr/bin**: Comandos basicos del sistema(ls, mv, pwd, etc)
-- **/usr/local**: Comandos propios de la instalcion local
-- **/etc**: Administracion del sistema.
-- **/dev**: Dispositivos(discos, red, impresoras, etc)
-- **/home**: Usuarios del sistema.
-- **/tmp, /usr/tmp**: Ficheros temporales con permisos para todos.
-- **/lib, usr/lib**: Bibliotecas del sistema.
