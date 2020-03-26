@@ -103,11 +103,9 @@ Cuando usamos Python debemos atender ciertas reglas de la comunidad para definir
 * **Input**: var = input('message of input')
 
 ## Main
- Cuando guardamos un archivo para luego ejecutarlo, se ejecutara lo que esta escrito en '__main__'.
+Cada ves que ejecutamos un script esta presente la variable **__name__**, esta retornara el nombre del modulo en el caso de que este se importado desde otro script. Y retornara el valor '__main__' en el caso de que nos encontremos en el modulo que fue ejecutados desde la CLI. Es decir, Cuando ejecutamos un script desde la terminal, la variable **__name__** obtiene el valor de "__main__". De esta manera cuando deseemos ejecutar un codigo SOLO si el modulo es ejecutado(no importado). Lo estructuraremos de la siguiente manera:
 
- Ej:
-
- ```[python]
+ ```python
  # Todas las funciones y codigo necesario para el programa.
 
  if __name__ == '__main__':
@@ -170,67 +168,70 @@ En python *todas* las variables son visibles, aunque existe una sintaxis para di
 Son utilizados para hacer asignaciones a las variables:
 
 * **=**: Asignar. Ej: 
-```[python] 
+```python
  >>> a = 10
  >>> a
  10
 ```
 * **+=**: Sumar y asignar. Ej:
-```[python]
+```python
  >>> a = 10
  >>> a += 5
  >>> a
  15
 ``` 
 * **-=**: Restar y asignar. Ej:
-```[python]
+```python
  >>> a = 10
  >>> a -= 5
  >>> a
  5 
 ```
 * **/=**: Dividir y asignar. Ej:
- ```[python]
+ ```python
  >>> a = 10
  >>> a /= 3
  >>> a
  3.333 
  ```
 * **//=**: Division Entera y asignar. Ej:
- ```[python]
+
+ ```python
  >>> a = 10
  >>> a //= 3
  >>> a
  3
  ```
+
 * **%=**: Modulo y asignar. Ej:
- ```[python]
+ ```python
  >>> a = 10
  >>> a %= 3
  >>> a
  1
  ```
 * **\*=**: Multiplicar y asignar. Ej:
- ```[python]
+ ```python
  >>> a = 10
  >>> a *= 3
  >>> a
  30
  ```
 * **\*\*=**: Sacar potencia y asignar. Ej:
- ```[python]
+ ```python
  >>> a = 2
  >>> a **= 8
  >>> a
  256
  ```
 * **or**: si el valor a la izquierda es (nulo, falso o vacio) asigna el valor a la derecha. Ej: 
- ```[python]
+
+```python
  >>> a = False
  >>> b = a or 50
  >>> b
  50 
- ```
+```
 ## Comparacion
 
 Nos sirven para comparar valores:
@@ -288,7 +289,7 @@ Las funciones las defines con **def** junto a un nombre y unos paréntesis que r
 
 Después por indentación colocas los datos que se ejecutarán desde la función:
 
-``` [python]
+```python
  >>> def my_first_function():
  ...	return “Hello World!” 
  ...    
@@ -376,7 +377,7 @@ Python incluye varias built-in functions en su librería estándar(recuerda que 
 
 Las variables, a diferencia de los demás lenguajes de programación, no debes definirlas, ni tampoco su tipo de dato, ya que al momento de iterarlas se identificará su tipo. Recuerda que en Python todo es un objeto.
 
-``` [python]
+```python
  A = 3 
  B = A
 ```
@@ -401,7 +402,7 @@ Los String son declaradas entre comillas simples('') o doble(""). Son inmutables
 
 ### Listas
 Las listas las declaras con corchetes. Estas pueden tener una lista dentro o cualquier tipo de dato.
-``` [python]
+```python
  >>> L = [22, True, ”una lista”, [1, 2]]
  >>> L_none = list() 
  >>> L[0] 
@@ -423,7 +424,7 @@ la primera es una **cadena o número** que  será la clave para acceder al segun
 
 *Los diccionarios se inicializan con {} o con la función dict*
 
-``` [python]
+```python
  >>> D = {"Kill Bill": "Tamarino", "Amelie": "Jean-Pierre Jeunet"} 
  >>> D["Kill Bill"]
  "Tamarino"
@@ -438,7 +439,7 @@ la primera es una **cadena o número** que  será la clave para acceder al segun
 
 ### Tuplas
 Las tuplas son similares a las listas. Estas se declaran con paréntesis, recuerda que no puedes editar los datos de una tupla después de que la has creado pues son inmutables.
-``` [python]
+```python
  >>> T = (22, True, "una tupla", (1, 2))
  >>> T_none = tuple() 
  >>> T[0] 
@@ -447,7 +448,7 @@ Las tuplas son similares a las listas. Estas se declaran con paréntesis, recuer
 
 ### Set o Conjuntos
 Los conjuntos son elementos sin orden y no permiten elementos repetidos.
-``` [python]
+```python
  >>> S = set()
  >>> s.add(5)
  {5}
@@ -462,28 +463,28 @@ Los conjuntos son elementos sin orden y no permiten elementos repetidos.
 
 * De flotante a entero:
 
-``` [python]
+```python
  >>> int(4.3)
  4
 ```
 
 * De entero a flotante:
 
-``` [python]
+```python
  >>> float(4) 
  4.0
 ```
  
 * De entero a string:
 
-``` [python]
+```python
  >>> str(4.3) 
  "4.3"
 ``` 
 
 * De tupla a lista:
 
-``` [python]
+```python
  >>> list((4, 5, 2)) 
  [4, 5, 2]
 ```
@@ -492,49 +493,49 @@ Los conjuntos son elementos sin orden y no permiten elementos repetidos.
 
 ## Longitud de una cadena, lista, tupla, etc.:
 
-``` [python]
+```python
  >>> len("key") 
  3
 ```
 
 ## Tipo de dato:
 
-``` [python]
+```python
  >>> type(4) 
  < type int >
 ```
  
 ## Aplicar una conversión a un conjunto como una lista:
 
-``` [python]
+```python
  >>> map(str, [1, 2, 3, 4])
  ['1', '2', '3', '4']
 ```
  
 ## Redondear un flotante con x número de decimales:
 
-``` [python]
+```python
 >>> round(6.3243, 1)
  6.3
 ```
  
 ## Generar un rango en una lista (esto es mágico):
 
-``` [python]
+```python
  >>> range(5) 
  [0, 1, 2, 3, 4]
 ```
  
 ## Sumar un conjunto:
 
-``` [python]
+```python
  >>> sum([1, 2, 4]) 
  7
 ```
 
 ## Organizar un conjunto:
 
-``` [python]
+```python
  >>> sorted([5, 2, 1]) 
  [1, 2, 5]
 ```
@@ -547,7 +548,7 @@ Se utilizan para verificar si un valor esta dentro de un iterable, retornan un b
 
 ## Conocer los comandos que le puedes aplicar a x tipo de datos:
 
-``` [python]
+```python
  >>>Li = [5, 2, 1]
  >>>dir(Li)
  >>>['append', 'count', 'extend', 'index', 'insert', 'pop', 'remove', 'reverse', 'sort']
@@ -557,7 +558,7 @@ Se utilizan para verificar si un valor esta dentro de un iterable, retornan un b
 
 ## Información sobre una función o librería:
 
-``` [python]
+```python
  >>> help(sorted) 
  (Aparecerá la documentación de la función sorted)
 ``` 
@@ -568,7 +569,7 @@ Clases es uno de los conceptos con más definiciones en la programación, pero e
 
 Para crear un constructor haces una función dentro de la clase con el nombre ***__init__*** y de parámetros self (significa su clase misma), nombre_r y edad_r:
 
-```[python]
+```python
  >>> class Estudiante(object): 
  ... 	def __init__(self,nombre_r,edad_r): 
  ... 		self.nombre = nombre_r 
@@ -607,7 +608,7 @@ Es un constructor de nuestra clase, es decir, es un “método especial” que s
 
 Un iterator es simplemente un objeto que cumple con los requisitos del Iteration Protocol (protocolo de iteración) y por lo tanto puede ser utilizado en ciclos. Por ejemplo,
 
-```[python]
+```python
 for i in range(10):
     print(i)
 ```
@@ -622,7 +623,7 @@ En este caso, la función range es un iterable que regresa un nuevo valor en cad
 
 Los generators son simplemente una forma rápida de crear iterables sin la necesidad de declarar una clase que implemente el protocolo de iteración. Para crear un generator simplemente declaramos una función y utilizamos el keyword **yield** en vez de return para regresar el siguiente valor en una iteración. Por ejemplo,
 
-```[python]
+```python
 def fibonacci(max):
     a, b = 0, 1
     while a < max:
@@ -632,7 +633,7 @@ def fibonacci(max):
 
 ***Es importante*** recalcar que una vez que se ha agotado un generator ya no podemos utilizarlo y debemos crear una nueva instancia. Por ejemplo,
 
-```[python]
+```python
 fib1 = fibonacci(20)
 fib_nums = [num for num in fib1]
 ...
@@ -659,7 +660,7 @@ Son constructos que nos permiten generar secuencias a partir de otras secuencias
 # Condicionales IF
 Los condicionales tienen la siguiente estructura. Ten en cuenta que lo que contiene los paréntesis es la comparación que debe cumplir para que los elementos se cumplan.
 
-``` [python]
+```python
  if ( a > b ):
  	elementos 
  elif ( a == b ): 
@@ -673,14 +674,14 @@ Los condicionales tienen la siguiente estructura. Ten en cuenta que lo que conti
 ## FOR
 El bucle de for lo puedes usar de la siguiente forma: recorres una cadena o lista a la cual va a tomar el elemento en cuestión con la siguiente estructura:
 
-```[python]
+```python
  for i in ____:
  	elementos
 ```
 	 
 Ejemplo:
 
-``` [python]
+```python
  for i in range(10):
  	print i
 ```
@@ -690,14 +691,14 @@ En este caso recorrerá una lista de diez elementos, es decir el `print i` debe 
 ## WHILE
 En este caso while tiene una condición que determina hasta cuándo se ejecutará. O sea que dejará de ejecutarse en el momento en que la condición deje de ser cierta. La estructura de un while es la siguiente:
 
-``` [python]
+```python
  while (condición):
  	elementos
 ```
 
 Ejemplo:
 
-``` [python]
+```python
  >>> x = 0 
  >>> while x < 10: 
  ... 	print x 
@@ -724,7 +725,7 @@ escriban los datos y no se desperdicie memoria.
 Una mejor manera de manipular archivos  y una buena practica es utilizando context managers,
 porque garantizan que el archivo se cierre, Ej.
 
-``` [python]
+```python
 with open(filename) as f:
 # do something with the file
 ```
@@ -733,7 +734,7 @@ with open(filename) as f:
 Existen varios modos de abrir un archivo. Los más importantes son r (read),
 w (write), a (append).
 
-```[python]
+```python
 with open(filename, mode=’w’) as f:
 # do something with the file
 ```
@@ -760,7 +761,7 @@ funciones. Estas envuelven a otra función y permiten ejecutar código antes y
 después de que es llamada
 Ejemplo de definicion de un decorador:
 
-``` [python]
+```python
 def lower_case(func):
 	def wrapper():
 		# execute code before
@@ -772,7 +773,7 @@ def lower_case(func):
 ```
 **Importante**, la funcion donde vayamos a ejecutar el decorador debera estar predecedida por la llamada a el decorador ejemplo:
 
-``` [python]
+```python
 @lower_case()
 def my_function (arg)
 	pass
@@ -780,7 +781,7 @@ def my_function (arg)
 
 **Nota**: Cuando declaramos la function aux wraper es comun pasarle como parametros (*arg,**kwargs). Ejemplo:
 
-``` [python]
+```python
 def lower_case(func):
 	def wrapper(*arg,**kwargs):
 		# execute code before
@@ -807,7 +808,7 @@ Todos los objetos son una instancia de una clase
 
 Ejemplo:
 
-``` [python]
+```python
 class Airplane:
 	def __init__(self, passengers, seats, pilots=[]):
 		self.passengers = passengers
@@ -836,7 +837,7 @@ Por ejemplo,
 
 Por ejemplo, si queremos tener el comportamiento de un diccionario podemos escribir el siguiente código:
 
-``` [python]
+```python
 class SecretDict(collections.UserDict):
 
    def _password_is_valid(self, password):
@@ -859,7 +860,7 @@ my_secret_dict[‘some_password:some_key’] # si el password es válido, regres
 
 Otra estructura de datos que vale la pena analizar, es **namedtuple**. Usualmente utilizamos tuples que permiten acceder a sus valores a través de índices. Sin embargo, en ocasiones es importante poder nombrar elementos (en vez de utilizar posiciones) para acceder a valores y no queremos crear una clase ya que únicamente necesitamos un contenedor de valores y no comportamiento.
 
-``` [python]
+```python
 Coffee = collections.NamedTuple(‘Coffee’, (‘size’, ‘bean’, ‘price’))
 def get_coffee(coffee_type):
      If coffee_type == ‘houseblend’:
@@ -888,7 +889,7 @@ Para utilizar cualquier modulo deberemos importarlo con la siguiente linea de co
 
 Una vez importado el modulo para hacer referencia a las funciones, objetos, variables definidos en dicho modulo deberemos hacer referencia de la siguiente manera:
 
-``` [python]
+```python
 model_name.variable_name
 model_name.function_name
 model_name.class_name
@@ -896,7 +897,7 @@ model_name.class_name
 
 Si requerimos solamente el uso de ciertos metodos, del modulo podriamos importar exclusivamente esa definicion de la siguiente manera:
 
-``` [python]
+```python
 from model_name import function
 
 hola = funtion()
@@ -921,7 +922,7 @@ Esta libreria nos permite la manipulacion de archivos en formato xls (hojas de c
  
  Codigo de interes:
 1. Lectura de archivos: 
-``` [pythom]
+```python
 from openpyxl import load_workbook
 
 FILE_PATH = 'test.xlsx'
@@ -937,11 +938,12 @@ for row in sheetiter_rows(min_row=2)
     print(row[2].value)
 ```
 ***NOTA:*** El atributo min_row no es obligatorio, este indica a partir de cual fila comenzara al iteracion, para el ejemplo es la segunda fila. Por defecto es la primera
+
 # Scopes and NameSpace
 
 En Python, un **name**, también conocido como **identifier**, es simplemente una forma de otorgarle un nombre a un objeto. Mediante el nombre, podemos acceder al objeto. Vamos a ver un ejemplo:
 
-``` [python]
+```python
 my_var = 5
 
 id(my_var) # 4561204416
@@ -950,7 +952,7 @@ id(5) # 4561204416
 
 En este caso, el **identifier** my_var es simplemente una forma de acceder a un objeto en memoria (en este caso el espacio identificado por el número 4561204416). Es importante recordar que un name puede referirse a cualquier tipo de objeto (incluso a funciones).
 
-``` [python]
+```python
 def echo(value):
     return value
 
@@ -978,7 +980,7 @@ En cualquier momento determinado, el programa tiene acceso a tres scopes:
 
 Cuando se solicita un objeto, Python busca primero el nombre en el scope local, luego en el global, y por último, en el raíz. Cuando anidamos una función dentro de otra función, su scope también queda anidado dentro del scope de la función padre.
 
-``` [python]
+```python
 def outer_function(some_local_name):
     def inner_function(other_local_name):
          # Tiene acceso a la built-in function print y al nombre local some_local_name
@@ -990,7 +992,7 @@ def outer_function(some_local_name):
 
 Para poder manipular una variable que se encuentra fuera del scope local podemos utilizar los keywords global y nonlocal.
 
-``` [python]
+```python
 some_var_in_other_scope = 10
 
 def some_function():
@@ -1008,7 +1010,7 @@ Por lo tanto es una buena practicar que manejemos los posibles errores que pueda
 Para “aventar” un error utilizamos el keyword raise.
 Ej.
 
-``` [python]
+```python
 def divide(numerator, denominator):
 
 If denominator == 0:
@@ -1022,7 +1024,7 @@ Ej.
 
 Si queremos evitar que termine el programa y tenemos una estrategia para responder al error podemos utilizar los keyword **try** / **except**
 Ej.
-``` [python]
+```python
 try:
 	airplane.takeoff()
 except TakeOffError as error:
@@ -1030,7 +1032,7 @@ except TakeOffError as error:
 ```
 El esqueleto de una estructura **try** es:
 
-``` [python]
+```python
 try:
 	#run this code
 except
@@ -1046,7 +1048,7 @@ Si desea conoces mas acerca de los errores y como manejarlos visita el [web site
 
 Son objetos de Python que proveen información contextual adicional al bloque de código. Esta información consiste en correr una función (o cualquier callable) cuando se inicia el contexto con el keyword with; al igual que correr otra función cuando el código dentro del bloque with concluye. Por ejemplo:
 
-``` [python]
+```python
 with open(‘some_file.txt’) as f:
     lines = f.readlines()
 ```
@@ -1060,7 +1062,7 @@ Existen dos formas de *implementar* un context manager:
 
 Vamos a implementar la funcionalidad anterior para ilustrar el punto:
 
-``` [python]
+```python
 class CustomOpen(object):
     def __init__(self, filename):
         self.file = open(filename)
@@ -1079,7 +1081,7 @@ Esta es simplemente una clase de Python con **dos métodos** adicionales: ***ent
 
 El mismo código puede implementarse utilizando el módulo **contextlib** que forma parte de la librería estándar de Python.
 
-``` [python]
+```python
 from contextlib import contextmanager
 
 @contextmanager
@@ -1150,6 +1152,79 @@ Ej. cambios en los procesos de toma de decisiones
 * **PEP20**: import this.
 
 https://www.python.org/dev/peps/
+
+# Unit Testing
+
+## Doctest
+Las pruebas unitarias son un conjunto de pruebas que le ofrecen a nuestra aplicacion ser mas robusta.
+
+En el stack de python viene incluido el modulo de doctest. Este nos permitira realizar pruebas unitarias de una manera muy sencilla. Para ello en un archivo tipeamos nuestras operaciones de la siguiente manera:
+```python
+>>> 2 + 2
+4
+
+>>> 3*3 != 10
+True
+```
+
+Suponiendo que el archivo se llama *test.txt* lo ejecutamos de la siguiente manera: `python3 -m doctest test.txt`. De esta manera ejecutamos las pruebas en nestro archivo.
+
+Tambien podemos realizar nuestros tests directamente en el DocString de nuestras funciones o metodos.
+
+```python
+"""
+from functools import lru_cache
+
+@lru_cache()
+def fibonacci(number):
+    """
+    Retorn el numero n de la serie de fibonacci dado un n number
+        >>> fibonacci(5)
+        5
+
+        >>> fibonacci(11)
+        89
+
+    """
+    if number <= 1:
+        return number, number
+    return (fibonacci(number-1)[0] + fibonacci(number-2)[0]), number
+if __name__ == '__main__':
+    fibonacci(200)
+    print('Informacion del cache: ', fibonacci.cache_info())
+    # Para limpiar la cache en caso de que lo deseemos aplicamos el metodo fibonacci.cache_clear()
+```
+Para testearlo aplicamos el mismo comando. `python3 -m doctest fibonacci.py`
+
+Podemos realizar tarea bastante complejas y que requieran varias instrucciones. Para ellos nos podemos apoyar de un fichero como el del primer ejemplo.
+
+## Asserts
+Este es un feature de python que nos permite validar y testear nuestro codigo de una manera sencilla. Aca, evaluaremos una expresion y siempre que esta nos retorne False se le vantara una Exception de tipo AssertionError. Ejemplo:
+
+```python
+assert True
+assert False, 'Este es el mensaje de la Exception'
+AssertionError: Este es el mensaje de la Exception
+```
+
+## Otros
+
+Adicionalmente existe la libreria [pytest](https://docs.pytest.org/en/latest) y el framework [unittest](https://docs.python.org/3/library/unittest.html). Se recomiendo la utlizacion del segundo, ya que es mas robusto.
+
+## Covertura
+La covertura es utilizada para ver que porcentaje de nuestro codigo se esta ejecutando, con nuestras Pruebas unitarias. Si se esta ejecutando el 100%. Esto indica que nuestro codigo no deberia tener fallas(Logiacamente si paso todos los test).
+
+Para realizar esto nos vamos a apoyar de la libreria [coverage](https://coverage.readthedocs.io/en/coverage-5.0.4/)
+
+Una vez intalada. Ejecutamos las siguiente lineas de codigo
+```zsh
+coverage run test.py #Suponiendo que el fichero test.py se encuentran nuestras pruebas unitarias de nuestro script.py
+
+coverage report -m script.py #Esto nos mostrara un reporte con: Lineas totales, Lineas no ejecutadas, Porcentaje de lineas no ejecutadas, Numero de las lineas que no fueron ejecutas.
+
+coverage html script.py # Esto nos  creara un reporte en un archivo html
+```
+PD: Los reportes creados en archivos html deben observarse desde un servidor web. El comando `python3 -m http.server` nos ayudara con esto.
 
 # Cómo seguir
 
