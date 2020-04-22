@@ -1209,10 +1209,10 @@ AssertionError: Este es el mensaje de la Exception
 
 ## Otros
 
-Adicionalmente existe la libreria [pytest](https://docs.pytest.org/en/latest) y el framework [unittest](https://docs.python.org/3/library/unittest.html). Se recomiendo la utlizacion del segundo, ya que es mas robusto.
+Adicionalmente existe la libreria [pytest](https://docs.pytest.org/en/latest) y el framework [unittest](https://docs.python.org/3/library/unittest.html). Se recomienda la utlizacion del segundo, ya que es mas robusto.
 
 ## Covertura
-La covertura es utilizada para ver que porcentaje de nuestro codigo se esta ejecutando, con nuestras Pruebas unitarias. Si se esta ejecutando el 100%. Esto indica que nuestro codigo no deberia tener fallas(Logiacamente si paso todos los test).
+La covertura es utilizada para ver que porcentaje de nuestro codigo se esta ejecutando, con nuestras Pruebas unitarias. Si se esta ejecutando el 100%. Esto indica que nuestro codigo no deberia tener fallas(Logicamente si paso todos los test).
 
 Para realizar esto nos vamos a apoyar de la libreria [coverage](https://coverage.readthedocs.io/en/coverage-5.0.4/)
 
@@ -1225,6 +1225,9 @@ coverage report -m script.py #Esto nos mostrara un reporte con: Lineas totales, 
 coverage html script.py # Esto nos  creara un reporte en un archivo html
 ```
 PD: Los reportes creados en archivos html deben observarse desde un servidor web. El comando `python3 -m http.server` nos ayudara con esto.
+
+# Manejo de imagenes
+Una libreria muy conocida en python para el manejo de imagenes es [PIL](https://pypi.org/project/Pillow/)
 
 # Cómo seguir
 

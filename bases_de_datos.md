@@ -1,3 +1,10 @@
+# Importante
+La gran parte de esta notas asi como la mayoria de sus ejemplo estan en español.
+
+Esto en proyectos reales, no es una buena practica.
+
+Estan de esta manera para que le sea de mayor ayuda a los nuevos miembros de la comunidad hispana de programadores.
+
 # MYSQL
 
 ## Instalacion
@@ -43,30 +50,33 @@ En este punto ya tienes instalado tu servidor de MySQL y puedes continuar con el
 Tutorial sencillo para los usuarios de Linux:
 
 Se instala el servidor y cliente de mysql.
-`sudo apt-get install mysql-server mysql-client`
+`sudo apt-get install mysql-server mysql-client` 
 
 Accedes a la base de datos de mysql.
-`> usemysql;`
+`> usemysql;` 
 
 Creas un nuevo usuario.
-`create user 'tuNombreDeUsuario'@'localhost' identified by'tuContraseña';`
+`create user 'tuNombreDeUsuario'@'localhost' identified by'tuContraseña';` 
 
 Modificas las siguientes configuraciones de tu usuario.
-```SQL
-GRANT allprivileges ON *.* TO  'tuNombreDeUsuario'@'localhost';
-UPDATE user SET plugin="auth_socket" WHERE User= 'tuNombreDeUsuario';
-FLUSH PRIVILEGES;
+
+``` SQL
+GRANT allprivileges ON *.* TO  'tuNombreDeUsuario'@'localhost'; 
+UPDATE user SET plugin="auth_socket" WHERE User= 'tuNombreDeUsuario'; 
+FLUSH PRIVILEGES; 
 ```
+
 Listo, ya tienes los privilegios para acceder.
 
 ## Conexcion a la BD
-A traves de la terminal es la manera mas optima de acceder a la base de datos, esto lo hacemos atraves del siguiente comando: `mysql -u root -h localhost -p`
+
+A traves de la terminal es la manera mas optima de acceder a la base de datos, esto lo hacemos atraves del siguiente comando: `mysql -u root -h localhost -p` 
 
 Banderas:
 
-- -u :Nombre del usuario
-- -h :Nombre del host
-- -p :Contraseña
+* -u : Nombre del usuario
+* -h : Nombre del host
+* -p : Contraseña
 
 ## Algunos datos de interes:
 
@@ -525,7 +535,144 @@ CREATE TABLE usuarios(
 
 * NOW() -> Retorna la fecha y hora actuales.
 
----
+## Sentencias
+
+A grandes rasgos las sentencias SQL se ejecutan de la siguiente manera.
+
+**NOTA:** Para este ejemplo se presume que el cliente ya esta autenticado.
+
+1. Se toma la sentencia(hasta el "; ") y se envia al servidor.
+2. El servidor valida que el cliente tiene los permisos necesarios para ejecutar dicha sentencia.
+3. El servidor valida que el cliente tiene los permisos necesarios para acceder a los datos solicitados.
+4. El servidor valida la sintaxis de la sentencia
+5. El servidor determina la forma mas optima de ejecutar el query(se ordenan tablas, se busca por indices, se trabaja con FK, etc.)
+6. El resultado es eviado al cliente()
+
+
+### Alias
+En ocaciones estaremos trabajaremos con columnas o trabajas con nombre bastante complejos, en cualquier coso podremos apoyarnos del keyword *AS* para crear un alias de las mias. Ejemplo:
+``` SQL
+SELECT fecha_publicacion AS fecha FROM libros AS lb;
+SELECT 9 * 10 AS resultado;
+```
+**NOTA:** los alias de las tablas seran muy utiles cuando se hagan JOINS y setencias complejas.
+
+**NOTA:** Podemos crear alias sin la necesidad de escribir la palabra *AS* de la siguiente manera: `SELECT 9*10 resultado;`. Sin embargo por cuestiones de legibilidad esto no es recomendado.
+
+
+### Salida
+
+El output por default de una consulta SQL es en forma de tabla. Nosotros podemos editar este y obtener nuestra respuesta een formato de carta si efectuamos el query de la siguiente manera:
+
+``` SQL
+SELECT * FROM autores; -- Formato de tabla
+SELECT * FROM autores\G; -- Formato de carta o lista.
+```
+
+Este estilo de output(en carta) usualmente es utilixado cuando el resultado nos arroja muchas columnas, ya que de la otra manera el texte se saldra un poco del formato(Por el tamaño de nuestra consola).
+
+### Clausula WHERE
+
+Esta nos sirve para condicionar los resultados obtenidos de nuestra consulta, espeficicando el valor esperado en una de las columnas. Ejemplo:
+
+``` SQL
+SELECT nombre, apellido FROM autores WHERE autor_id = 1;
+```
+
+Los **signos de igual** que podemos utilizar son:
+
+* Menor(<)
+* Mayor(>)
+* Menor igual(<=)
+* Mayor igual(=>)
+* Igual(=)
+* Diferente(!= ó <>)
+* <=> Seguridad(Es algo parecido al =)
+
+**Operadores logicos**:
+
+* AND -> Todas la condiciones deben ser verdaderas
+* OR -> Basta con que se cumpla una de las condiciones
+* NOT -> Negación
+
+**IMPORTANTE** los campos nulos deben tratarse una maresa especial, ya que estos mas que como un valor se comportan como un tipo de de dato. Si quiereos obneter los registros con una determinada columna nula, deberemos ejecutar una setnencia como esta:
+
+``` SQL
+SELECT * FROM autores WHERE seudonimo IS NULL; 
+-- ó
+SELECT * FROM autores WHERE seudonimo <=> NULL; 
+-- O si queremos obtener aquellos que NO son nulos, la sentencia seria:
+SELECT * FROM autores WHERE seudonimo IS NOT NULL; 
+```
+
+#### Rangos
+
+Cuando deseamos obtener registros entre un rango de valores, deberemos utilizar la clausula *BETWEEN AND*, siguiendo la siguiente estructura
+
+``` SQL
+SELECT titulo FROM libros WHERE fecha_publicacion BETWEEN "1995-01-01" AND '2015-12-31';
+```
+
+#### Listas
+
+Cuando deseamos obtener registros entre una lista de valores, deberemos utilizar la clausula *IN*, siguiendo la siguiente estructura
+
+``` SQL
+SELECT titulo FROM libros WHERE id IN (1, 32, 33, 41, 53, 61); 
+```
+
+#### Unicos
+
+Se puede dar el caso de que estemos los registros que estemos obteniendo esten duplicado(como es el caso de los titulos de lagunos libros) y solo queremos obtener resultados unicos en nuestras consultas. Esto lo hacemos apoyandones de la clausula *DISTINCT*, siguiendo la siguiente estructura:
+
+``` SQL
+SELECT DISTINCT titulo FROM libros;
+```
+
+
+### Actualizar
+Si deseamos actualizar uno o varios registros seguiremos la siguiente estructura:
+`UPDATE table_name SET field = Value, field2 = value WHERE ...;`
+``` SQL
+UPDATE libros SET descripcion = "Nueva descripcion", ventas = 1502 WHERE libro_id = 41;
+```
+
+**NOTA:** Lo ideal es realizar las actualizacion utilizando la llave primaria, esto agilizara mucho el proceso de busqueda del registro.
+
+**NOTA:** Si no colocamos la clausula where se actualizaran todos los registros.
+
+### Eliminar
+``` SQL
+DELETE FROM libros WHERE libro_id = 43;
+```
+
+**NOTA:** Lo ideal es realizar sentencia utilizando la llave primaria, esto agilizara mucho el proceso de busqueda del registro.
+
+**NOTA:** Si no colocamos la clausula where se eliminaran todos los registros.
+
+#### Eliminacion en cascada
+En ocaciones necesitremos eliminar registros que estan siendo referenciados por otras tablas(Como es el caso de la tabla autores que esta siendo referenciada en la tabla libros). Si nosotros queremos eliminar un autores, este no debe tener libros registrados, este es un proceso un poco tedioso en caso de que nos encontremos con varias tablas referenciadas. 
+
+Es por ello que es recomendable colocarle un CASCADE al evento de DELETE(`ON DELETE CASCADE`), esto lo hacemos en la definicion de la tabla de la siguiente manera
+
+``` SQL
+-- Cuando creamos la tabla
+CREATE TABLE libros (
+
+    libro_id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT, 
+    autor_id INT UNSIGNED NOT NULL,
+    titulo VARCHAR(60) NOT NULL, 
+    fecha_publicacion DATE NOT NULL, 
+    descripcion VARCHAR(255)
+
+    FOREIGN KEY (autor_id) REFERENCES autores(autor_id) ON DELETE CASCADE
+);
+
+-- Si la tabla ya existe
+ALTER TABLE libros ADD FOREIGN KEY (autor_id) REFERENCES autores(autor_id) ON DELETE CASCADE;
+```
+
+-------------------------------------------------------------------------------
 
 # Formas normales en DB relacionales
 
