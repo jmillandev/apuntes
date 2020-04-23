@@ -1,64 +1,64 @@
 # Importante
-La gran parte de esta notas asi como la mayoria de sus ejemplo estan en español.
+La gran parte de esta notas asi como la mayoria de sus ejemplo estan en español. 
 
-Esto en proyectos reales, no es una buena practica.
+Esto en proyectos reales, no es una buena practica. 
 
-Estan de esta manera para que le sea de mayor ayuda a los nuevos miembros de la comunidad hispana de programadores.
+Estan de esta manera para que le sea de mayor ayuda a los nuevos miembros de la comunidad hispana de programadores. 
 
 # MYSQL
 
 ## Instalacion
 
-Para realizar la instalación de MySQL en tu pc lo primero que debes tener en cuenta es que debes hacer la verificación de la versión que quieres instalar y la distribución para tu sistema operativo. En este enlace encuentras el listado de las plataformas soportadas.
+Para realizar la instalación de MySQL en tu pc lo primero que debes tener en cuenta es que debes hacer la verificación de la versión que quieres instalar y la distribución para tu sistema operativo. En este enlace encuentras el listado de las plataformas soportadas. 
 
 ### Windows
 
-Si estas trabajando con Windows puedes hacer la descarga ingresando en el siguiente [enlace](https://dev.mysql.com/downloads/installer/). Este es el sitio oficial de MySQL por lo que puedes confiar en la descarga.
+Si estas trabajando con Windows puedes hacer la descarga ingresando en el siguiente [enlace](https://dev.mysql.com/downloads/installer/). Este es el sitio oficial de MySQL por lo que puedes confiar en la descarga. 
 
-El instalador para Windows es muy similar a los que ya conocemos, nos pide algunas verificaciones y nos permite navegar a través de diferentes ventanas.
+El instalador para Windows es muy similar a los que ya conocemos, nos pide algunas verificaciones y nos permite navegar a través de diferentes ventanas. 
 
-Inicialmente el instalador nos va a solicitar que aceptemos la los términos y acuerdos de la licencia. Revisalos y si estas de acuerdo continua.
+Inicialmente el instalador nos va a solicitar que aceptemos la los términos y acuerdos de la licencia. Revisalos y si estas de acuerdo continua. 
 
-En seguida te va a solicitar información relacionada con el tipo de instalación que vas a realizar, puedes elegir entre Developer Default, Client Only y Full. Cualquiera que sea la opción que elijas esto no implica que luego puedas actualizarla.
+En seguida te va a solicitar información relacionada con el tipo de instalación que vas a realizar, puedes elegir entre Developer Default, Client Only y Full. Cualquiera que sea la opción que elijas esto no implica que luego puedas actualizarla. 
 
-Si instalas la versión Full vas a tener acceso a todas las características y productos que MySQL ofrece.
+Si instalas la versión Full vas a tener acceso a todas las características y productos que MySQL ofrece. 
 
-Verifica que tengas disponibles todos los requerimientos que el instalador te presenta. En caso de no contar con ellos debes descargar e instalar el software solicitado.
+Verifica que tengas disponibles todos los requerimientos que el instalador te presenta. En caso de no contar con ellos debes descargar e instalar el software solicitado. 
 
-Continua con la instalación de acuerdo a lo que te indica el ayudante.
+Continua con la instalación de acuerdo a lo que te indica el ayudante. 
 
 ### Mac
 
-En nuestro caso vamos a estar trabajando con MySQL en Mac por lo que haremos la instalación en este sistema operativo.
+En nuestro caso vamos a estar trabajando con MySQL en Mac por lo que haremos la instalación en este sistema operativo. 
 
 Para instalar MySQL usando el instalador del paquete:
 
-Descarga el archivo de imagen del disco ( .dmg ) que contiene el instalador del paquete MySQL. No es necesario tener una cuenta en Oracle para realizar la instalación pero es recomendable hacerlo.
+Descarga el archivo de imagen del disco ( . dmg ) que contiene el instalador del paquete MySQL. No es necesario tener una cuenta en Oracle para realizar la instalación pero es recomendable hacerlo. 
 
-Haz doble clic sobre el archivo para montar la imagen y ver su contenido.
+Haz doble clic sobre el archivo para montar la imagen y ver su contenido. 
 
-Esto te va a mostrar el asistente de instalación de MySQL. El SO puede preguntarte si confías en el origen de este programa, puedes darle continuar hasta que llegues al installation type puedes hacer clic en Instalar para ejecutar el asistente de instalación utilizando todos los valores predeterminados, o puedes hacer clic en Personalizar para modificar qué componentes instalar (servidor MySQL, Prueba de MySQL, Panel de preferencias, Soporte inicializado; todas las pruebas excepto MySQL están habilitadas por defecto). En este caso esta bien que instalemos con los valores por defecto.
+Esto te va a mostrar el asistente de instalación de MySQL. El SO puede preguntarte si confías en el origen de este programa, puedes darle continuar hasta que llegues al installation type puedes hacer clic en Instalar para ejecutar el asistente de instalación utilizando todos los valores predeterminados, o puedes hacer clic en Personalizar para modificar qué componentes instalar (servidor MySQL, Prueba de MySQL, Panel de preferencias, Soporte inicializado; todas las pruebas excepto MySQL están habilitadas por defecto). En este caso esta bien que instalemos con los valores por defecto. 
 
-Selecciona el tipo de cifrado de contraseñas que vas a usar para tu base de datos.
+Selecciona el tipo de cifrado de contraseñas que vas a usar para tu base de datos. 
 
-Ingresa una contraseña que no se te vaya a perder u olvidar, porque es la contraseña de tu usuario root para la base de datos.
+Ingresa una contraseña que no se te vaya a perder u olvidar, porque es la contraseña de tu usuario root para la base de datos. 
 
-En este punto ya tienes instalado tu servidor de MySQL y puedes continuar con el curso.
+En este punto ya tienes instalado tu servidor de MySQL y puedes continuar con el curso. 
 
 ### Linux Debian
 
 Tutorial sencillo para los usuarios de Linux:
 
-Se instala el servidor y cliente de mysql.
+Se instala el servidor y cliente de mysql. 
 `sudo apt-get install mysql-server mysql-client` 
 
-Accedes a la base de datos de mysql.
+Accedes a la base de datos de mysql. 
 `> usemysql;` 
 
-Creas un nuevo usuario.
+Creas un nuevo usuario. 
 `create user 'tuNombreDeUsuario'@'localhost' identified by'tuContraseña';` 
 
-Modificas las siguientes configuraciones de tu usuario.
+Modificas las siguientes configuraciones de tu usuario. 
 
 ``` SQL
 GRANT allprivileges ON *.* TO  'tuNombreDeUsuario'@'localhost'; 
@@ -66,7 +66,7 @@ UPDATE user SET plugin="auth_socket" WHERE User= 'tuNombreDeUsuario';
 FLUSH PRIVILEGES; 
 ```
 
-Listo, ya tienes los privilegios para acceder.
+Listo, ya tienes los privilegios para acceder. 
 
 ## Conexcion a la BD
 
@@ -93,7 +93,7 @@ un comentario de bloque
 
 * **Ejecutar ficheros**
 
-Para ejecutar ficheros con la extension *.sql*, seguimos la siguiente estructura.
+Para ejecutar ficheros con la extension *. sql*, seguimos la siguiente estructura. 
 
 ``` shell
 
@@ -121,9 +121,9 @@ DROP DATABASE IF EXISTS libreria;
 CREATE DATABASE IF NOT EXISTS libreria;
 ```
 
-Como vimos solo tenemos que agregar `IF NOT EXISTS` o `IF EXISTS` antes del nombre de la tabla o base de datos.
+Como vimos solo tenemos que agregar `IF NOT EXISTS` o `IF EXISTS` antes del nombre de la tabla o base de datos. 
 
-## Restablecer contraseña de root MySQL
+### Restablecer contraseña de root MySQL
 
 En el caso de que hayamos perdido la contraseña del usurio root, la podemos recuperar siguiendo los siguiente pasos
 
@@ -137,13 +137,13 @@ Lo primero que devmos hacer es detener el servidor, con cualquiera de los siguie
 
 ```
 
-Una vez el servidor se encuentre detenido, debemos de reiniciarlo en un modo seguro.
+Una vez el servidor se encuentre detenido, debemos de reiniciarlo en un modo seguro. 
 
 ``` shell
 sudo mysqld_safe --skip-grant-tables --skip-networkin
 ```
 
-**--skip-grant-tables** Permite conectarnos al servidor sin la necesidad de un password, además de otrogar todos los privilegios a la sesión.
+**--skip-grant-tables** Permite conectarnos al servidor sin la necesidad de un password, además de otrogar todos los privilegios a la sesión. 
 
 **--skip-networkin** Detiene la escucha de peticiones TCP/IP 
 
@@ -159,7 +159,7 @@ Una vez dentro del servidor, debemos de trabajar con la base de datos **MySQL**
 USE mysql;
 ```
 
-Con el cambio de base de datos haremos la actualización.
+Con el cambio de base de datos haremos la actualización. 
 
 ``` shell
 UPDATE user SET password=PASSWORD('tu_password') WHERE user='root'; 
@@ -172,7 +172,7 @@ FLUSH PRIVILEGES;
 exit
 ```
 
-El paso final es detener el servidor en modo seguro. Iniciamos el servidor como te costumbre y nos autenticamos, la contraseña ya estará funcionando.
+El paso final es detener el servidor en modo seguro. Iniciamos el servidor como te costumbre y nos autenticamos, la contraseña ya estará funcionando. 
 
 ``` shell
 mysql -u root -p 
@@ -190,15 +190,15 @@ SET @nombre2 := "Valor2"
 SET @curso = "Data Bases", @gestor = "Mysql";
 ```
 
-Nosotros podemos declarar variables en practicamente cualquier lugar: En funciones, Procedimientos, En sentias, etc.
+Nosotros podemos declarar variables en practicamente cualquier lugar: En funciones, Procedimientos, En sentias, etc. 
 
-*NOTA:* Como pudiste notar, existen dos operadores validos para declarar una variable, el *=* y el *:=*.
+*NOTA:* Como pudiste notar, existen dos operadores validos para declarar una variable, el *=* y el *:=*. 
 
-**IMPORTANTE:** Las variables declaradas dentro de una sesion, perteneceran solo al scope de la misma. Es decir, no podran ser accedidas por otros usuario, e incluso ya no estaran diponibles en el instante que cerremos nuestra sesion.
+**IMPORTANTE:** Las variables declaradas dentro de una sesion, perteneceran solo al scope de la misma. Es decir, no podran ser accedidas por otros usuario, e incluso ya no estaran diponibles en el instante que cerremos nuestra sesion. 
 
 ## Obtencion de datos
 
-Para obtener datos de nuestro servidor es muy sencillos. Para esto utilizamos la palabra reservada.*SELECT*
+Para obtener datos de nuestro servidor es muy sencillos. Para esto utilizamos la palabra reservada. *SELECT*
 
 ``` SQL
 SET @nombre = "Valor", @curso = "Data Bases";
@@ -237,14 +237,14 @@ Esto eliminara por completo nuestra base de datos(Datos y estructura)
 
 ## Tipos de datos
 
-En general, la mayoría de los servidores de base de datos nos permiten almacenar los mismo tipo de datos, como strings, fechas y número.
+En general, la mayoría de los servidores de base de datos nos permiten almacenar los mismo tipo de datos, como strings, fechas y número. 
 
 ### Alfanuméricos
 
 * CHAR
 * VARCHAR
 
-En ambos casos nosotros debemos de especificar la longitud máxima que podrá almacenar el campo. Opcionalmente podemos definir el charset que almacenará.
+En ambos casos nosotros debemos de especificar la longitud máxima que podrá almacenar el campo. Opcionalmente podemos definir el charset que almacenará. 
 `VARCHAR(20) character set utf8` 
 
 ### Números enteros
@@ -264,11 +264,11 @@ Para los flotantes encontraremos dos tipos
 * Float
 * Double
 
-En ambos casos nosotros debemos de especificar la cantidad de dígitos que almacenará la columna antes y después del punto (p, s).
+En ambos casos nosotros debemos de especificar la cantidad de dígitos que almacenará la columna antes y después del punto (p, s). 
 
 `precio FLOAT(3, 2)` 
 
-En este caso la columna podrá almacenar hasta tres dígitos como enteros y dos después del punto decimal. Ejemplo: *Ejemplo 999.99*
+En este caso la columna podrá almacenar hasta tres dígitos como enteros y dos después del punto decimal. Ejemplo: *Ejemplo 999. 99*
 
 ### Tiempo
 
@@ -281,7 +281,7 @@ En este caso la columna podrá almacenar hasta tres dígitos como enteros y dos 
 
 ## Tablas
 
-Es importante tomar en cuenta que para manupular cualquiera de nuestras tablas, primero debemos indicar que Base de datos esteremos utilizando. Esto los hacemos a traves de la sentencia: `USE libreria;` .
+Es importante tomar en cuenta que para manupular cualquiera de nuestras tablas, primero debemos indicar que Base de datos esteremos utilizando. Esto los hacemos a traves de la sentencia: `USE libreria;` . 
 
 *NOTA:* Si queremos saber en que base de datos estamos trabajando utilizaremos la sentencia `SELECT DATABASE(); ` 
 
@@ -390,7 +390,7 @@ Algunas restricciones:
 
 * NOT NULL -> El campo no puede ser nulo
 * UNSIGNED -> El campo solo puede almacenar numero positivos
-* ENUM(OPT1, OPT2, ... , OPTn) -> El campo solo puede almacenar uno de los valores descriptos, Este pueder ser: numerico o de tipo texto. Este tipo de restriccion No es sensible a mayusculas y minisculas.
+* ENUM(OPT1, OPT2, ... , OPTn) -> El campo solo puede almacenar uno de los valores descriptos, Este pueder ser: numerico o de tipo texto. Este tipo de restriccion No es sensible a mayusculas y minisculas. 
 
 ### Insertar Datos
 
@@ -419,7 +419,7 @@ VALUES (1, "Code", "M", "1996-12-30", "Venezuela"),
 
 ### Llaves
 
-Las llaves son muy importantes en las tablas, principalmente esta nos permitiran realizar busqueda muy mas rapidas.
+Las llaves son muy importantes en las tablas, principalmente esta nos permitiran realizar busqueda muy mas rapidas. 
 
 #### Primarias
 
@@ -450,7 +450,7 @@ CREATE TABLE usuarios(
 
 #### Foraneas
 
-Las llaves foraneas nos permiten crear relaciones entre tablas de una forma rapida. La forma en la que funciona es que hacen referencia a un campo de otra tabla(generalmente al campo de la llave primaria), es importante mencionar que estos campo deben ser del mismo tipo.
+Las llaves foraneas nos permiten crear relaciones entre tablas de una forma rapida. La forma en la que funciona es que hacen referencia a un campo de otra tabla(generalmente al campo de la llave primaria), es importante mencionar que estos campo deben ser del mismo tipo. 
 Estructura:
 `FOREIGN KEY (columna) REFERENCES tabla_referencia(llave_primaria)` 
 
@@ -489,7 +489,7 @@ referencia a ella desde la tabla libros
 
 #### Unicos
 
-Nos permite hacer referencia de que un campo tendra un valor unico en nuestra tabla.
+Nos permite hacer referencia de que un campo tendra un valor unico en nuestra tabla. 
 
 Estructura:
 `field TYPE UNIQUE` 
@@ -508,11 +508,11 @@ CREATE TABLE usuarios(
 ); 
 ```
 
-NOTA: La palabra **CONSTRAINT** es opcional, sin embargo, por temas de legibilidad recomiendo colocarla.
+NOTA: La palabra **CONSTRAINT** es opcional, sin embargo, por temas de legibilidad recomiendo colocarla. 
 
 **COMBINACION** de valores unicos:
-Si necesitamos validar el valor único de una combinación de columnas lo haremos de la siguiente manera.
-En este caso queremos validar que la combinación de nombre, apellido y matricula sean unicas en la tabla.
+Si necesitamos validar el valor único de una combinación de columnas lo haremos de la siguiente manera. 
+En este caso queremos validar que la combinación de nombre, apellido y matricula sean unicas en la tabla. 
 
 ``` SQL
 CREATE TABLE usuarios( 
@@ -525,7 +525,7 @@ CREATE TABLE usuarios(
 ); 
 ```
 
-## Variables y funciones de MYSQL
+## Variables y funciones predefinidas de MYSQL
 
 ### Variables
 
@@ -533,13 +533,53 @@ CREATE TABLE usuarios(
 
 ### Fuciones
 
-* NOW() -> Retorna la fecha y hora actuales.
+* IF (10 > 90, , "10 es mayor que 90", "Diez no es mayor que noventa")
+* IFNULL(field, 'El campo es nulo')
+
+#### Para Strings
+
+* CONTAC('HOLA', ' ', 'MUNDO') : Recibe n argumentos, estos pueden ser, Datos duros, variables o columnas. Retorna la concatenacion de los n valores, en este caso ->'HOLA MUNDO'. 
+* LENGTH("hola mundo") : recibe un string y retorna la cantidad de caracteres en el mismo. 
+* UPPER('hola') : Retorna -> 'HOLA'
+* UPPER('HOLA') : Retorna -> 'hola'
+* TRIM('    hola  mundo  '): Elimina los prefijos y sufijos de de una cadena de caracteres, por defecto. eliminara los espacio(' '). Esta ejemplo retorna -> 'hola mundo'
+* LEFT('cadena', n) : Nos retorna los primeros n caracteres de la cadena comenzado de izquierda a derecha. 
+* RIGHT('cadena', n) : Nos retorna los primeros n caracteres de la cadena comenzado de derecha a izquierda. 
+
+#### Para numéros
+
+* RAND() : Obtenemos un numero flotante entre 0 y 1
+* ROUND( n ) : Esta funcion nos retorna n redondeado
+* TRUNCATE(f, i) : Esta funcion nos retorna f que es de tipo flotante truncado con i decimales(i es un entero)
+* POWER(b, e) o POW(b, e) : Nos retorna b elevado a la e. 
+
+#### Para Fechas
+
+* NOW() : Retorna un datetime con la fecha y hora actuales. 
+* CURDATE(): Retorna un date con la fecha actual. 
+* SECOND(datetime) : Recibe un valor de tipo datetime y retorna el segundo de este. 
+* MINUTE(datetime) : Recibe un valor de tipo datetime y retorna el minuto de este. 
+* HOUR(datetime) : Recibe un valor de tipo datetime y retorna la hora de este. 
+* DAY(datetime) : Recibe un valor de tipo date ó datetime y retorna el dia de este. 
+* MOUNTH(datetime) : Recibe un valor de tipo date ó datetime y retorna el mes de este. 
+* YEAR(datetime) : Recibe un valor de tipo date ó datetime y retorna el año de este. 
+* DAYOFWEEK(datetime) : Recibe un valor de tipo date ó datetime y retorna el dia de la semana en entero de este. 
+* DAYOFMONTH(datetime) : Recibe un valor de tipo date ó datetime y retorna el dia del mes en entero de este. 
+* DAYOFYEAR(datetime) : Recibe un valor de tipo date ó datetime y retorna el dia del año en entero de este. 
+* DATE(datetime) : Recibe un valor de tipo datetime y retorna un date. 
+
+**NOTA:** Nosotros podemos sumar o restar intervalos de tiempo a nuestros valores, esto lo asemos apoyandonos de la clausula *INTERVAL*. siguiendo la siguiente estructura: `fecha [+-] INTERVAL valor [SECOND MINUTE HOUR DAY WEEK MONTH YEAR]` . 
+Ejemplo:
+
+``` SQL
+SELECT NOW() + INTERVAL 25 DAY; 
+```
 
 ## Sentencias
 
-A grandes rasgos las sentencias SQL se ejecutan de la siguiente manera.
+A grandes rasgos las sentencias SQL se ejecutan de la siguiente manera. 
 
-**NOTA:** Para este ejemplo se presume que el cliente ya esta autenticado.
+**NOTA:** Para este ejemplo se presume que el cliente ya esta autenticado. 
 
 1. Se toma la sentencia(hasta el "; ") y se envia al servidor.
 2. El servidor valida que el cliente tiene los permisos necesarios para ejecutar dicha sentencia.
@@ -548,17 +588,18 @@ A grandes rasgos las sentencias SQL se ejecutan de la siguiente manera.
 5. El servidor determina la forma mas optima de ejecutar el query(se ordenan tablas, se busca por indices, se trabaja con FK, etc.)
 6. El resultado es eviado al cliente()
 
-
 ### Alias
+
 En ocaciones estaremos trabajaremos con columnas o trabajas con nombre bastante complejos, en cualquier coso podremos apoyarnos del keyword *AS* para crear un alias de las mias. Ejemplo:
+
 ``` SQL
-SELECT fecha_publicacion AS fecha FROM libros AS lb;
-SELECT 9 * 10 AS resultado;
+SELECT fecha_publicacion AS fecha FROM libros AS lb; 
+SELECT 9 * 10 AS resultado; 
 ```
-**NOTA:** los alias de las tablas seran muy utiles cuando se hagan JOINS y setencias complejas.
 
-**NOTA:** Podemos crear alias sin la necesidad de escribir la palabra *AS* de la siguiente manera: `SELECT 9*10 resultado;`. Sin embargo por cuestiones de legibilidad esto no es recomendado.
+**NOTA:** los alias de las tablas seran muy utiles cuando se hagan JOINS y setencias complejas. 
 
+**NOTA:** Podemos crear alias sin la necesidad de escribir la palabra *AS* de la siguiente manera: `SELECT 9*10 resultado; ` . Sin embargo por cuestiones de legibilidad esto no es recomendado. 
 
 ### Salida
 
@@ -569,7 +610,7 @@ SELECT * FROM autores; -- Formato de tabla
 SELECT * FROM autores\G; -- Formato de carta o lista.
 ```
 
-Este estilo de output(en carta) usualmente es utilixado cuando el resultado nos arroja muchas columnas, ya que de la otra manera el texte se saldra un poco del formato(Por el tamaño de nuestra consola).
+Este estilo de output(en carta) usualmente es utilixado cuando el resultado nos arroja muchas columnas, ya que de la otra manera el texte se saldra un poco del formato(Por el tamaño de nuestra consola). 
 
 ### Clausula WHERE
 
@@ -629,83 +670,167 @@ Se puede dar el caso de que estemos los registros que estemos obteniendo esten d
 SELECT DISTINCT titulo FROM libros;
 ```
 
-
 ### Actualizar
+
 Si deseamos actualizar uno o varios registros seguiremos la siguiente estructura:
-`UPDATE table_name SET field = Value, field2 = value WHERE ...;`
+`UPDATE table_name SET field = Value, field2 = value WHERE ... ; ` 
+
 ``` SQL
 UPDATE libros SET descripcion = "Nueva descripcion", ventas = 1502 WHERE libro_id = 41;
 ```
 
-**NOTA:** Lo ideal es realizar las actualizacion utilizando la llave primaria, esto agilizara mucho el proceso de busqueda del registro.
+**NOTA:** Lo ideal es realizar las actualizacion utilizando la llave primaria, esto agilizara mucho el proceso de busqueda del registro. 
 
-**NOTA:** Si no colocamos la clausula where se actualizaran todos los registros.
+**NOTA:** Si no colocamos la clausula where se actualizaran todos los registros. 
 
 ### Eliminar
+
 ``` SQL
 DELETE FROM libros WHERE libro_id = 43;
 ```
 
-**NOTA:** Lo ideal es realizar sentencia utilizando la llave primaria, esto agilizara mucho el proceso de busqueda del registro.
+**NOTA:** Lo ideal es realizar sentencia utilizando la llave primaria, esto agilizara mucho el proceso de busqueda del registro. 
 
-**NOTA:** Si no colocamos la clausula where se eliminaran todos los registros.
+**NOTA:** Si no colocamos la clausula where se eliminaran todos los registros. 
 
 #### Eliminacion en cascada
+
 En ocaciones necesitremos eliminar registros que estan siendo referenciados por otras tablas(Como es el caso de la tabla autores que esta siendo referenciada en la tabla libros). Si nosotros queremos eliminar un autores, este no debe tener libros registrados, este es un proceso un poco tedioso en caso de que nos encontremos con varias tablas referenciadas. 
 
-Es por ello que es recomendable colocarle un CASCADE al evento de DELETE(`ON DELETE CASCADE`), esto lo hacemos en la definicion de la tabla de la siguiente manera
+Es por ello que es recomendable colocarle un CASCADE al evento de DELETE( `ON DELETE CASCADE` ), esto lo hacemos en la definicion de la tabla de la siguiente manera
 
 ``` SQL
 -- Cuando creamos la tabla
 CREATE TABLE libros (
 
     libro_id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT, 
-    autor_id INT UNSIGNED NOT NULL,
+    autor_id INT UNSIGNED NOT NULL, 
     titulo VARCHAR(60) NOT NULL, 
     fecha_publicacion DATE NOT NULL, 
     descripcion VARCHAR(255)
 
     FOREIGN KEY (autor_id) REFERENCES autores(autor_id) ON DELETE CASCADE
-);
+
+); 
 
 -- Si la tabla ya existe
-ALTER TABLE libros ADD FOREIGN KEY (autor_id) REFERENCES autores(autor_id) ON DELETE CASCADE;
+ALTER TABLE libros ADD FOREIGN KEY (autor_id) REFERENCES autores(autor_id) ON DELETE CASCADE; 
+```
+
+### Restaurar
+
+Si deseamos restaurar una tabla(borrar todos sus registros, dejandola como "nueva"). seguiremos la siguiente estructura: `TRUNCATE TABLE table_name;` . Ejemplo:
+
+``` SQL
+
 ```
 
 -------------------------------------------------------------------------------
 
+## Funciones
+
+Al igual como si un lenguaje de programacion se tratase, en MYSQL podemos crear nuestras propias funciones. 
+
+Algo interesante a tener en cuenta es que todas las funciones en MYSQL necesitan retornar un valor. 
+
+### Crear
+
+Para crear una nueva funcion debemos seguir la siguiente estructura:
+
+``` SQL
+DELIMITER caracter(es)
+
+CREATE FUNCTION function_name(parameters1 type1, ..., parametersn type2) 
+RETURNS return_type
+
+BEGIN
+  # CODE
+END caracter(es)
+
+DELIMITER ;
+```
+
+Ejemplo:
+
+``` SQL
+DELIMITER //
+
+CREATE FUNCTION agregar_dias(fecha DATE, dias INT)
+RETURNS DATE
+BEGIN
+  RETURN fecha + INTERVAL dias DAY;
+END//
+
+-- Otra funcion, esta vez ejecutando sentencias dentro de ella:
+CREATE FUNCTION obtener_paginas()
+RETURNS INT
+BEGIN
+  SET @paginas = (SELECT (ROUND( RAND() * 100 ) * 4));
+  RETURN @paginas;
+END //
+
+DELIMITER ;
+```
+
+### Listar
+
+Para listar las funciones disponibles nos apoyaremos de la sentencia:
+
+``` SQL
+SELECT name FROM mysql.proc;
+```
+
+Si queremos listar solo las funciones declaradas en la base de datos que estamos usando actualmente, nos apoyaremos de la clausula *WHERE* de la siguiente manera: 
+
+``` SQL
+SELECT name FROM mysql.proc WHERE db = DATABASE() AND TYPE() = 'FUNCTION';
+```
+
+### Eliminar
+
+Estructura:
+
+``` SQL
+DROP FUNCTION function_name;
+```
+
+Ejemplo:
+
+``` SQL
+DROP FUNCTION agregar_dias;
+```
+
 # Formas normales en DB relacionales
 
-La normalización en las bases de datos relacionales es uno de esos temas que, por un lado es sumamente importante porque nos apoya no tener datos duplicados ni compuestos en nuestra DB y por el otro suena algo esotérico. Vamos a ver las formas normales (FN) de una manera simple para aplicarlas futuros proyectos.
+La normalización en las bases de datos relacionales es uno de esos temas que, por un lado es sumamente importante porque nos apoya no tener datos duplicados ni compuestos en nuestra DB y por el otro suena algo esotérico. Vamos a ver las formas normales (FN) de una manera simple para aplicarlas futuros proyectos. 
 
 ## Primera Forma Normal (1FN)
 
-Esta FN nos ayuda a eliminar los valores repetidos y no atómicos dentro de una base de datos.
+Esta FN nos ayuda a eliminar los valores repetidos y no atómicos dentro de una base de datos. 
 
 Formalmente, una tabla está en primera forma normal si:
 
-* Todos los atributos son atómicos. Un atributo es atómico si los elementos del dominio son simples e indivisibles.
-* No debe existir variación en el número de columnas.
-* Los campos no clave deben identificarse por la clave (dependencia funcional).
-* Debe existir una independencia del orden tanto de las filas como de las columnas; es decir, si los datos cambian de orden no deben cambiar sus significados.
+* Todos los atributos son atómicos. Un atributo es atómico si los elementos del dominio son simples e indivisibles. 
+* No debe existir variación en el número de columnas. 
+* Los campos no clave deben identificarse por la clave (dependencia funcional). 
+* Debe existir una independencia del orden tanto de las filas como de las columnas; es decir, si los datos cambian de orden no deben cambiar sus significados. 
 
-Se traduce básicamente a que si tenemos campos compuestos como por ejemplo “nombre_completo” que en realidad contiene varios datos distintos, en este caso podría ser “nombre”, “apellido_paterno”, “apellido_materno”, etc.
+Se traduce básicamente a que si tenemos campos compuestos como por ejemplo “nombre_completo” que en realidad contiene varios datos distintos, en este caso podría ser “nombre”, “apellido_paterno”, “apellido_materno”, etc. 
 
-También debemos asegurarnos que las columnas son las mismas para todos los registros, que no haya registros con columnas de más o de menos.
+También debemos asegurarnos que las columnas son las mismas para todos los registros, que no haya registros con columnas de más o de menos. 
 
-Todos los campos que no se consideran clave deben depender de manera única por el o los campos que si son clave.
+Todos los campos que no se consideran clave deben depender de manera única por el o los campos que si son clave. 
 
-Los campos deben ser tales que si reordenamos los registros o reordenamos las columnas, cada dato no pierda el significado.
+Los campos deben ser tales que si reordenamos los registros o reordenamos las columnas, cada dato no pierda el significado. 
 
 ## Segunda Forma Normal (2FN)
 
-Esta FN nos ayuda a diferenciar los datos en diversas entidades.
+Esta FN nos ayuda a diferenciar los datos en diversas entidades. 
 
 Formalmente, una tabla está en segunda forma normal si:
 
-* Ésta en 1FN.
-* Sí los atributos que no forman parte de ninguna clave dependen de forma completa de la clave principal. Es decir, que no existen dependencias parciales.
-* Todos los atributos que no son clave principal deben depender únicamente de la clave principal.
+* Ésta en 1FN. 
+* Sí los atributos que no forman parte de ninguna clave dependen de forma completa de la clave principal. Es decir, que no existen dependencias parciales. 
+* Todos los atributos que no son clave principal deben depender únicamente de la clave principal. 
 
 Lo anterior quiere decir que sí tenemos datos que pertenecen a diversas entidades, cada entidad debe tener un campo clave separado. Por ejemplo:
-
