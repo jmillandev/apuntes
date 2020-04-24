@@ -588,7 +588,20 @@ A grandes rasgos las sentencias SQL se ejecutan de la siguiente manera.
 5. El servidor determina la forma mas optima de ejecutar el query(se ordenan tablas, se busca por indices, se trabaja con FK, etc.)
 6. El resultado es eviado al cliente()
 
-### Alias
+### Busqueda
+La busqueda es de la sentencia mas comunes en SQL, esa en su estructura mas basica es asi: `SELECT field1, ...,fieldn FROM table_name;`.
+
+Ejemplo:
+``` SQL
+-- obtener una lista del pais de origen de los autores:
+SELECT autor_id, pais_originen FROM autores;
+-- obtener una lista con todos los datos de los autores:
+SELECT * FROM autores;
+```
+
+**NOTA:** El caracter \* es para indicar que extraeremos todos los campos ó columnas.
+
+#### Alias
 
 En ocaciones estaremos trabajaremos con columnas o trabajas con nombre bastante complejos, en cualquier coso podremos apoyarnos del keyword *AS* para crear un alias de las mias. Ejemplo:
 
@@ -601,9 +614,9 @@ SELECT 9 * 10 AS resultado;
 
 **NOTA:** Podemos crear alias sin la necesidad de escribir la palabra *AS* de la siguiente manera: `SELECT 9*10 resultado; ` . Sin embargo por cuestiones de legibilidad esto no es recomendado. 
 
-### Salida
+#### Salida
 
-El output por default de una consulta SQL es en forma de tabla. Nosotros podemos editar este y obtener nuestra respuesta een formato de carta si efectuamos el query de la siguiente manera:
+El output por default de una consulta SQL es en forma de tabla. Nosotros podemos editar este y obtener nuestra respuesta en formato de carta si efectuamos el query de la siguiente manera:
 
 ``` SQL
 SELECT * FROM autores; -- Formato de tabla
@@ -612,7 +625,7 @@ SELECT * FROM autores\G; -- Formato de carta o lista.
 
 Este estilo de output(en carta) usualmente es utilixado cuando el resultado nos arroja muchas columnas, ya que de la otra manera el texte se saldra un poco del formato(Por el tamaño de nuestra consola). 
 
-### Clausula WHERE
+#### Clausula WHERE
 
 Esta nos sirve para condicionar los resultados obtenidos de nuestra consulta, espeficicando el valor esperado en una de las columnas. Ejemplo:
 
@@ -646,7 +659,7 @@ SELECT * FROM autores WHERE seudonimo <=> NULL;
 SELECT * FROM autores WHERE seudonimo IS NOT NULL; 
 ```
 
-#### Rangos
+##### Rangos
 
 Cuando deseamos obtener registros entre un rango de valores, deberemos utilizar la clausula *BETWEEN AND*, siguiendo la siguiente estructura
 
@@ -654,12 +667,33 @@ Cuando deseamos obtener registros entre un rango de valores, deberemos utilizar 
 SELECT titulo FROM libros WHERE fecha_publicacion BETWEEN "1995-01-01" AND '2015-12-31';
 ```
 
-#### Listas
+##### Listas
 
 Cuando deseamos obtener registros entre una lista de valores, deberemos utilizar la clausula *IN*, siguiendo la siguiente estructura
 
 ``` SQL
 SELECT titulo FROM libros WHERE id IN (1, 32, 33, 41, 53, 61); 
+```
+
+##### Busqueda en strings con LIKE
+En caso de que necesitemos buscar un substring y no sabemos en que posicion exacta se encuentra de nuestra cadena, nos apoyaremos de la clausula *LIKE*, del comodin de multicaracteres *%* y el monocaracter *_*. Ejemplo:
+``` SQL
+-- Titulos que contienen la palabra 'potter'
+SELECT * FROM libros WHERE titulo LIKE '%potter%';
+
+-- Titulos que contengan 5 caracteres y el 3er caracter sea una 'b'
+SELECT * FROM libros WHERE titulo LIKE '__b__';
+
+-- Titulos que su segundo caracter sea la letra 'a'
+SELECT * FROM libros WHERE titulo LIKE '_a%';
+
+```
+
+##### Expresiones regulares
+Para utilizar regex en nuestras sentencias sql nos apoyaremos de la *REGEXP*, la complejita de la regex dependera de nuestras necesitades. Ejemplo:
+``` SQL
+-- Titulos que comienzan con H,O,L ó A.
+SELECT * FROM titulo WHERE titulo REGEXP '^[HOLA]'
 ```
 
 #### Unicos
@@ -669,6 +703,111 @@ Se puede dar el caso de que estemos los registros que estemos obteniendo esten d
 ``` SQL
 SELECT DISTINCT titulo FROM libros;
 ```
+
+#### Orden
+Si queremos ordenar la salida de nuestra consulta utilizares la clausula *ORDER BY*. Ejemplo:
+``` SQL
+SELECT titulo FROM libros ORDER BY titulo;
+```
+
+**NOTA:** Por defecto el ordenamiento se hace de forma acendente, si queremos hacerlo de forma descendente o bien expresarlo de forma explicita nos apoyaremos de *ASC* y *DESC*, ejemplo: `SELECT titulo FROM libros ORDER BY titulo DESC;`
+
+**NOTA:** Si nosotros asi lo deseamos podemos ordenar nuestra salida por mas de un campo. Ejemplo: `SELECT * FROM libros ORDER BY libro_id AND titulo ASC;`
+
+#### Limitar salida
+En la mayoria de los casos nosotros solo necesitaremos motrar un rango de nuestra consulta, eso lo haremos apoyandonos de la clausula *LIMIT*, esta recibe uno o dos parametros:
+1. El offset: Indica el inicio del rango. **Si solo pasamos un valor, este por defecto sera 0(cero).**
+2. El limite: No indica cuando registros vamos a extraer despues de offset.
+
+Estructura:
+``` SQL
+SELECT * FROM table_name LIMIT offset, limit;
+SELECT * FROM table_name LIMIT limit;
+```
+
+Ejemplo:
+``` SQL
+SELECT titulo FROM libros WHERE autor_id = 2 LIMIT 10;
+```
+
+#### Funciones de agregacion
+La funciones de agregacion son ejecutadas a un conjunto de datos, es decir al resultado de una sentencia o consulta sql.
+
+Algunas funciones de agregacion son:
+
+##### Contar
+``` SQL
+-- Cuenta todos los registros de nuestra tabla autores;
+SELECT COUNT(*) FROM autores;
+
+-- Cuenta todos los autores de USA:
+SELECT COUNT(*) FROM autores WHERE pais_origen = "USA";
+```
+
+##### Sumar
+``` SQL
+-- Suma el total de venta de todos los libros:
+SELECT SUM(ventas) FROM libros;
+```
+
+##### Maximo y minimo
+``` SQL
+-- Retorna el valor de ventas del libro con mas ventas
+SELECT MAX(ventas) FROM libros;
+
+-- Retorna el valor de ventas del libro con menos ventas
+SELECT MIN(ventas) FROM libros;
+```
+
+##### Promedio
+``` SQL
+-- Retorna el promedio de ventas efectuadas
+SELECT AVG(ventas) FROM libros;
+```
+
+#### Grupos
+Habra ocaciones(como con las funciones de agregacion) que necesitaresmo trabajar con conjuntos de datos agrupados de alguna forma. Para esto nos apoyaremos de la clausula *GROUP BY* seguida del campo(o los campos) por el que deseamos agrupar los conjuntos. Ejemplo:
+``` SQL
+SELECT autor_id, SUM(ventas) AS total FROM libros GROUP BY autor_id ORDER BY total DESC LIMIT
+```
+
+#### Condicion bajo agrupamientos
+Como las funciones de agregacion son ejecutadas una vez ya el servidor realizo la consulta, no podemos utilizar estas dentro de nuestra clausula *WHERE*, si necesitamos filtrar nuestros dados data una funcion de agregacion nos apoyaremos de la clausula *HAVING*. Ejemplo:
+``` SQL
+SELECT autor_id, SUM(ventas) AS total FROM libros GROUP BY autor_id HAVING SUM(ventas) > 100;
+```
+
+#### Unir
+Para unir resultados lo haremos de la siguiente manera:
+``` SQL
+SELECT CONTACT(nombre, " ", apellido) FROM autores
+UNION
+SELECT CONTACT(nombre, " ", apellidos) FROM usuarios;
+```
+
+**IMPORTANTE:** Todas las consultas deben retornar la misma cantidad de columnas. En caso que necesitemos realizar consultas con un numero columnas  diferentes podemos completar estas con columnas que contengan un string vacio("").
+**NOTA:** Los encabezados mostrados seran los de la primera consulta
+
+#### Subconsultas
+Para realizar una consulta anidada o una subconsulta es tan sencillo como colocar esta dentro de parentesis, ejemplo:
+``` SQL
+SELECT
+    autor_id
+FROM libros
+GROUP BY autor_id
+HAVING SUM(ventas) > (SELECT AVG(ventas) FROM libros);
+```
+
+#### Validar si una consulta existe
+``` SQL
+SELECT IF(
+    EXISTS(SELECT libro_id FROM libros WHERE titulo = 'El hobbit'),
+    'Disponible',
+    'No disponible'
+) AS mensaje;
+```
+
+**NOTA:** Dentro de la consulta de la funcion EXISTS debemos ser muy cuidadosos del los campo a extraer, pues esto nos afectara en el rendimiento de la consulta. En este caso usamos una llave primaria(que es lo recomendado).
 
 ### Actualizar
 
@@ -722,7 +861,7 @@ ALTER TABLE libros ADD FOREIGN KEY (autor_id) REFERENCES autores(autor_id) ON DE
 Si deseamos restaurar una tabla(borrar todos sus registros, dejandola como "nueva"). seguiremos la siguiente estructura: `TRUNCATE TABLE table_name;` . Ejemplo:
 
 ``` SQL
-
+TRUNCATE TABLE libros;
 ```
 
 -------------------------------------------------------------------------------
@@ -745,6 +884,7 @@ RETURNS return_type
 
 BEGIN
   # CODE
+  RETURN value
 END caracter(es)
 
 DELIMITER ;
