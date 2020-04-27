@@ -589,9 +589,11 @@ A grandes rasgos las sentencias SQL se ejecutan de la siguiente manera.
 6. El resultado es eviado al cliente()
 
 ### Busqueda
-La busqueda es de la sentencia mas comunes en SQL, esa en su estructura mas basica es asi: `SELECT field1, ...,fieldn FROM table_name;`.
+
+La busqueda es de la sentencia mas comunes en SQL, esa en su estructura mas basica es asi: `SELECT field1, ...,fieldn FROM table_name;` . 
 
 Ejemplo:
+
 ``` SQL
 -- obtener una lista del pais de origen de los autores:
 SELECT autor_id, pais_originen FROM autores;
@@ -599,7 +601,7 @@ SELECT autor_id, pais_originen FROM autores;
 SELECT * FROM autores;
 ```
 
-**NOTA:** El caracter \* es para indicar que extraeremos todos los campos ó columnas.
+**NOTA:** El caracter \* es para indicar que extraeremos todos los campos ó columnas. 
 
 #### Alias
 
@@ -676,7 +678,9 @@ SELECT titulo FROM libros WHERE id IN (1, 32, 33, 41, 53, 61);
 ```
 
 ##### Busqueda en strings con LIKE
+
 En caso de que necesitemos buscar un substring y no sabemos en que posicion exacta se encuentra de nuestra cadena, nos apoyaremos de la clausula *LIKE*, del comodin de multicaracteres *%* y el monocaracter *_*. Ejemplo:
+
 ``` SQL
 -- Titulos que contienen la palabra 'potter'
 SELECT * FROM libros WHERE titulo LIKE '%potter%';
@@ -690,7 +694,9 @@ SELECT * FROM libros WHERE titulo LIKE '_a%';
 ```
 
 ##### Expresiones regulares
+
 Para utilizar regex en nuestras sentencias sql nos apoyaremos de la *REGEXP*, la complejita de la regex dependera de nuestras necesitades. Ejemplo:
+
 ``` SQL
 -- Titulos que comienzan con H,O,L ó A.
 SELECT * FROM titulo WHERE titulo REGEXP '^[HOLA]'
@@ -705,37 +711,45 @@ SELECT DISTINCT titulo FROM libros;
 ```
 
 #### Orden
+
 Si queremos ordenar la salida de nuestra consulta utilizares la clausula *ORDER BY*. Ejemplo:
+
 ``` SQL
 SELECT titulo FROM libros ORDER BY titulo;
 ```
 
-**NOTA:** Por defecto el ordenamiento se hace de forma acendente, si queremos hacerlo de forma descendente o bien expresarlo de forma explicita nos apoyaremos de *ASC* y *DESC*, ejemplo: `SELECT titulo FROM libros ORDER BY titulo DESC;`
+**NOTA:** Por defecto el ordenamiento se hace de forma acendente, si queremos hacerlo de forma descendente o bien expresarlo de forma explicita nos apoyaremos de *ASC* y *DESC*, ejemplo: `SELECT titulo FROM libros ORDER BY titulo DESC;` 
 
-**NOTA:** Si nosotros asi lo deseamos podemos ordenar nuestra salida por mas de un campo. Ejemplo: `SELECT * FROM libros ORDER BY libro_id AND titulo ASC;`
+**NOTA:** Si nosotros asi lo deseamos podemos ordenar nuestra salida por mas de un campo. Ejemplo: `SELECT * FROM libros ORDER BY libro_id AND titulo ASC;` 
 
 #### Limitar salida
+
 En la mayoria de los casos nosotros solo necesitaremos motrar un rango de nuestra consulta, eso lo haremos apoyandonos de la clausula *LIMIT*, esta recibe uno o dos parametros:
+
 1. El offset: Indica el inicio del rango. **Si solo pasamos un valor, este por defecto sera 0(cero).**
 2. El limite: No indica cuando registros vamos a extraer despues de offset.
 
 Estructura:
+
 ``` SQL
 SELECT * FROM table_name LIMIT offset, limit;
 SELECT * FROM table_name LIMIT limit;
 ```
 
 Ejemplo:
+
 ``` SQL
 SELECT titulo FROM libros WHERE autor_id = 2 LIMIT 10;
 ```
 
 #### Funciones de agregacion
-La funciones de agregacion son ejecutadas a un conjunto de datos, es decir al resultado de una sentencia o consulta sql.
+
+La funciones de agregacion son ejecutadas a un conjunto de datos, es decir al resultado de una sentencia o consulta sql. 
 
 Algunas funciones de agregacion son:
 
 ##### Contar
+
 ``` SQL
 -- Cuenta todos los registros de nuestra tabla autores;
 SELECT COUNT(*) FROM autores;
@@ -745,12 +759,14 @@ SELECT COUNT(*) FROM autores WHERE pais_origen = "USA";
 ```
 
 ##### Sumar
+
 ``` SQL
 -- Suma el total de venta de todos los libros:
 SELECT SUM(ventas) FROM libros;
 ```
 
 ##### Maximo y minimo
+
 ``` SQL
 -- Retorna el valor de ventas del libro con mas ventas
 SELECT MAX(ventas) FROM libros;
@@ -760,36 +776,45 @@ SELECT MIN(ventas) FROM libros;
 ```
 
 ##### Promedio
+
 ``` SQL
 -- Retorna el promedio de ventas efectuadas
 SELECT AVG(ventas) FROM libros;
 ```
 
 #### Grupos
+
 Habra ocaciones(como con las funciones de agregacion) que necesitaresmo trabajar con conjuntos de datos agrupados de alguna forma. Para esto nos apoyaremos de la clausula *GROUP BY* seguida del campo(o los campos) por el que deseamos agrupar los conjuntos. Ejemplo:
+
 ``` SQL
 SELECT autor_id, SUM(ventas) AS total FROM libros GROUP BY autor_id ORDER BY total DESC LIMIT
 ```
 
 #### Condicion bajo agrupamientos
+
 Como las funciones de agregacion son ejecutadas una vez ya el servidor realizo la consulta, no podemos utilizar estas dentro de nuestra clausula *WHERE*, si necesitamos filtrar nuestros dados data una funcion de agregacion nos apoyaremos de la clausula *HAVING*. Ejemplo:
+
 ``` SQL
 SELECT autor_id, SUM(ventas) AS total FROM libros GROUP BY autor_id HAVING SUM(ventas) > 100;
 ```
 
-#### Unir
+#### Unir resultados
+
 Para unir resultados lo haremos de la siguiente manera:
+
 ``` SQL
 SELECT CONTACT(nombre, " ", apellido) FROM autores
 UNION
 SELECT CONTACT(nombre, " ", apellidos) FROM usuarios;
 ```
 
-**IMPORTANTE:** Todas las consultas deben retornar la misma cantidad de columnas. En caso que necesitemos realizar consultas con un numero columnas  diferentes podemos completar estas con columnas que contengan un string vacio("").
+**IMPORTANTE:** Todas las consultas deben retornar la misma cantidad de columnas. En caso que necesitemos realizar consultas con un numero columnas  diferentes podemos completar estas con columnas que contengan un string vacio(""). 
 **NOTA:** Los encabezados mostrados seran los de la primera consulta
 
 #### Subconsultas
+
 Para realizar una consulta anidada o una subconsulta es tan sencillo como colocar esta dentro de parentesis, ejemplo:
+
 ``` SQL
 SELECT
     autor_id
@@ -798,7 +823,75 @@ GROUP BY autor_id
 HAVING SUM(ventas) > (SELECT AVG(ventas) FROM libros);
 ```
 
+#### Uniones
+
+A menudos necesitaremos obtener datos de dos tablas diferentes que comparten un dato en comun(FOREIGN KEY), la manera mas optima realizar estas consultas es a traves *JONIS*, existen 4 tipos principales: innner, left, right y outher que pueden ser extendidos a 7 como veremos a continuacion:
+
+![Joins type](. /img/bases_de_datos/joins. jpg)
+
+
+**NOTA:** en las sentencia siguientes podemos cambiar `ON libros.autor_id = autores.autor_id` por `USING(autor_id)`. Esto porque hemos seguido una buena normalizacion y estandar(o ese se supone) en nuestras tablas.
+*USING* No es mas que un shortcut de la subclausula *ON*.
+
+**NOTA:** Si asi lo deseamos con la subclausula *ON* podremos condicionar aun mmas la union de tablas, como por ejemplo:
+``` SQL
+SELECT *
+  FROM libros
+  INNER JOIN autores ON libros.autor_id = autores.autor_id
+                        AND autores.seudonimo IS NOT NULL;
+
+```
+
+
+##### Izquierda
+
+Si queremos obtener todos los elemenos de la tabla izquiera(incluyendo aquellos que no tenga un valor correspondiente en la tabla de la derecha). 
+
+``` SQL
+SELECT *
+  FROM libros
+  LEFT JOIN autores ON libros.autor_id = autores.autor_id
+  -- Si queremos obtener solo los elementos que no estan incluidos en la tabla izquiera(libros) descomentamos la siguiente linea.
+  -- WHERE autores.autor_id IS NULL
+  ;
+```
+
+##### Derecha
+
+Si queremos obtener todos los elemenos de la tabla derecha(incluyendo aquellos que no tenga un valor correspondiente en la tabla de la izquiera). 
+
+``` SQL
+SELECT *
+  FROM libros
+  RIGHT JOIN autores ON libros.autor_id = autores.autor_id
+  -- Si queremos obtener solo los elementos que no estan incluidos en la tabla derecha(autores) descomentamos la siguiente linea.
+  -- WHERE autores.autor_id IS NULL
+  ;
+```
+
+##### Interno
+Si queremos obtener solo los valores del conjunto que coincide entre las dos tablas:
+``` SQL
+SELECT *
+  FROM libros
+  INNER JOIN autores ON libros.autor_id = autores.autor_id;
+```
+
+##### Externo
+Si queremos obtener todos los valores de la tabla nos apoyaremos del *LEFT JOIN*,*RIGHT JOIN* y de la clausula *UNION*.
+
+##### Producto cartesiano
+Para realizr un producto cartesiano entre dos tablas, lo haremos de la sigueitne manera:
+``` SQL
+SELECT usuarios.username, libros.titulo FROM usuarios CROSS JOIN libros;
+-- ó
+SELECT usuarios.username, libros.titulo FROM usuarios INNER  JOIN libros;
+-- ó
+SELECT usuarios.username, libros.titulo FROM usuarios, libros;
+```
+
 #### Validar si una consulta existe
+
 ``` SQL
 SELECT IF(
     EXISTS(SELECT libro_id FROM libros WHERE titulo = 'El hobbit'),
@@ -807,7 +900,7 @@ SELECT IF(
 ) AS mensaje;
 ```
 
-**NOTA:** Dentro de la consulta de la funcion EXISTS debemos ser muy cuidadosos del los campo a extraer, pues esto nos afectara en el rendimiento de la consulta. En este caso usamos una llave primaria(que es lo recomendado).
+**NOTA:** Dentro de la consulta de la funcion EXISTS debemos ser muy cuidadosos del los campo a extraer, pues esto nos afectara en el rendimiento de la consulta. En este caso usamos una llave primaria(que es lo recomendado). 
 
 ### Actualizar
 
@@ -939,6 +1032,246 @@ Ejemplo:
 ``` SQL
 DROP FUNCTION agregar_dias;
 ```
+
+## Procedimientos
+Los store procedure o procedimientos almanecedos son rutinas la cuales se ejucutan directamente en el motor de base de datos. En estas podemos realizar rutinas complejas asi como trabajar con grupos de datos y ciclos.
+
+**IMPORTANTE:** CAda gestos de base de datos posee su propia forma de trabar con los Store procedure. Por lo que una vez creado los store procedure debemos seguir trabajando con el mismo gestor de base de datos.
+
+### Crear
+Para crear un procedimiento seguimos la siguiente estructura:
+``` SQL
+DELIMITER caracter(es)
+
+CREATE PROCEDURE procedure_name(params_1 TYPE_1, ..., params_n TYPE_n)
+BEGIN
+    # CODE
+END caracter(es)
+
+DELIMITER ;
+```
+
+Ejemplo:
+
+``` SQL
+DELIMITER //
+
+CREATE PROCEDURE prestamo(usuario_id INT,libro_id INT)
+BEGIN
+    INSERT INTO libros_usuarios(libro_id, usuarios_id) VALUES (libro_id, usuarios_id);
+    UPDATE libros SET stock = stock -1 WHERE libros.libro_id = libro_id;
+END//
+
+DELIMITER ;
+```
+
+#### Retornar valores
+Obtener valores de un procedimiento no es posible, pero si podemos editar una variable que recibimos como parametor, esto lo podemos hacer de la siguiente mantera:
+``` SQL
+DELIMITER //
+
+CREATE PROCEDURE prestamo(usuario_id INT,libro_id INT, OUT cantidad INT)
+BEGIN
+    INSERT INTO libros_usuarios(libro_id, usuarios_id) VALUES (libro_id, usuarios_id);
+    UPDATE libros SET stock = stock -1 WHERE libros.libro_id = libro_id;
+
+    SET cantidad = (SELECT stock FROM libros WHERE libros.libro_id = libro_id);
+END//
+
+DELIMITER ;
+```
+**NOTA:** El argumento de "cantidad" debera ser una @variable, para posteriormente poderla consultar.
+**NOTA:** Se parece mucho a los prodecimientos y su manera de setear valores en lenguajes de bajo nivel com Turbo Pascal. 
+
+#### Condicionales
+Para trabajar con condicionales en nuestros procedimientos lo haremos de la siguiente manera:
+``` SQL
+DELIMITER caracter(es)
+
+CREATE PROCEDURE procedure_name(params_1 TYPE_1, ..., params_n TYPE_n)
+BEGIN
+    IF condicion_1 THEN
+	# CODE_1
+    ELSEIF condicion_2 THEN
+	# CODE_2
+    .
+    .
+    .
+    ELSE
+        # CODE_n
+    END IF;
+
+END caracter(es)
+
+DELIMITER ;
+```
+
+Tambien podemos trabajar con *casos* en caso de que tengamos muchos opciones:
+``` SQL
+DELIMITER caracter(es)
+
+CREATE PROCEDURE procedure_name(params_1 TYPE_1, ..., params_n TYPE_n)
+BEGIN
+    CASE
+	WHEN condition_1 THEN
+	    # CODE_1
+	.
+	.
+	.
+	WHE condition_n THEN
+	    # CODE_n
+
+    END CASE
+END caracter(es)
+
+DELIMITER ;
+```
+
+#### Ciclos
+Para trabajar con ciclos en los procedimientos los haremos de la siguiente manera:
+``` SQL
+DELIMITER caracter(es)
+
+CREATE PROCEDURE procedure_name(params_1 TYPE_1, ..., params_n TYPE_n)
+BEGIN
+
+-- Ciclo While
+    WHILE condition DO
+	#CODE of while
+    END WHILE;
+-- Ciclo Repeat
+    REPEAT
+	#CODE of repeat
+        UNTIL condition
+    END REPEAT;
+END caracter(es)
+
+DELIMITER ;
+```
+
+**NOTA:** Seguramente las variable sera algo que te sirva mucho en este modulo
+
+**NOTA** poco relevante: Me llama un poco la atencion la similitud que hay entre SQL y Pascal.
+
+### Errores
+Dentro de los store procedure podemos declarar un modulo para realizar ciertas acciones en caso de que ocurra un error dentro del procedimiento. Esto lo hacemos de la siguiente manera:
+
+``` SQL
+DELIMITER caracter(es)
+
+CREATE PROCEDURE procedure_name(params_1 TYPE_1, ..., params_n TYPE_n)
+BEGIN
+    DECLARE EXIT HANDLER FOR SQLEXCEPTION -- Si ocurre un error
+    BEGIN
+	# CODE
+    END;
+    # SQL CODE
+END caracter(es)
+
+DELIMITER ;
+```
+
+### Ejecutar
+Para ejecutar un procedimiento es tan sencillo como `CALL procedure_name(arg_1, ..., arg_n);`. Los argumentos son en caso de que el procedimiento tenga parametros definidos.
+
+### Listar
+Para listar los procedimientos asociados a nuestra base de datos ejecutaremos:  
+``` SQL
+SELECT name FROM mysql.proc WHERE db = DATABASE() AND type = "PROCEDURE";
+```
+
+### Eliminar
+Eliminar un procedimiento basta con ejecutar `DROP PROCEDURE procedure_name;`
+
+### Editar
+Lamentablemente no es posible editar un procedimiento, debemos eliminarlo y volverlo a crear con los nuevos ajustes. 
+
+## Vistas
+Podemos ver a las vista como una consulta definica por el admin que sera usuda periodicamente. Este luego de creada se comporta de manera muy similar a una tabla(Al menos en el sentido de como hacer consultas sobre ella).
+
+### Crear
+Para crear una vista es muy sencillo, solo deberemos seguir la siguiente estructura `CREATE VIEW view_name AS consulta`. Siendo "consulta" del tipo `SELECT ...;`
+
+**NOTA:** Es importante crear y mantener un estandar en los nombres de nuestras vista(por ejemplo colocarle view o vw al inicio o al final, ya que estas se listan como tablas, pero en realidad no lo son. Son vistas)
+
+### Editar
+Para editar una vista seguimos la estructura: `CREATE OR REPLACE VIEW view_name AS consulta;`
+
+### Eliminar
+Para eliminarla ejecutamos `DROP VIEW view_name;`
+
+## Transacciones
+Una transaccion explicada de una forma sencilla se puede ver como envolver varias sentencias en una sola. Dicho de otra manera, o todas las sentencias se ejecutan de forma correcta o ninguna se ejecutara, ya que podremos regresar al estado de la tabla al comenzar la transaccion. Para crear una trasaccion seguimos la siguiente estructura:
+``` SQL
+START TRANSACTION;
+    # SQL CODE
+-- Si todo va bien
+COMMIT; -- Cofirmamos cambios y finalizamos la transaccion
+
+-- Si algo falla
+ROLLBACK; -- Finalizamos la transaccion sin confirmar los cambios.
+```  
+
+**NOTA:** Un uso muy comun de las transacciones es dentro de Store Procedures, de esta manera podemos colocar un *rollback* dentro del majeno de errores del procedimiento.
+
+## Motores
+Un motor de almacenamiento se el encargado de almacenar, gestionar y recuperar toda la información de una tabla.
+
+MySQL nos permite trabajar con diferentes motores de almacenamiento, entre los que destacan *MyISAM* e *InnoDB*.
+
+Para que nosotros conozcamos que motor de almacenamiento podemos utilizar basta con ejecutar la siguiente sentencia en nuestra terminal. `SHOW ENGINES;`
+
+Obtendremos un listado
+- InnoDB
+- MRG_MYISAM
+- MOMORY
+- BLACKHOLE
+- MyISAM
+- CSV
+- ARCHIVE
+- PERFORMANCE_SCHEMA
+- FEDERATED
+
+### Gestion
+
+Si nosotros así lo deseamos podemos cambiar el motor de almacenamiento. Existen dos formas de hacer esto. La primera, es modificar el archivo my.cnf.
+
+``` CNF
+[mysqld]
+default-storage-engine = innodb
+```
+
+La segunda forma es hacerlo directamente desde nuestra sección, basta con ejecutar la siguiente sentencia. `SET storage_engine=INNODB;`.
+
+En ambos casos para este ejemplo modificamos el motor de almacenamiento de MyISAM a InnoDB.
+
+---
+Si nosotros deseamos conocer qué motor de almacenamiento utiliza una tabla en particular, podemos hacerlo ejecutando la siguiente sentencia.
+
+``` SQL
+SHOW TABLE STATUS WHERE `Name` = 'tabla' \G;
+```
+
+Si deseamos crear una tabla utilizando un motor en particular, debemos seguir la siguiente estructura.
+``` SQL
+CREATE TABLE tabla_innodb (id int, value int) ENGINE=INNODB;
+CREATE TABLE tabla_myisam (id int, value int) ENGINE=MYISAM;
+CREATE TABLE tabla_default (id int, value int);
+```
+
+### MyISAM
+Es el motor por default de MySQL. Una de las principales ventajas de este motor es la velocidad al momento de recuperar información. MyISAM es una excelente opción cuando las sentencias predominantes en nuestra aplicación sean de consultas, debido a que este no hace un bloqueo de tablas cuando consultamos registros. Esta es una de las razones por las cuales MyISAM es tan popular en aplicaciones web.
+
+Si tu aplicación necesita realizar búsquedas full-text MyISAM es un mejor opcion.
+
+La principal desventajas de *MyISAM* recae en la ausencia de atomocidad, ya que no se comprueba la integridad referencial de los datos. Se gana tiempo en la inserción, sí, pero perdemos confiabilidad en los datos.
+
+### InnoDB
+La principal ventaja de este motor recae en la seguridad de las operaciones. InnoDB permite la ejecución de transacciones, esto nos garantiza que los datos se persisten de forma correcta y si existe algún error podamos revertir todos los cambios realizados.
+
+Algo interesante a mencionar sobre InnoDB es que este motor realiza un bloqueo total sobre un tabla cuando es ejecutada una se las siguientes sentencias: Select, Insert, Update y Delete.
+
+Si deseamos trabajar con transacción y la integridad de los datos sea crucial nuestra mejor opción será InnoDB.
 
 # Formas normales en DB relacionales
 
