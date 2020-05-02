@@ -12,6 +12,7 @@ Aca podemos utilizar conbinaciones de teclas y cambiarnos a cualquiera de los ot
 Es el modo en el que podemos introducir texto. Se puede entrar a este modo desde el modo normal. utilizando alguno de los siguientes atajos.
 
 - Antes del cursor: [i].
+- Al inicio de la linea: [I]
 - Delante del cursor: [a].
 - Al comienzo de una nueva linea(crea la nueva linea): [o].
 - Final de la linea: [A].
@@ -37,6 +38,8 @@ También podremos personalizar aspectos de Vim para esa sesión, ya que no queda
 - `:[rango]g[lobal]/{pattern}/[comando]`: **ejecuta un comando** en cada línea espeficicada que coincidan con el **patrón de búsqueda** {pattern}.
 - `:[rango]p[rint]`: nos **muestra** el rango.
 - `:h`: **informacion detallada de cada comando**
+
+**NOTA:** Los rangos son denotados `1,100`.
 
 **Lineas en VIM**:
 Como Vim nombra algunas lineas:
@@ -201,7 +204,7 @@ Los motions son atajos que nos permitiran movernos mas rapido a traves de un doc
 - [j]: Bajar un número de línea(Lineas separadas por un retorno de carro)
 - [gj]: bajar una línea visible.
 - [k]: sube una línea
-- [gk]: sube una línea visible.
+- [gk]: sube una línea visible. 
 - [0]: va al inicio de la linea real.
 - [g0]: Va al inicio de la linea visible en pantalla.
 - [^]: va al primer caracter no blanco de la línea.
@@ -221,9 +224,56 @@ Los motions son atajos que nos permitiran movernos mas rapido a traves de un doc
 - [,]: da la vuelta a la última busqueda.
 - [%]: Nos lleva de (,[,{ a ),],} y biseversa.
 
+# Busquedas
+
+## Pasos a seguir
+
+1.  Busqueda hacia adelanta utilizaremos: [/]
+1. Busquedas hacia atras utilizaremos: [?]
+2. Una vez tipeada la busqueda presionaremos enter.
+3. Pulsamos [n] o [N] Para ir a la siguiente o la previa coincidencia.
+
+## Mayuculas sensibles
+Podemos decirle a Vim que tome o no en cuenta las mayúsculas de forma global o especificarlo en cada búsqueda. Si no queremos que Vim tome en cuenta las mayúsculas pondremos en nuestro `.vimrc` lo siguiente: `set ignorecase`
+
+Sin importar la opcion por defecto le podemos indicar esta opcion dentro de la busqueda:
+- `/\chola`: Encontrara `Hola hola HOLA`.
+- `/\Chola`: Encontrara `hola`.
+
+De todas formas. tenemos otro amigo más en nuestro repertorio: `set smartcase`. Cuya función es la de **tomar en cuenta las mayúsculas si en nuestra búsqueda incluímos una**. De no ser así, buscará todos los resultados posibles.
+
+
+# Sustituciones
+El comando `:substitute` es un comando que puede parecer más complejo que el típico `ctrl+f` de otros editores de código, le proporcionaremos un patrón de búsqueda y después el texto que queramos sustituir. Su complejidad radica en las múltiples opciones que cambiarán el comportamiento de este comando, esas opciones son llamadas `flags`. El comando sustituir tiene la siguiente estructura:
+`:[range]s[ubstitute]/{pattern}/{string}/[flags]`
+
+Estas son unas cuantas flags útiles (para más información consultad `:h :s_flags`):
+- `g`: global -> hace que el comado de sustitución actúe de forma global, cambiando cada patrón que encuentre en una línea en lugar de cambiar únicamente el primero.
+- `c`: confirm -> nos da la oportunidad de confirmar los cambios.
+- `n`: number -> suprime el comportamiento habitual del comando sustituir, nos **informa del número de casos que se verían afectados** si ejecutásemos el comando.
+- `&`: esta flag le indica al comando sustituir que reutilice las **flags del comando anterior**.
+- `i`: Ignorar las mayusculas.
+- `I`: No ignorar las mayusculas.
+
+Es importante saber los carácteres especiales que podemos usar como reemplazo (para más info consultad `:h sub-replace-special`):
+- `\r`: inserta un retorno de carro(Enter)
+- `\t`: inserta una tabulacion.
+- `\\`: inserta un \
+- `\n`: Inserta el enesimo submatch de la expresion regular
+- `\0`: Inserta el patron de busqueda completo.
+- `~`: Usa el {string} del comando de sustitusion anterior.
+- `\={Vim script}`: Evalua la expresion {Vim script} y usa el resultado como el {string} a reemplazar.
+
+**NOTA:** Si no indicamos nada en el patron de busqueda utliza el del comando anterior. Si asi lo deamos podemos teclear [^r] para ver la expresion de busqueda.
+
+# Expresiones regulares(Regex)
+Aca solo iran unos pequeños ejemplo, nada practico. Se espera que de quien este leyendo esto ya posea un conocimiento de regex.
+
+- `#\([0-9a-fA-F]\{6}\|[0-9a-fA-F]\{3}\)` es igual a `\v#([0-9a-fA-F]{6}|[0-9a-fA-F]{3})` que es igual a `\v#(\x{6}|\x{3})`
+- Para revisar el manual de las clases regex: `:h character-classes`.
+
 # Lugares relevantes
 El comando [m{a-zA-Z}] crea una marca (o varias si definimos más) en el archivo a la que podremos saltar cuando queramos usando el acento grave más la letra del alfabeto que hayamos usado.
-
 
 Lo bueno de las marcas es que hay algunas que se añaden solas, aquí tenéis unos cuantos comandos que se ejecutan desde el modo normal y sin los dos puntos:
 
@@ -253,3 +303,20 @@ Algunos registros ya definidos por vim son:
 - [""]: El registro sin nombre.
 - ["\_]: El registro agujero negro.
 - ["+] / ["-]: **El portapapeles del sistema**
+
+# Macros
+Las macros se empiezan a grabar en cuanto pulsamos la tecla [q] y le asignamos un registro, para parar de grabar pulsaremos de nuevo [q]. Si quisiéramos guardar la macro escogida en el registro a usaríamos el comando qa.
+
+Para ejecutar un macro lo haremos con [@{registro}].
+
+## Variables
+Declaramos una variable con `:let var_name=value`
+Modificar una variable: `let var_name+=value` ó `let var_name-=value`
+Imprimir una variable desde elmodo inseción: [^r={var_name}<Enter>]
+
+## Tips
+- Para las macros usa comandos como [A] y [I] que normalicen la posición del cursor.
+- Para repetir una macro que acabamos de ejecutar por ejemplo con [@q] usaremos [@@] las veces que queramos.
+- Para ver el contenido de nuestra macro `@a` podemos usar el comando `:reg a`.
+- Para editar una macro llamada por ejemplo `a`, podemos pegar su contenido con `:put a` y cuando la hayamos editado al gusto copiarla de nuevo al registro con `"ay$`.
+- Ejecutar una macro en todos los buffers abiertos `:argdo normal @a`.
