@@ -179,37 +179,40 @@ Los patrones de diseño son soluciones de arquitectura de software aplicables a 
 
 Basicamente existen 3 tipos:
 
-1. **Creacion:** Nos hablan de como de crean nuevas instancias de los objetos.
-Entre ellos encontramos:
-- Abstract Factory.
-- Builder.
-- Factory Method.
-- Prototype.
-- Singleton.
+1. [**Creacionales:**](#creacionales) Nos hablan de como se crean nuevas instancias de los objetos.
 
-2. **Estructurales:** Nos hablan de como debemos estructurar nuestras clases para crear estructuras flexibles y eficientes.
 Entre ellos encontramos:
-- Adapter.
-- Bridge.
-- Composite.
-- Decorator.
-- Facade.
-- Flyweight.
-- Proxy.
+- [*Abstract Factory*](#abstract_factory): Provee una interfaz para la creacion de familias de objetos sin espeficicar una clase en concreto.
+- [*Builder*](#builder): Separa la construccion de objectos complejos.
+- [*Factory Method*](#factory_method): Define un interfaz para la creacion de un objecto pero deja qu la subclase decida que clase instanciar.
+- [*Prototype*](#prototype): especifica que tipo de objectos crear usando una instancia prototipo y crea nuevos objecos copiando este prototipo.
+- [*Singleton*](#singleton): Nos aseguramos que una clase solo puede ser instanciada una vez, ademas de proveer un punto de acceso a esta.
+
+2. [**Estructurales:**](#estructurales) Nos hablan de como debemos estructurar nuestras clases para crear estructuras flexibles y eficientes.
+
+Entre ellos encontramos:
+- [*Adapter*](#adapter): Convierte la interaz de una clase en otro interfaz quee cliente espera.
+- [*Bridge*](#bridge): Nos permite desacoplar un a abstracción de su implementacion, de manera que ambas puedan ser modificadas indepedientemente sin necesdad de alterar por ello la otra.
+- [*Composite*](#composite): sirve para construir objetos complejos a partir de otros más simples y similares entre sí, gracias a la composición recursiva y a una estructura en forma de árbol.
+- [*Decorator*](#decorator): Agrega responsabilidades adicionales a un objeto de forma dinámica.
+- [*Facade*](#facade): Nos permite utilizar módulos complejos de una forma sencilla y con bajos costos para el cliente.
+- [*Flyweight*](#flyweight):Nos permite eliminar o reducir redundancia cuando trabajamos con una gran cantidad de objetos.
+- [*Proxy*](#proxy): Permite controlar el acceso a diferentes áreas de módulos.
 
 
-3. **Comportamiento:** Hablan sobre como deben comportarse nuestros objetos. Gestionando algoritmos y responsabilidades entre ellos.
+3. [**De Comportamiento:**](#comportamiento) Hablan sobre como deben comportarse nuestros objetos. Gestionando algoritmos y responsabilidades entre ellos.
+
 Entre ellos encontramos:
-- Chain of Responsibility.
-- Command.
-- Interpreter.
-- Iterador.
-- Mediador.
-- Memento.
-- Observer.
-- State.
-- Tempalte Method.
-- Visitor.
+- [*Chain of Responsibility*](#chain_of_responsability): Evita acoplar el emisor de una petición a su receptor dando a más de un objeto la posibilidad de responder a una petición. Para ello, se encadenan los receptores y pasa la petición a través de la cadena hasta que es procesada por algún objeto.
+- [*Command*](#command): Permite solicitar una operación a un objeto sin conocer realmente el contenido de esta operación, ni el receptor real de la misma. Para ello se encapsula la petición como un objeto, con lo que además facilita la parametrización de los métodos.
+- [*Interpreter*](#interpreter): Dado un idioma, define una representación para su gramática junto con un intérprete que use la representación para interpretar oraciones en el lenguaje.
+- [*Iterator*](#iterator): Define una interfaz que declara los métodos necesarios para acceder secuencialmente a un grupo de objetos de una colección.
+- [*Mediator*](#mediator): Define un objeto que encapsula cómo un conjunto de objetos interactúan.
+- [*Memento*](#memento): Permite almacenar el estado de un objeto (o del sistema completo) en un momento dado de manera que se pueda restaurar en ese punto de manera sencilla. Para ello se mantiene almacenado el estado del objeto para un instante de tiempo en una clase independiente de aquella a la que pertenece el objeto (pero sin romper la encapsulación), de forma que ese recuerdo permita que el objeto sea modificado y pueda volver a su estado anterior.
+- [*Observer*](#observer): Define una dependencia del tipo uno a muchos entre objetos, de manera que cuando uno de los objetos cambia su estado, notifica este cambio a todos los dependientes.
+- [*State*]: Se utiliza cuando el comportamiento de un objeto cambia dependiendo del estado del mismo.
+- [*Template Method*](#template_method): Define el esqueleto de programa de un algoritmo en un método, llamado método de plantilla, el cual difiere algunos pasos a las subclases.
+- [*Visitor*](#visitor): Representa una operación que se realiza sobre los elementos que conforman la estructura de un objeto.
 
 ***IMPORTANTE:*** Es importante recalcar que los patrones de diseño son para darte una idea de como diseñar tu aplicacion, no son un "copia y pega" pues no siempre son la mejor solucion que se adapta a tu problema en algunas cosos puede ponerte las cosas mas dificiles.
 
