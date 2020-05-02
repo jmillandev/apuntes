@@ -1,6 +1,7 @@
 Es un editor desarrolado para CLI, es decir que solo podemos interactuar con el por medio del teclado. O al menos ese es el objetivo.
 
 **NOTA:** Cuando hacemos referencia a algo como [i]. Nos referimos a que debe teclear la letra i desde el modo comando.
+**NOTA:** Cuando vemos algo como [^c]. ese significa <Control>+c.
 
 # Modos
 
@@ -19,6 +20,18 @@ Es el modo en el que podemos introducir texto. Se puede entrar a este modo desde
 - Modo Reemplazar: desde el modo normal tecleamos: [R]
 - Reemplazar un caracter: situados sobre el caracter en modo normal [r]
 - Reemplazar caracter y seguir en modo inserción: [s]
+
+## Autocompletado
+Lo primero que tenemos que aclarar es que en **Vim tendremos varias opciones para el autocompletado y que este se realiza siempre en el modo insertar**. Para activar las diferentes opciones de autocompletado tenemos los siguiente atajos de teclado:
+
+- El autocompletado se activa con [^n] y [^p], seleccionando el primer y ultimo resultado de las lista de conincidencias.
+- [^x^n] Buscar una lista de palabras en el buffer.
+- [^x^i] Muestra autocompleta de archivos incluidos. Muchos lenguajes de programacion permiten incluir archivos, este atajo sirve para buscar palabras en ellos.
+- [^x^k]: Mira una lista de palabras en el diccionario.
+- [^x^l]: Esto hace un autocompletado de lineas completas.
+- [^x^f]: Autocompletado de para nombre de archivos o carpetas 
+- [^x^o]: Sirve para la omni-completion, **segurencias basadas en el codigo como pueden ser propiedades css** que podemos utilizar. Hay varios lenguajes soportados y mediante plugins podemos agregar mas.
+
 
 ## Comando
 A este modo se accede pulsando [:], se escriben comandos, y se ejecutan pulsando [ENTER]. 
