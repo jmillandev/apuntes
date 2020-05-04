@@ -286,7 +286,7 @@ Aca solo iran unos pequeños ejemplo, nada practico. Se espera que de quien este
 - Para revisar el manual de las clases regex: `:h character-classes`.
 
 # Lugares relevantes
-El comando [m{a-zA-Z}] crea una marca (o varias si definimos más) en el archivo a la que podremos saltar cuando queramos usando el acento grave más la letra del alfabeto que hayamos usado.
+El comando [m{a-zA-Z}] crea una marca (o varias si definimos más) en el archivo a la que podremos saltar cuando queramos usando el acento grave(\`) más la letra del alfabeto que hayamos usado: .
 
 Lo bueno de las marcas es que hay algunas que se añaden solas, aquí tenéis unos cuantos comandos que se ejecutan desde el modo normal y sin los dos puntos:
 
