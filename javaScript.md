@@ -713,7 +713,7 @@ Son justamente eso, promesas de valores que aun no conocemos, pero prometemos co
 
 Las promesas se invocan de la siguiente forma:
 
-```[javaScript]
+``` javascript
 Promesa = new Promise( ( resolve, reject ) => {
   // --- llamado asíncrono
   if( todoOK ) {
@@ -739,7 +739,7 @@ A diferencia de los callbacks en el CallbackHell, que terminan estando anidados 
 
 Ejemplo(replica del codigo anterior con los *callback*):
 
-```[javaScript]
+``` javaScript
 const API_URL = "https://swapi.co/api/";
 const PEOPLE_URL = "people/:id";
 const opts = { crossDomain: true };
@@ -776,13 +776,13 @@ obtener_personaje(1)
     })
     .then(personaje => {console.log(`El personaje 6 es ${personaje.name}`)
     })
-    .catch(on_error)```
+    .catch(on_error)
 ```
 
 ### En paralelo
 Para hacer el llamado a múltiples promesas, nos apoyamos en un array de ids con el que luego construimos otro arreglo de Promesas, que pasaremos como parámetro a Promise.all( arregloDePromesas ), con las promesas podemos encadenar llamadas en paralelo, algo que no es posible usando callbacks.
 Ejemplo:
-```[javaScript]
+``` javascript
 const API_URL = 'https://swapi.co/api/'
 const PEOPLE_URL = 'people/:id'
 const opts = { crossDomain: true }
@@ -812,7 +812,7 @@ Promise
 ### En carrera
 Permite ejecutar multiples promesas al mismo tiempo y ejecutar aquella que termine primero ejemplo:
 
-``` [javascript]
+``` javascript
 const getUserAll = new Promise(function(todoBien, todoMal) {
   // llamar a un api
   setTimeout(function() {
@@ -843,10 +843,12 @@ Promise.race([
 // En este ejemplo solo se ejecutara getUser
 ```
 
+**NOTA:** Podemos manejar los errores de las promesas si en el then pasamos un segundo callback, este segundo callback maneraja el error de esa promesa.
+
 ## Async-await
 Es la manera más simple y clara de realizar tareas asíncronas. Await detiene la ejecución del programa hasta que todas las promesas sean resueltas. Para poder utilizar esta forma, hay que colocar async antes de la definición de la función, y encerrar el llamado a Promises.all() dentro de un bloque try … catch.
 Ejemplo:
-```[javaScript]
+``` javaScript
 const API_URL = 'https://swapi.co/api/'
 const PEOPLE_URL = 'people/:id'
 const opts = { crossDomain: true }
@@ -880,10 +882,14 @@ async function obtenerPersonajes() {
 obtenerPersonajes()
 ```
 
+**NOTA:** Cualquier funcion async-await retorna una promesa, por lo tanto si requerimos un valor retornado por esta lo obtendremos atraves de un then().
+
+**NOTA:** Todos los errores de la funcion podran ser manejados dentro del cath de la promesa(Leer la nota anterior).
+
 # Memoizacion
 La memoización es una técnica de programación que nos permite ahorrar cómputo o procesamiento en JavaScript, al ir almacenando el resultado invariable de una función para que no sea necesario volver a ejecutar todas las instrucciones de nuevo, cuando se vuelva a llamar con los mismos parámetros. Es similar a usar memoria cache.
 Ejemplo:
-```[javaScript]
+``` javaScript
 function factorial(n) {
   if (!this.cache) {
     this.cache = {}

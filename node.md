@@ -15,8 +15,12 @@
 ## 2.1 Nodemon
 [Nodemon](https://www.npmjs.com/package/nodemon): Este paquete nos sera de mucha ayuda para no tener que bajar y subir el servidor manualmente cada vez que hagamos un cambio. Este hara el reinicio automaticamente cuando note un cambio en alguno de los archivos.
 
+**NOTA:** Por default nodemon solo reseteara el servidor cuando hagamos una cambio en los archivos javascript. Si queremos que ejecute estos cambios en otro tipo de ficheros lo haremos de lasiguiente manera: `nodemon app -e js,css,html,hbs`
 ## 2.2 Yargs
 [Yargs](https://www.npmjs.com/package/yargs): Nos sirve para manejar los argumentos de entrada en una app de linea de comandos.
+
+## Colors
+[Colors](https://www.npmjs.com/package/colors): Nos ayuda a colorear la salida de nuestra CLI.
 
 ## 2.3 Request
 [Request](https://link): Nos sirve para hacer peticiones HTTP utilizando callbacks.
@@ -29,9 +33,23 @@
 ## 2.5 EXPRESS
 [Express](https://www.npmjs.com/package/express): Nos permite montar un servidor HTTP. Esta basado en la libreria HTTP que viene por defecto en node.
 
-
 ## 2.6 Handlebars
-[hbs](https://link): Es un motor de platatillas(template engine) para express.
+[hbs](https://www.npmjs.com/package/hbs): Es un motor de platatillas(template engine) para express.
+Una configuracion sencilla para este motor de plantillas junto con express es:
+``` javascript
+const express = require('express')
+const app = express()
+
+app.set('view engine', 'hbs')
+
+app.get('/', (req, res) => {
+    res.render('filename', {
+        // Context
+    })
+})
+```
+
+**NOTA:** Debe haber un fichero con extension `.hbs` en un carpeta views en la raiz de la app. Este fichero contiene el template.
 
 ## 2.7 Body-parser
 [Body-parser](https://link): No ayuda a leer mensajes serializados desde la URL(como por ejemplo los que son mandados por POST o PUT)
