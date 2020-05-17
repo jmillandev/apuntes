@@ -83,6 +83,16 @@ forma recursiva
 - **wc** < [FILE] : Word Count, Retorna el numero de lineas, de palabras y de caracteres contenidos en FILE.
     - -l :Retorna solo el numero de lineas.
 
+### cUrl
+Su nombre significa client url.
+Algunas banderas:
+- -o [PATH]: Para guardar el fichero.
+- -i: Nos muestra los encabezados y el cuerpo de la respuesta.
+- -I: Nos muestra solo los encabezados.
+- -H "header : value": Seteamos los encabezados de la peticion. Si necesitamos mas encabezados, seguiremos colocando banderas -H.
+- -X METHOD: Seteamos el verbo http por el cual realizaremos la consulta. por default es GET.
+- -d '{"data":"value"}': Seteamos el cuerpo de la peticion.
+
 # Composicion de comandos:
 ## Secuencia de comando
 command_1; command_2
@@ -238,6 +248,7 @@ Algunos ficcheros para la particularizacion de inicio y fin de sesion.
 acabado de ejecutarse.
 2. [ctrl]-D - el sistema lo interpreta como _EOF_ (End Of File) y cierra el _stream_ de entrada
 (STDIN) para un archivo en donde se esté escribiendo desde la terminal.
+3. [ctrl]-L - este es un shortcut para `clear`. Es decir, limpia el output de nuestra terminal.
 
 # Programacion en Shell
 
