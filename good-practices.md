@@ -32,7 +32,7 @@ Debemos seguir un estándar de codificación, el cual nos ayuda a:
 Los identificadores son variables, funciones, clases, módulos, componentes, etc. Elementos a los que nosotros debamos crearles un nombre propio.
 
 Ejemplo sin un identificador mnemotécnico una función se vería así:
-``` [PHP]
+``` php
 function f( int $b, int $a ) : float {
         return ( $b * $a ) / 2;
 }
@@ -40,7 +40,7 @@ function f( int $b, int $a ) : float {
 Al leer este código no sabemos para qué funciona y hasta podríamos borrarlo por equivocación.
 
 Ahora utilizando un identificador mnemotécnico se vería así:
-``` [PHP]
+``` php
 function areaTriangulo( int $base, int $altura ) : float {
         return ( $base * $altura ) / 2;
 }
@@ -93,7 +93,7 @@ Los efectos colaterales en este caso son aquellos que suceden mas alla del codig
 - **No** uses variables globales.
 
 
-# Principios SOLID: Single Responsibility Principle
+# Principios SOLID
 **SOLID** son cinco principios básicos de la programación orientada a objetos que ayudan a crear software mantenible en el tiempo.
 
 **SOLID** significa:
@@ -104,16 +104,90 @@ Los efectos colaterales en este caso son aquellos que suceden mas alla del codig
 - [I](#interface): Interface Segregation Principle. 
 - [D](#dependency): Dependency Inversion Principle. 
 
+
 <a name="ingle"></a>
 ## Single Reponsibility Principle
-La S se trata de una clase que debe tener sólo una razón para cambiar. Es decir, que cada clase debe tener una UNICA responsabilidad.
+A class should have one and only one reason to change. Meaning that a class should have only one job.
+
+En español:
+Una clase que debe tener sólo una razón para cambiar. Es decir, que cada clase debe tener una UNICA responsabilidad.
+
+Veamos un Ejemplo:
+``` java
+package main;
+
+public class Rectangulo {
+    private float base;
+    private float altura;
+
+    public Rectangulo(float base, float altura) {
+        this.setBase(base);
+        this.setAltura(altura);
+    }
+
+    public float getBase() {
+        return this.base;
+    }
+
+    public void setBase(float base) {
+        this.base = base;
+    }
+
+    public float getAltura() {
+        return this.altura;
+    }
+
+    public void setAltura(float altura) {
+        this.altura = altura;
+    }
+    
+    public String toString() {
+        return "Base " + this.base + ", Altura " + this.altura;
+    }
+
+    public float area() {
+        return this.base * this.altura;
+    }
+
+    // Este metodo No cumple con el principio de responsabilidad unica
+    public void imprimir() {
+        System.out.println(this);
+    }
+
+}
+```
+
+En el ejemplo anterio, a excepción del metodo 'imprimir', toda la clase cumple con el principio de responsabilidad unica. Debido a que sus metodos estan fuertemente relacionado(tienen una alta cohesión), donde la pregunta principal podria ser: ¿que se tiene que mostrar?.
+
+Pero si nos centramos en el metodo 'imprimir', este se podria decir que pertenece a otra capa en la logica. La capa de presentación(donde la pregunta seria ¿como mostrar la información?), ya que si en un futuro, queremos mostrar el contenido de esta clase en un formato Json en un servicio WEB, no deberiamos modificar la clase. Entoces, aplicando el principio de responsabilidad unica creariamos otra clase que se veria asi:
+
+``` java
+package main;
+
+public class Presentacion {
+    public void imprimir(Rectangulo rectangulo) {
+        System.out.println(restantgulo);
+    }
+
+    public void area(Rectangulo rectangulo) {
+        System.out.println(restantgulo.area());
+    }
+}
+```
 
 <a name="open"></a>
 ## Open/Closed Principle
-Establece que una entidad de software debe quedarse abierta para su extensión, pero cerrada para su modificación. Es decir, las entidades, clases, metodos deben quedar abierta al posibilidad de extension, de esta forma la clase puede adaptarse a nuevos esenarios sin la necesidad de modificar o añadir codigo. Ejemplo:
+Objects or entities should be open for extension, but closed for modification.
+
+En español:
+Establece que una entidad de software debe quedarse abierta para su extensión, pero cerrada para su modificación.
+
+Es decir, las entidades, clases, metodos deben quedar abierta al posibilidad de extension, de esta forma la clase puede adaptarse a nuevos ecenarios sin la necesidad de modificar o añadir codigo. Este principio suele resolverse delegando las funcionalidades( usualmente mediante la herencia y/o interfaces).
+
+Ejemplo:
 
 **Violacion_O/C**: Aqui vemos como la funcion valida el tipo de documento que se desea procesar, de esta manera seria imposible agregar un nuevo estilo de documento sin modificar el archivo
-``` [PHP]
+``` php
 <?php
 
 class DocProcessor
@@ -133,7 +207,7 @@ class DocProcessor
 }
 ```
 **O/C_Respetado**: En este cado el metodo se encarga de procesar directamente el archivo, delegando la responsabilidad de validar el archivo a otra clase.
-``` [PHP]
+``` php
 <?php
 
 class DocProcessor
@@ -146,8 +220,70 @@ class DocProcessor
         }
 }
 ```
+
+Otro ejemplo:
+Volamos un instante con el codigo de ejemplo en [Open/Closed Principle](#open) y regresemos aca.
+Supongamos que creamos otra clase llamado Triangulo, que hace algo muy similar a la clase Rectangulo, esta calcula el area de dicha figura.
+
+Pero, ¿que pasa si ahora queremos imprimir el area del triangulo?. Deberiamos hacer algo asi en la clase 'Presentación'
+
+``` java
+package main;
+
+public class Presentacion {
+    public void imprimir(Rectangulo rectangulo) {
+        System.out.println(rectantgulo);
+    }
+
+    public void area(Rectangulo rectangulo) {
+        System.out.println(rectantgulo.area());
+    }
+
+    public void imprimir(Triangulo triangulo) {
+        System.out.println(triangulo);
+    }
+
+    public void area(Triangulo triangulo) {
+        System.out.println(triangulo.area());
+    }
+
+}
+```
+
+Este codigo funciona perfectamente, pero supone una violación al princio O/C. Ya qeu tendiramos que crear N*2 metodos por cada n figuras que tengamos. Para solucionar esto podemos crear la siguiente interfaz.
+
+``` java
+package main;
+
+public class IFigura {
+
+    float area();
+
+}
+```
+
+Luego de aplicar dicha interfaz a nuestras dos clases(Triangulo y Rectangulo). Podriamos hacer un refactor a nuestra clase 'Presentacion' y quedaria así:
+
+``` java
+public class Presentacion {
+    public void imprimir(IFigura figura) {
+        System.out.println(figura);
+    }
+
+    public void area(IFigura figura) {
+        System.out.println(figura.area());
+    }
+
+}
+```
+
+De esta forma dejamos nuestro codigo abiarto a la extension pero cerrado a la modificación.
+
 <a name="liskov"></a>
 ## Liskov Substitution Principle
+Let q(x) be a property provable about objects of x of tiye T. Then q(y) should provable for objects y of type S where  S is a subtype of T.
+
+Es decir:
 Establece que cada clase que hereda de otra puede usarse como su padre sin necesidad de conocer las diferencias entre ellas. Para que pueda darse este principio debe cumplir con dos puntos:
 - El cliente debe usar métodos de la clase padre únicamente.
 - La clase hija no debe alterar el comportamiento de los métodos de la clase padre.
@@ -160,11 +296,15 @@ En el caso de que una clase hija requiera modificar el codigo de un metodo de la
 Establece que los clientes de un programa cuando implementan una interface sólo deberían conocer de éste los métodos que realmente usan. Es decir, no deben implementar interfaces con metodo que no utilizan en su codigo fuente.
 
 **Consejos**
-En el casode que tengas un metodo implementando interfaces con metodos que este no utilizara(o seria estupido que los utilizara), debemos "paritr" la interfaz en varias interfaces. Recordemos que una misma clase puede implementar varias interfaces.
+A client should never be forced to implement an inaterface that it doesn't use or client shouln't be forced to depend on methods they do not use.
+
+En el caso de que tengas un metodo implementando interfaces con metodos que este no utilizara(o seria estupido que los utilizara), debemos "partir" la interfaz en varias interfaces(posiblemente que vayan heredando unas de otras). Tambien recordemos que una misma clase puede implementar varias interfaces.
 
 <a name="dependency"></a>
 ## Dependency Inversion Principle.
-Detalla que los módulos de alto nivel no deben depender de los de bajo nivel, ambos deben depender de abstracciones. Es decir, los objetos no deben ser creador dentro de las clases sino pasados como parametro. Y a su vez estos parametros no deben ser de un tipo de clase en especial, sino que deberan depender de un interfaz.
+Entities must depend on abstractions not on concretions. It states that the high level madule must not depend on the low level module, but they should depend on abtractions.
+
+Detalla que los módulos de alto nivel no deben depender de los de bajo nivel, ambos deben depender de abstracciones. Es decir, los objetos no deben ser creados dentro de las clases sino pasados como parametro. Y a su vez estos parametros no deben ser de un tipo de clase en especial, sino que deberan depender de un interfaz.
 
 Las abstracciones no deben depender de los detalles, los detalles deben depender de las abstracciones.
 
@@ -220,7 +360,7 @@ Entre ellos encontramos:
 ### Singleton 
 Permite restringir la creación de objetos pertenecientes a una clase o al valor de un tipo a un único objeto. Dicho de otra manera la idea es tener **una sola instancia** de la clase a lo largo de toda nuestra aplicacion.
 Ejemplo:
-``` [PHP]
+``` php
 class Singleton
 {
     private static $theInstance = null;
@@ -243,7 +383,7 @@ Un ejemplo de creacion por el patron Singleton son los *log de errores* de las a
 Se utiliza para ayudar a la creacion de nuevas instancias. Este patron es util cuando la **creacion** de un objeto es un proceso muy **complejo**
 
 Ejemplo:
-``` [PHP]
+``` php
 class Automobile
 {
     private $vehicleMake;
@@ -282,7 +422,7 @@ El patrón Decorator responde a la necesidad de añadir dinámicamente funcional
 Es un patron de comportamiento. Se utiliza cuando hay una operacion, especialmente compleja, que debe ser realizada desde diferentes puntos de entrada.
 Tipicamente este sucede cuando realizando una app WEB se debe realizar la misma operacion desde consulta de algun visitante como desde la linea de comandos.
 Permite solicitar una operación a un objeto sin conocer realmente el contenido de esta operación, ni el receptor real de la misma. Para ello se encapsula la petición como un objeto, con lo que además facilita la parametrización de los métodos. Ejemplo:
-``` [PHP]
+``` php
 interface CommandInterface
 {
     public function execute():
@@ -325,7 +465,7 @@ Al hablar de Documentacion no hablamos solamente de texto, los graficos tambien 
 ## ¿Donde documentar?
 Basicamente existen dos lugar:
 - **Dentro del propio codigo.**
-``` [PHP]
+``` php
 <?php
 
 /** 
@@ -441,7 +581,7 @@ Este tipo de prueba es del tipo *unit test* y Se trata de lo siguiente:
 - Examinamos nuestro codigo en busca de mejoras.
 - Repetir
 Ejemplo:
-``` [PHP]
+``` php
 <?php 
 
 use PHPUnit\Framework\TestCase;
