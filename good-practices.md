@@ -400,7 +400,237 @@ Entre ellos encontramos:
 
 ## Creacionales
 
+### Simple Factory
+
+Este metodo perse, no es catalogado como un patron de diseño, sin embargo es necesario hablar de el para comprender mejor patrones como abstract factory o  factory method.
+
+La idea de este, es poder crear objetos complejos de una forma sencilla.
+
+Por Ejemplo:
+Supongamos que tenemos la siguiente clase:
+
+``` python
+class Pizza:
+
+    def __init__(self, cantidad_rebanadas: int):
+        self.cantidad_rebanadas = cantidad_rebanadas
+
+    @property
+    def cantidad_rebanadas(self):
+        return self.cantidad_rebanadas
+
+    def __str__(self):
+        return f"Cantidad de rebanadas: {self.cantidad_rebanadas}"
+
+
+class Pizzeria:
+    """
+    Esta Clase nos ayudara con el proceso de crear una nueva pizza,
+    por si tenemos que leer algo de la base de datos, Conectarnos con un
+    API, o cualquier otro requerimiento en logica del negocio.
+    """
+    small = 6
+    medium = 8
+    large = 12
+
+    def create_small_pizza(self):
+        return Pizza(self.small)
+
+    def create_medium_pizza(self):
+        return Pizza(self.medium)
+
+    def create_large_pizza(self):
+        return Pizza(self.large)
+
+
+if __name__ == "__main__":
+# Si no implementamos Simple Factory, la instancia de la clase se veria como:
+    pizzaMargarita = Pizza(8)
+
+    print(pizzaMargarita)
+
+# Implementando Simple Factory, la instancia de la clase se veria como:
+    pizzeria = Pizzeria()
+    pizzaPeperoni = pizzeria.create_medium_pizza()
+
+    print(pizzaPeperoni)
+```
+
+### Factory Method
+Define an interface for creating an object, but let subclasses decide which class to instantiate. Factory Method lets a class defer instantiation to subclasses.
+
+En español:
+Define una interfaz para la creación de un objecto, pero deja que la subclase, es decir la clase que implementa la interfaz, decida que clase instanciar.
+
+Esta patron nos permitira mediante una clase generar objectos complejos controlados. La diferencia con el Simple Factory es que aqui necesitaremos de una interfaz para poder crear dichos objectos.
+
+Ejemplo:
+``` java
+public class Pizza {
+
+	private int cantidadRebanadas;
+	private String especialidad;
+	
+	public Pizza(int cantidadRebanadas, String especialidad) {
+		this.cantidadRebanadas = cantidadRebanadas;
+		this.especialidad = especialidad;
+	}
+	
+	public String toString() {
+		return "Cantidad rebanadas : " + this.cantidadRebanadas + " Especilidad : " + this.especialidad;
+	}
+	
+}
+
+
+public interface IPizzeria {
+
+	Pizza crearPizza(String tipo);
+	
+}
+
+public class PizzaOrillaRellena extends Pizza {
+
+	public PizzaOrillaRellena(int cantidadRebanadas, String especialidad) {
+		super(cantidadRebanadas, especialidad);
+	}
+	
+}
+
+public class PizzeriaCF implements IPizzeria {
+
+	public Pizza crearPizza(String tipo) {
+		
+		if (tipo.equals("Peperoni")) {
+			return new Pizza(8, "Peperoni");
+		}
+		
+		if (tipo.equals("Hawaiana")) {
+			return new Pizza(8, "Hawaiana");
+		}
+		
+		if (tipo.equals("Peperoni orilla rellena")) {
+			return new PizzaOrillaRellena(12, "Peperoni"); //
+		}
+		
+		return null;
+	}
+	
+}
+
+public class Main {
+
+	public static void main(String[] args) {
+		
+		PizzeriaCF cf = new PizzeriaCF();
+		
+		Pizza peperoni = cf.crearPizza("Peperoni");
+		Pizza hawaiana = cf.crearPizza("Hawaiana");
+		Pizza orillaRellena = cf.crearPizza("Peperoni orilla rellena");
+		
+		
+		System.out.println(peperoni);
+		System.out.println(hawaiana);
+		
+		System.out.println(orillaRellena);
+		
+	}
+
+}
+```
+
+Como vemos en el ejemplo anterior es la clase *PizzeriaCF* mediando la interfaz *IPizzeria* la encargada de crear la instancia del tipo de Pizza requerida
+
+### Abstract Factory
+Provide an interface for creating families of related or dependent objects without specifying their concrete classes.
+
+
+Una de las principales direfencia entre este patron y el Factory Method, es que acá nuestra intererfaz contendra N cantidad de metodos(Factories) para crear distintos objectos tipo de objectos(Con cierta relación entre si). Ejemplo:
+
+``` java
+public interface IAbstractFactory {
+
+	IComputadora crearComputadora();
+	
+	ITablet crearTablet();
+	
+}
+
+public interface IComputadora {
+
+}
+
+public interface ITablet {
+
+}
+
+
+
+public class MacbookPro implements IComputadora {
+
+}
+
+public class IPad implements ITablet {
+
+}
+
+public class AppleStore implements IAbstractFactory {
+
+	public IComputadora crearComputadora() {
+		return new MacbookPro();
+	}
+	
+	public ITablet crearTablet() {
+		return new IPad();
+	}
+	
+}
+
+
+public class QX410 implements IComputadora {
+
+}
+
+public class TabS3 implements ITablet {
+
+}
+
+public class SamsungStore implements IAbstractFactory {
+
+	public IComputadora crearComputadora() {
+		return new QX410();
+	}
+	
+	public ITablet crearTablet() {
+		return new TabS3();
+	}
+	
+}
+
+
+
+public class Main {
+
+	public static void main(String[] args) {
+		
+		SamsungStore samsung = new SamsungStore();
+		AppleStore apple = new AppleStore();
+		
+		IComputadora mac = apple.crearComputadora();
+		ITablet ipad = apple.crearTablet();
+		
+		IComputadora qx = samsung.crearComputadora();
+		ITablet s3 = samsung.crearTablet();
+		
+	}
+
+}
+```
+
+En este caso nuestro AbstractFactory, Es la abtraccion de una tienda electronica, Donde solo espeficicamos los distintos FactoryMethod que alli se crean. Luego la subclase es la encargada de crear los distintos tipo de objectos.
+
 ### Singleton 
+Ensure a class only has one instance, and provide a global point of access to it.
 
 Permite restringir la creación de objetos pertenecientes a una clase o al valor de un tipo a un único objeto. Dicho de otra manera la idea es tener **una sola instancia** de la clase a lo largo de toda nuestra aplicacion.
 Ejemplo:
@@ -423,78 +653,1678 @@ class Singleton
 
 Como acabamos de ver solo puede existir una instancia de esta clase durante la vida de esta aplicacion ya que esta puede ser creada solo desde dentro de ella misma, Y esta configurada para que al crearse por primera vez, no se vuelva a cronstruir.
 
-Un ejemplo de creacion por el patron Singleton son los *log de errores* de las aplicaciones.
+La creación de este patron la podriamos resumir en los siguiente pasos.
+- Hacer privado el metodo constructor de la clase, de esta manera solo desde la clase perse podra se ejecutado dicho metodo.
+- Crear un nuevo metodo **estatico** desde donde obtendermos la instancia de nuestra clase.
+- Validar desde nuestro nuevo metodo si ya existe o no una instancia creada(generarmente con un atributo privado), Si no existe, se crea y se retorna. Si existe, simplemente se retorna.
 
-### Factory
+Un ejemplo de creacion por el patron Singleton son los *log de errores* de las aplicaciones. Otro ejemplo muy comun, es el acceso a la base de datos.
 
-Se utiliza para ayudar a la creacion de nuevas instancias. Este patron es util cuando la **creacion** de un objeto es un proceso muy **complejo**
+### Builder
+Separate the construction of a complex object from its representation so that the same construction process can create diferent representations.
+This provides solution to Telescopic constructors and constructor overload.
 
-Ejemplo:
+Este metodo es muy util a la hora de crear objectos con atributos variables, como puede ser:
 
-``` php
-class Automobile
-{
-    private $vehicleMake;
-    private $vehicleModel;
+``` java
 
-    public function __contruct($make, $model) {
-        $this->vehicleMake = $make;
-        $this->vehicleModel = $model;
-    }
+package main;
 
-    public function getMakeAndModel() {
-        return $this->vehivle.Make.' '.$this->vehicleModel;
-    }
+public class Usuario {
+	
+	private String nombre;
+	private String apellido;
+	
+	private boolean medioContacto; 
+	
+	private String email;
+	private String telefono;
+	private String direccion;
+	
+    //3. step: All setters modify it so that it returns the class object..
+    // only Optional attributes have setters
+	public BuilderUsuario setMedioContacto(boolean medioContacto) {
+		
+		if(!medioContacto) {
+			throw new IllegalArgumentException("No es posible asiganar un valor falso a medio de contacto");
+		}
+		
+		this.medioContacto = medioContacto;
+		return new BuilderUsuario(this);
+	}
+    
+    // 1 step: Constructor private!	
+	private Usuario(String nombre, String apellido) {
+		this.nombre = nombre;
+		this.apellido = apellido;
+		
+		this.medioContacto = false;
+		
+		this.email = "";
+		this.telefono = "";
+		this.direccion = "";
+		
+	}
+	// 2 step: Generate a public and static method that allows us to return a new class object
+	public static Usuario Make(String nombre, String apellido) {
+		return new Usuario(nombre, apellido);
+	}
+	
+    // 4 step: Method that returns the final object, the method is instance
+	public Usuario Build() {
+		return this;
+	}
+	
+	public String toString() {
+		return " " + this.nombre + " " + this.apellido + " " + this.email + " " + this.telefono + " " + this.direccion;
+	}
+	
+	
+	public static class BuilderUsuario{
+		
+		private Usuario usuario;
+		
+		public BuilderUsuario(Usuario usuario) {
+			this.usuario = usuario;
+		}
+		
+		public BuilderUsuario setDireccion(String direccion) {
+			usuario.direccion = direccion;
+			return this;
+		}
+
+		public BuilderUsuario setEmail(String email) {
+			usuario.email = email;
+			return this;
+		}
+
+		public BuilderUsuario setTelefono(String telefono) {
+			usuario.telefono = telefono;
+			return this;
+		}
+		
+		public Usuario Build() {
+			return usuario;
+		}
+	}
+	
 }
 
-class AutomobileFactory
-{
-    private static $model = 2019;
+public class Main {
 
-    public static function create($make)
-    {
-        return new Automobile($make, self::$model);
-    }
+	public static void main(String[] args) {
+
+		Usuario codi = Usuario.Make("Codi", "Facilito")
+							.setMedioContacto(false)
+							.setDireccion("México").Build();
+							
+		System.out.println(codi);
+	}
+
 }
 
-$a = new Automobile('Renault', 2019);
-$b = AutomobileFactory::create('Toyota');
 ```
+
+Veamos que hace este codigo:
+
+- El metodo **Make**: crea el objeto mas basico(Este resive los parametros obligatorios).
+- El Metodo **Build**: Se encarga simplemente de retornar el objeto perse.
+- Setters: Se encargan de setear los valores opcionales y a su vez retornar un objeto. De tal forma que podemos seguir llamando a los metodos del objeto.
+- A su ves el setter setMedioContacto retorna un objecto del tipo **BuilderUsuario**, que es el que contiene los setter. Es metodo es totalmente customizado(No pertenece al patron perse). Se creo con la finalidad de que la unica manera de que le podamos seterar; El email, la direccion o el telefono a un usuario es que antes hayamos pasado por este "Setter" *setMedioCotacto*.
+
+Como vimos con este patron podemos ir creando objetos complejos, mediante "partes", de esta manera podemos ir crear objetos con las partes que necesitemos y todo de una manera muy legible.
+
+### Prototype
+Specify the kinds of objects to create using a prototypical instance, and createnew objects by copying this prototype.
+
+Es principalmente util cuando debemos crear varias instancias de un objeto pero con ligeras modificaciones. Ejemplo, los fantasmas en Pac-Man.
+ Otro caso donde es recomendable utilizar en la creacion de objectos donde uno o varios atributos tienen un costo significando(Como consultar a la DB o a una API).
+
+ Ejemplo en codigo:
+ ``` java
+ package main;
+
+public class Enemigo {
+
+	private String imagen; 
+	private int posX;
+	private int posY;
+	private int cantidadVida;
+	
+	public Enemigo(String imagen, int posX, int posY, int cantidadVida) {
+		this.setImagen(imagen);
+		this.setPosX(posX);
+		this.setPosX(posX);
+		this.setCantidadVida(cantidadVida);
+	}
+	
+	public Enemigo(Enemigo enemigo) {
+		this.setImagen(enemigo.getImagen());
+		this.setPosX(enemigo.getPosX());
+		this.setPosX(enemigo.getPosY());
+		this.setCantidadVida(enemigo.getCantidadVida());
+	}
+	
+	public Enemigo clone() {
+		//return new Enemigo(this);
+		return new Enemigo(this.imagen, this.posX, this.posY, this.cantidadVida);
+	}
+	
+	public String getImagen() {
+		return imagen;
+	}
+	
+	public void setImagen(String imagen) {
+		this.imagen = imagen;
+	}
+	
+	public int getPosX() {
+		return posX;
+	}
+	
+	public void setPosX(int posX) {
+		this.posX = posX;
+	}
+	
+	public int getPosY() {
+		return posY;
+	}
+	
+	public void setPosY(int posY) {
+		this.posY = posY;
+	}
+	
+	public int getCantidadVida() {
+		return cantidadVida;
+	}
+
+	public void setCantidadVida(int cantidadVida) {
+		this.cantidadVida = cantidadVida;
+	}
+}
+
+public class Main {
+
+	public static void main(String[] args) {
+		
+		Enemigo enemigoBase = new Enemigo("Imagen1.png", 0, 100, 2);
+		
+		Enemigo enemigo1 = new Enemigo(enemigoBase);
+		Enemigo enemigo2 = new Enemigo(enemigoBase);
+		Enemigo enemigo3 = new Enemigo(enemigoBase);
+		
+		enemigo1.setPosX(100);
+		enemigo2.setPosX(150);
+		enemigo3.setPosX(200);
+		
+		Enemigo enemigoBase2 = new Enemigo("Imagen1.png", 0, 200, 2);
+		
+		Enemigo enemigo4 = enemigoBase2.clone();
+		Enemigo enemigo5 = enemigoBase2.clone();
+		Enemigo enemigo6 = enemigoBase2.clone();
+		
+		enemigo4.setPosX(100);
+		enemigo5.setPosX(150);
+		enemigo6.setPosX(200);
+		
+		
+	}
+
+}
+ ```
 
 ## Estructurales
 
+### Adapter
+Convert the interface of a class into another interface clients expect. Adapter lets classes work together that couldn't otherwise because of incompatible interfaces.
+
+Ejemplo:
+``` java
+public interface IConexionSQL {
+	
+	void conexion();
+	
+	String runQuery();
+	
+}
+
+public interface IConexionNoSQL {
+	
+	void conexion();
+	
+	String excecuteSentence();
+	
+}
+
+public class ConexionMySQL implements IConexionSQL {
+
+	public void conexion() {
+		System.out.println("Conexión con MYSQL");
+	}
+	
+	public String runQuery() {
+		return "Consulta MYSQL";
+	}
+	
+}
+
+public class ConexionMongoDB implements IConexionNoSQL {
+	
+	public void conexion() {
+		System.out.println("Conexión con MongoDB");
+	}
+	
+	public String excecuteSentence() {
+		return "Consulta MongoDB";
+	}
+	
+}
+
+public class AdaptadorDB implements IConexionSQL {
+
+	private IConexionNoSQL noSQL;
+	
+	public AdaptadorDB(IConexionNoSQL noSQL) {
+		this.noSQL = noSQL;
+	}
+	
+	public void conexion() {
+		this.noSQL.conexion();
+	}
+	
+	public String runQuery() {
+		return this.noSQL.excecuteSentence();
+	}
+}
+
+public class Main {
+
+	public static void main(String[] args) {
+		
+		IConexionSQL conexion = new ConexionMySQL();
+		// IConexionSQL conexion = new AdaptadorDB( new ConexionMongoDB() );
+		
+		conexion.conexion();
+		
+		String resultado = conexion.runQuery();
+		System.out.println(resultado);
+
+	}
+
+}
+```
+
+En el ejemplo podemos ver dos clases **IConexionNoSQL** y **IConexionSQL** que no son compatibles entre si.
+Mediante un adaptador podemos hacer que estas clases sean compatibles para el cliente(en este caso la clase *Main*), y de esta manera pasar de usar ConexionMysql a ConexionMongoDB, sin mayores cambios mas alla de una linea de codigo(donde se instancia a la clase reponsable de la conexion).
+
+### Composite
+Compose objects into tree structures to represent part-whole hierarchies. Composite lets clients treat individual objects and compositions of objects uniformly.
+
+``` java
+public interface IMenu {
+	
+	boolean open();
+	
+	boolean close();
+	
+	
+}
+
+
+import java.util.ArrayList;
+
+public class Menu implements IMenu{
+	
+	private ArrayList<IMenu> menus;
+	
+	public Menu() {
+		this.menus = new ArrayList<IMenu>();
+	}
+	
+	public boolean open() {
+		System.out.println("Open!");
+		return true;
+	}
+	
+	public boolean close() {
+		System.out.println("Close!");
+		return true;
+	}
+	
+	public void addMenu(IMenu menu) {
+		this.menus.add(menu);
+	}
+	
+	public IMenu getMenu(int pos) {
+		return this.menus.get(pos);
+	}
+	
+}
+
+public class Main {
+
+	public static void main(String[] args) {
+		Menu menu = new Menu();
+		
+		Menu menu2 = new Menu();
+		Menu menu3 = new Menu();
+		
+		Menu menu4 = new Menu();
+		Menu menu5 = new Menu();
+		
+		menu3.addMenu(menu4);
+		menu3.addMenu(menu5);
+		
+		menu.addMenu(menu2);
+		menu.addMenu(menu3);
+		
+		menu.open();
+		menu.close();
+
+	}
+
+}
+
+```
+
 ### Decorador
+Attach additional responsibilities to on objects dynamically. Decorators provide a flexible alternative to subclassing for extending functionality.
 
-El patrón Decorator responde a la necesidad de añadir dinámicamente funcionalidad a un Objeto. Esto nos permite no tener que crear sucesivas clases que hereden de la primera incorporando la nueva funcionalidad, sino otras que la implementan y se asocian a la primera. 
+El patrón Decorator responde a la necesidad de añadir dinámicamente funcionalidad a un Objeto. Esto nos permite no tener que crear sucesivas clases que hereden de la primera incorporando la nueva funcionalidad, sino otras que la implementan y se asocian a la primera.
 
- 
+``` java
+public interface IPizza {
+
+	String descripcion();
+	
+	float precio();
+}
+
+public class PizzaHawaiana implements IPizza{
+	
+	public String descripcion() {
+		return "Pizza hawaiana";
+	}
+	
+	public float precio() {
+		return 8;
+	}
+	
+}
+
+public class PizzaPeperoni implements IPizza {
+	
+	public String descripcion() {
+		return "Pizza de peperoni";
+	}
+	
+	public float precio() {
+		return 8;
+	}
+}
+
+public class OrillaRellena implements IPizza {
+
+	private IPizza pizza;
+	
+	public OrillaRellena(IPizza pizza) {
+		this.pizza = pizza;
+	}
+	
+	public String descripcion() {
+		return this.pizza.descripcion() + " con orilla rellena";
+	}
+	
+	public float precio() {
+		return this.pizza.precio() + 4;
+	}
+	
+}
+
+public class QuesoExtra implements IPizza {
+
+	private IPizza pizza;
+	
+	public QuesoExtra(IPizza pizza) {
+		this.pizza = pizza;
+	}
+	
+	public String descripcion() {
+		return this.pizza.descripcion() + " queso extra";
+	}
+	
+	public float precio() {
+		return this.pizza.precio() + 2;
+	}
+	
+}
+
+public class Main {
+	
+	public static void main(String[] args) {
+		
+		IPizza pizzaPeperoni = new QuesoExtra(new PizzaPeperoni());
+		
+		System.out.println(pizzaPeperoni.descripcion());
+		System.out.println(pizzaPeperoni.precio());
+		
+		
+		IPizza pizzaHawaiana = new QuesoExtra(new OrillaRellena(new PizzaHawaiana()));
+		
+		System.out.println(pizzaHawaiana.descripcion());
+		System.out.println(pizzaHawaiana.precio());
+		
+	}
+
+}
+```
+
+En el ejemplo pudimos extender nuestro catalogo de pizzas sin editar la herarquia o los tipos de pizza(Peperoni y Hawaiana) ya creadas.
+
+Mediando los Decorators QuesoExtra y OrillaConQueso, pudimos extender las funcionabilidad del negocio. Si necesitaramos añadir mas caracteristicas, bastara con crear mas Decorartor que actuen como Wrapers.
+
+### Facade
+Provide a unified interface to a set of interfaces in a subsystem. Facade defines a higher-level interface that makes the subsystem easier to use.
+
+Este patron es util. Para exponerle al cliente metodos sencillos con los cual el interactura. Ya que no es relevante para el la complegidad de alguna de nuestras operaciones. Ejemplo:
+
+``` java
+public class Fachada {
+
+	private Computadora computadora;
+	
+	public Fachada() {
+		
+		ITeclado teclado = new Teclado();
+		IMouse mouse = new Mouse();
+		
+		this.computadora = new Computadora(teclado, mouse);
+	}
+	
+	public void encender() {
+		//Complejas
+		this.computadora.encender();
+	}
+	
+}
+
+public class Main {
+
+	public static void main(String[] args) {
+		
+		Fachada fachaComputadora = new Fachada();
+		
+		fachaComputadora.encender();
+	}
+
+}
+```
+
+En el ejemplo vemos como para nuestro cliente(Main), es sencillo encender el computador por medio de una fachadad, donde dentro de esta se estan ejecutando tareas complejas como interactuar con tablas en a DB, conectarse a API, etc. Con la finalidad de llevar a cabo dicha tarea(encender el computador).
+
+Pd: Para este Ejemplo se omitieron varias clases e interfaces porque distraerian al lector del patron principal.
+
+## Proxy
+Provide a surrogate or placeholder for another object to control access to it.
+
+Este patron comunmente tiene como objectivo limitar funcinabilidades de nuestro sistema. Principalmente por temas de seguridad. Ejemplo:
+
+``` java
+public interface IServicio {
+	
+	void leer();
+	
+	void escribir();
+	
+	void actualizar();
+	
+	void eliminar();
+	
+}
+
+public class Usuario {
+
+	private int nivelPermiso;//1 -- 5 //5 == Admin
+
+	public Usuario(int nivelPermiso) {
+		this.nivelPermiso = nivelPermiso;
+	}
+	
+	public int getNivelPermiso() {
+		return nivelPermiso;
+	}
+
+	public void setNivelPermiso(int nivelPermiso) {
+		this.nivelPermiso = nivelPermiso;
+	}
+	
+	
+	
+}
+
+public class Servicio implements IServicio{
+	
+	public void leer() {
+		System.out.println("Leer!");
+	}
+	
+	public void escribir() {
+		System.out.println("Escribir!");
+	}
+	
+	public void actualizar() {
+		System.out.println("Actualizar!");
+	}
+	
+	public void eliminar() {
+		System.out.println("Eliminar!");
+	}
+	
+}
+
+public class ProxyServicio implements IServicio {
+
+	private IServicio servicio;
+	
+	public ProxyServicio(Usuario usuario) {
+		
+	}
+	
+	public void leer() {
+		this.obtenerServicio().leer();
+	}
+	
+	public void escribir() {
+		this.obtenerServicio().escribir();
+	}
+	
+	public void actualizar() {
+		this.obtenerServicio().actualizar();
+	}
+	
+	public void eliminar() {
+		this.obtenerServicio().eliminar();
+	}
+	
+	private IServicio obtenerServicio() {
+		if(this.servicio == null) {
+			this.servicio = new Servicio();//
+		}
+		
+		return this.servicio;
+	}
+}
+
+public class Main {
+
+	public static void main(String[] args) {
+		
+		Usuario usuario = new Usuario(5);
+		IServicio servicio = new ProxyServicio(usuario);
+		
+		servicio.leer(); //<--- Unica accion libre
+		servicio.escribir();
+		servicio.actualizar();
+		servicio.eliminar();
+		
+	}
+
+}
+```
+
+Nuestro Proxy le dara permisos de lectura a todo tipo de usuarios. Sin embargo, solo les dara permisos al resto de operacion a los usuarios Admin(aquellos con un nivel de rol igual a cinco).
+
+Adicionalmente nuestro proxy solo esta creando el objecto *Servicio* en caso de que sea requerido(Esta estructura es conocidad como **Virtual Proxy**). Esto suponiendo que el dicho objeto tiene un alto costo de creación, por tal motivo no queremos crearlo innecesariamente.
+
+### Flyweight
+User sharing to support large number of fine-grained objects efficiently.
+
+Este patron nos permite reutilizar objectos de tal manera que podamos crear aplicaciones con la minima cantidad de recursos necesarios(Aplicaciones ligeras).
+
+``` java
+public enum TipoNube {
+	Chica,
+	Mediana,
+	Grande
+}
+
+
+import java.util.HashMap;
+
+public class NubeFactory {
+
+	private HashMap<TipoNube, Nube> nubesMap;
+	
+	public NubeFactory() {
+		this.nubesMap = new HashMap<TipoNube, Nube>();
+	}
+	
+	public Nube getNube(TipoNube tipo) {
+		
+		Nube nube = (Nube)this.nubesMap.get(tipo);
+		
+		if(nube == null) {
+			nube = new Nube(tipo, "nube.png", 100, 100);
+			this.nubesMap.put(tipo, nube);
+		}
+		
+		return nube;
+	}
+	
+	public int countNubesMap() {
+		return this.nubesMap.size();
+	}
+	
+}
+
+
+public class Nube {
+
+	private TipoNube tipo;
+	private String imagen;
+	private int posX;
+	private int posY;
+	
+	public Nube(TipoNube tipo, String imagen, int posX, int posY) {
+		this.tipo = tipo;
+		this.imagen = imagen;
+		this.posX = posX;
+		this.posY = posY;
+	}
+
+	public String getImagen() {
+		return imagen;
+	}
+
+	public void setImagen(String imagen) {
+		this.imagen = imagen;
+	}
+
+	public int getPosX() {
+		return posX;
+	}
+
+	public void setPosX(int posX) {
+		this.posX = posX;
+	}
+
+	public int getPosY() {
+		return posY;
+	}
+
+	public void setPosY(int posY) {
+		this.posY = posY;
+	}
+
+	public TipoNube getTipo() {
+		return tipo;
+	}
+
+	public void setTipo(TipoNube tipo) {
+		this.tipo = tipo;
+	}
+	
+	
+}
+
+public class Main {
+
+	public static void main(String[] args) {
+	
+		NubeFactory factory = new NubeFactory();
+		
+		for(int x = 0; x < 100; x ++) {
+			Nube nube = factory.getNube(TipoNube.Chica);
+			System.out.println(nube);
+		}
+		
+		for(int x = 0; x < 200; x ++) {
+			Nube nube = factory.getNube(TipoNube.Mediana);
+			System.out.println(nube);
+		}
+		
+		for(int x = 0; x < 300; x ++) {
+			Nube nube = factory.getNube(TipoNube.Grande);
+			System.out.println(nube);
+		}
+		
+		System.out.println(factory.countNubesMap());
+	}
+
+}
+
+```
 
 ## De Comportamiento
 
+### Chain of responsibility
+Avoid coupling the sender of a request to its receiver by giving more than one object a chance to handle the request. Chain the receiving objects and pass the request along the chain until an object handles it.
+
+Example:
+``` java
+public enum TipoTransaccion {
+	Deposito,
+	Retiro,
+	Reembolso,
+	Cheques
+}
+
+public class Transaccion {
+	
+	private float cantidad;
+	private float balance;
+	private TipoTransaccion tipoTransaccion;
+	
+	public Transaccion(float cantidad, float balance, TipoTransaccion tipoTransaccion) {
+		this.setCantidad(cantidad);
+		this.setBalance(balance);
+		this.setTipoTransaccion(tipoTransaccion);
+	}
+
+	public float getCantidad() {
+		return cantidad;
+	}
+
+	public void setCantidad(float cantidad) {
+		this.cantidad = cantidad;
+	}
+
+	public float getBalance() {
+		return balance;
+	}
+
+	public void setBalance(float balance) {
+		this.balance = balance;
+	}
+
+	public TipoTransaccion getTipoTransaccion() {
+		return tipoTransaccion;
+	}
+
+	public void setTipoTransaccion(TipoTransaccion tipoTransaccion) {
+		this.tipoTransaccion = tipoTransaccion;
+	}
+}
+
+public interface IManejadorTransacciones {
+
+	void setNextManejador(IManejadorTransacciones next);
+	
+	void ejecutarTransaccion(Transaccion transaccion);
+	
+}
+
+
+public class Deposito implements IManejadorTransacciones {
+
+	private IManejadorTransacciones next;
+	
+	public void setNextManejador(IManejadorTransacciones next) {
+		this.next = next;
+	}
+	
+	public void ejecutarTransaccion(Transaccion transaccion) {
+		
+		if(transaccion.getTipoTransaccion() == TipoTransaccion.Deposito) {
+			float cantidad = transaccion.getCantidad() + transaccion.getBalance();
+			System.out.println("El nuevo balances después de un deposito es : " + cantidad);
+		}else {
+			this.next.ejecutarTransaccion(transaccion);
+		}
+		
+	}
+	
+}
+
+public class Reembolso implements IManejadorTransacciones {
+
+	private IManejadorTransacciones next;
+	
+	public void setNextManejador(IManejadorTransacciones next) {
+		this.next = next;
+	}
+	
+	public void ejecutarTransaccion(Transaccion transaccion) {
+		
+		if(transaccion.getTipoTransaccion() == TipoTransaccion.Reembolso) {
+			float cantidad = transaccion.getCantidad() + transaccion.getBalance();
+			System.out.println("El nuevo balances después de un reembolso es : " + cantidad);
+		}else {
+			System.out.println("Operación No Valida!");
+		}
+		
+	}
+}
+
+public class Retiro implements IManejadorTransacciones {
+
+	private IManejadorTransacciones next;
+	
+	public void setNextManejador(IManejadorTransacciones next) {
+		this.next = next;
+	}
+	
+	public void ejecutarTransaccion(Transaccion transaccion) {
+		
+		if(transaccion.getTipoTransaccion() == TipoTransaccion.Retiro) {
+			float cantidad = transaccion.getCantidad() - transaccion.getBalance();
+			System.out.println("El nuevo balances después de un retiro es : " + cantidad);
+		}else {
+			this.next.ejecutarTransaccion(transaccion);
+		}
+		
+	}
+}
+
+public class Main {
+
+	public static void main(String[] args) {
+		
+		Transaccion transaccion = new Transaccion(100, 200, TipoTransaccion.Cheques);
+		
+		IManejadorTransacciones deposito = new Deposito();
+		IManejadorTransacciones retiro = new Retiro();
+		IManejadorTransacciones reembolso = new Reembolso();
+		deposito.setNextManejador(retiro);
+		retiro.setNextManejador(reembolso);
+		
+		deposito.ejecutarTransaccion(transaccion);
+		
+	}
+
+}
+
+```
+El ejemplo anterior trata de un sistemas de transacciones bancarias. No es muy aplicable a la vida real pero sirve para mostrar este patron de deseño.
+
+En el ejemplo vemos como la transaccion creada es pasada de objecto en objeto(Deposito, Retiro, Reembolso). Hasta dar con el objecto capaz de procesar dicha transaccion.
+
+Para este ejemplo, el codigo podria tener un mejor performance. Principalmente si aplicaramos el Patron de diseño Virtual Proxy. Ya que si tuvieramos 100 objetos en la cadena. Es muy probable que instanciemos objetos(eslabones) que nunca utilizaremos.
+
+
 ### Command
+Encapsulate a request as an object, thereby letting you parameterize clients with different requests, queue or log requests, and support undoable operations.
 
 Es un patron de comportamiento. Se utiliza cuando hay una operacion, especialmente compleja, que debe ser realizada desde diferentes puntos de entrada.
 Tipicamente este sucede cuando realizando una app WEB se debe realizar la misma operacion desde consulta de algun visitante como desde la linea de comandos.
 Permite solicitar una operación a un objeto sin conocer realmente el contenido de esta operación, ni el receptor real de la misma. Para ello se encapsula la petición como un objeto, con lo que además facilita la parametrización de los métodos. Ejemplo:
 
-``` php
-interface CommandInterface
-{
-    public function execute():
+``` java
+public interface ICommand {
+
+	void operacion();
+	
+}
+
+public interface IDevise {
+	
+	void on();
+	
+	void off();
+}
+
+public class OffDevise implements ICommand {
+
+	private IDevise devise;
+	
+	public OffDivise(IDevise devise) {
+		this.devise = devise;
+	}
+	
+	public void operacion() {
+		this.devise.off();
+	}
+	
+}
+
+public class OnDevise implements ICommand {
+
+	private IDevise devise;
+	
+	public OnDevise(IDevise devise) {
+		this.devise = devise;
+	}
+	
+	public void operacion() {
+		this.devise.on();
+	}
+	
+}
+
+public class TV implements IDevise {
+	
+	private boolean on;
+	
+	public TV() {
+		this.on = false;
+	}
+	
+	public void on() {
+		this.on = true;
+		System.out.println("TV encendida!");
+	}
+	
+	public void off() {
+		this.on = true;
+		System.out.println("TV apagada!");
+	}
+	
+}
+
+public class Main {
+
+	public static void main(String[] args) {
+		IDevise tv = new TV();
+		
+		ICommand on = new OnDevise(tv);
+		ICommand off = new OffDevise(tv);
+		
+		on.operacion();
+		off.operacion();
+		
+	}
+
 }
 ```
 
-Usualmente la interfaz va de esta manera simple. ¿Que es lo que hara el 'execute' en este caso?
+En el ejemplo anterior podemos ver como los metodos "on" y "off", quedaron completamente encapsulados desde una respectiva clase que implementa la interfaz ICommad. Como vimos en el ejemplo cada metodo debe poseer una clase por separado, es decir si tuvieramos 100 metodos, abrian 100 clases, una para cada metodo.
+
+
+Usualmente la interfaz va de esta manera simple. ¿Que es lo que hara el 'operacion' en este caso?
 Bueno eso dependera del comando en especifico. pero de esta manera nos permite implementar facilmente el principio Open/Closed por ejemplo; Teniendo una lista de comando, ejecutarlos todos bajo un mismo metodo.
 
-### Observer
+### Iterator
+Provide a way to access the elements of an aggregate object sequentially without exposing its underlying representation.
 
-El patrón observer se compone de un sujeto que ofrece mecanismos de suscripción y desuscripción a múltiples observadores que quieren ser notificados de los cambios en dicho sujeto. Cada observador expone un método de **update** que es usado por el sujeto para notificar cualquier cambio a todos los suscritos.
+Este patron provee un metodo estandar para acceder, secuencialmente a los elementos de una collección. En este Patron nosotros creamos una interfaz, de tal manera que si un objeto quiere acceder a los elementos de una collección, debera hacerlo por medio de la interfaz. De esta manera nosotros no exponemos los attributos ni metodos de la collección. Ejemplo
+
+``` java
+public interface Iterador {
+
+	String siguiente();
+	
+	boolean contieneSiguiente();
+	
+}
+
+import java.util.ArrayList;
+
+public class GuiaTelefonica {
+
+	private ArrayList<String> numeros;
+	
+	public GuiaTelefonica() {
+		this.numeros = new ArrayList<String>();
+	}
+	
+	public void add(String numero) {
+		this.numeros.add(numero);
+	}
+	
+	public ArrayList<String> getNumeros() {
+		return this.numeros;
+	}
+	
+}
+
+public class IteradorGuia implements Iterador {
+
+	private GuiaTelefonica guia;
+	private int posicion;
+	
+	public IteradorGuia(GuiaTelefonica guia) {
+		this.guia = guia;
+	}
+	
+	public String siguiente() {
+		return this.guia.getNumeros().get(this.posicion++);
+	}
+	
+	public boolean contieneSiguiente() {
+		return this.posicion < this.guia.getNumeros().size()
+				&& this.guia.getNumeros().get(this.posicion) != null;
+	}
+	
+}
+
+public class Main {
+
+	public static void main(String[] args) {
+		GuiaTelefonica guia = new GuiaTelefonica();
+		
+		guia.add("123");
+		guia.add("124");
+		guia.add("125");
+		guia.add("126");
+		guia.add("127");
+		guia.add("128");
+		
+		Iterador iterador = new IteradorGuia(guia);
+		
+		while(iterador.contieneSiguiente()) {
+			System.out.println(iterador.siguiente());
+		}
+
+	}
+
+}
+```
+
+### Mediator
+
+Define an object that encapsulates how a set of objects interact. Mediator promotes loose coupling by keeping objects from referring to each other explicitly, and it lets you vary their interaction independently.
+
+Ese patron lo usaremos cuando deseemos comunicar objectos. Una analogia podria ser la de una torre de control(El mediador). Ya que esta enconstante comunicacion con las areonaves, y permite que las areonaves puedan comunicarse entre ellas.
+
+A diferencia de otros patros, en este no tenemos un conjunto de reglas a seguir. Nos tendremos que valer en gran parte de nuestra intuición como desarrolladores.
+
+En el seguiente ejemplo veremos un pequeño sistema de chat.
+
+``` java
+public class Usuario {
+	
+	private String nombre;
+	
+	public Usuario(String nombre) {
+		this.nombre = nombre;
+	}
+	
+	public void recibirMensaje(String mensaje) {
+		System.out.println(mensaje);
+	}
+	
+	public String getNombre() {
+		return this.nombre;
+	}
+
+}
+
+import java.util.HashMap;
+
+public class SalaChat {
+
+	private HashMap<String, Usuario> usuarios;
+	
+	public SalaChat() {
+		this.usuarios = new HashMap<String, Usuario>();
+	}
+	
+	public void addParticipante(Usuario usuario) {
+		this.usuarios.put(usuario.getNombre(), usuario);
+	}
+	
+	public void enviarMensaje(Usuario remitente, Usuario receptor, String mensaje) {
+		
+		if(this.usuarios.get(remitente.getNombre()) != null &&
+				this.usuarios.get(receptor.getNombre()) != null) {
+			
+			mensaje = "De :" + remitente.getNombre() + " mensaje :" + mensaje;
+			receptor.recibirMensaje(mensaje);
+			
+		}
+	}
+}
+
+public class Main {
+
+	public static void main(String[] args) {
+		
+		Usuario eduardo = new Usuario("Eduardo");
+		Usuario codi = new Usuario("Codi");
+		
+		SalaChat sala = new SalaChat();
+		
+		sala.addParticipante(eduardo);
+		sala.addParticipante(codi);
+		
+		sala.enviarMensaje(eduardo, codi, "Hola desde el curso de patrones de diseño!");
+
+	}
+}
+```
+### Memento
+Without violating encapsulation, capture and externalize an object's internal state so that the object can be restored to this state later.
+
+Permite capturar y exportar el estado interno de un objeto, para que luego se pueda restaurar sin romper la enapsulación.
+Con memento nosotros podremos crear una copia de seguridad de un objeto, y si necesitamos revertir los cambio, podremos hacerlos desde dicha copia. Es decir podremos hacer un "Control Z".
+
+La copia de seguridad puede ser parcial o total.
+
+Para implementar este patron unicamente necesitaremos dos clases. Veamoslo en el siguiente ejemplo:
+
+``` java
+
+public class Usuario {
+
+	private String nombre;
+	private int edad;
+	
+	public Usuario(String nombre, int edad) {
+		this.setNombre(nombre);
+		this.setEdad(edad);
+	}
+	
+	public Usuario getMemento() {
+		return new Usuario(this.getNombre(), this.getEdad());
+	}
+	
+	public void restartMemento(Usuario usuario) {
+		this.setNombre(usuario.getNombre());
+		this.setEdad(usuario.getEdad());
+	}
+	
+	public String getNombre() {
+		return nombre;
+	}
+
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
+
+	public int getEdad() {
+		return edad;
+	}
+
+	public void setEdad(int edad) {
+		this.edad = edad;
+	}
+	
+}
+
+public class Main {
+
+	public static void main(String[] args) {
+		
+		Usuario usuario = new Usuario("Codi", 6 );
+		
+		Usuario memento = usuario.getMemento();//Nuestra copia!
+		
+		usuario.setNombre("Cambio de nombre");
+		usuario.setEdad(20);
+		
+		System.out.println(usuario.getNombre());
+		System.out.println(usuario.getEdad());
+		
+		usuario.restartMemento(memento);
+		
+		System.out.println(usuario.getNombre());
+		System.out.println(usuario.getEdad());
+		
+	}
+
+}
+
+```
+
+### Observer
+Define at one-to-many dependency between objects so that when one object changes state, all its dependents are notified and updated automatically.
+
+El patrón observer se compone de un sujeto que ofrece mecanismos de suscripción y desuscripción a múltiples observadores que quieren ser notificados de los cambios en dicho sujeto.
 
 Es uno de los patrones más utilizados, algunos ejemplos típicos son:
 Newsletter
 Sockets
 Listeners en páginas web
+
+Crearemos una interfaz, y esta la vamos a implementar en los observadores, es decir en los objetos que esta interesado en el cambio. Dentro de esta interfaz nosotros colocaremos las direfentes acciones que un observador puede tener(Resurtir bodega, generar factura, etc).
+
+Tendremos otra Interfaz *Observable*, esta debe posser al menos dos metodos; **addObserver** y **notify**.
+
+Ejemplo:
+``` java
+
+public interface IObservable {
+
+	void addObserver(IObserver o);
+	
+	void notificarObservadores();
+	
+	void removeObserver();
+	
+}
+
+public interface IObserver {
+
+	void notificacion(String mensaje);
+	
+}
+
+import java.util.Set;
+import java.util.LinkedHashSet;
+
+public class Producto implements IObservable {
+	
+	private Set<IObserver> observadores;
+	
+	private int stock;
+	
+	public Producto(int stock) {
+		this.stock = stock;
+		this.observadores = new LinkedHashSet<>();
+	}
+	
+	public void venta() {
+		this.setStock(this.stock - 1);
+		System.out.println("Producto vendido!");
+		
+		this.notificarObservadores();
+	}
+
+	public int getStock() {
+		return stock;
+	}
+
+	public void setStock(int stock) {
+		this.stock = stock;
+	}
+	
+	public void addObserver(IObserver o) {
+		this.observadores.add(o);
+	}
+	
+	public void notificarObservadores() {
+		for(IObserver observador : this.observadores)
+			observador.notificacion("EL producto se vendio!");
+	}
+	
+	public void removeObserver() {
+		
+	}
+}
+
+public class Usuario implements IObserver {
+
+	public void notificacion(String mensaje){
+		System.out.println(mensaje);
+	}
+	
+}
+
+public class Main {
+
+	public static void main(String[] args) {
+		
+		Producto aguacate = new Producto(10);
+		
+		Usuario usuario1 = new Usuario();
+		Usuario usuario2 = new Usuario();
+		Usuario usuario3 = new Usuario(); //
+		
+		aguacate.addObserver(usuario1);
+		aguacate.addObserver(usuario2);
+		
+		aguacate.venta();
+	}
+}
+```
+### State
+Allow an object to alter its behavior when its internal state changes. The object will appear to change its class.
+
+Este patron lo utilizaremos cuando trabajemos con maquinas de estado
+
+Utilizando el patron State, nosotros debemos crear una interfaz con todos nuestros estados y una nueva clase por cada estado de nuestro objeto.
+
+Ejemplo:
+
+``` java
+public interface IEstadoAuto {
+
+	void encender();
+	
+	void manejar();
+	
+	void apagar();
+	
+}
+
+public class AutoApagar implements IEstadoAuto {
+	
+	private final Auto auto;
+	
+	public AutoApagar(Auto auto) {
+		this.auto = auto;
+	}
+	
+	public void encender() {
+		System.out.println("El auto esta encendido!");
+		auto.setEstadoActual(auto.getAutoEncendio());
+	}
+	
+	public void manejar() {
+		System.out.println("El auto no se puede manejar si esta apagado!");
+	}
+	
+	public void apagar() {
+		System.out.println("El auto ya esta apagado!");
+	}
+	
+}
+
+public class AutoEncender implements IEstadoAuto {
+	
+	private final Auto auto;
+	
+	public AutoEncender(Auto auto) {
+		this.auto = auto;
+	}
+	
+	public void encender() {
+		System.out.println("El auto esta encendido!");
+	}
+	
+	public void manejar() {
+		System.out.println("El auto esta en movimiento!");
+		auto.setEstadoActual(auto.getAutoMovimiento());
+	}
+	
+	public void apagar() {
+		System.out.println("El auto esta apagado!");
+		auto.setEstadoActual(auto.getAutoApagado());
+	}
+	
+}
+
+public class AutoManejar implements IEstadoAuto {
+	
+	private final Auto auto;
+	
+	public AutoManejar(Auto auto) {
+		this.auto = auto;
+	}
+	
+	public void encender() {
+		System.out.println("El auto ya esta encendido!");
+	}
+	
+	public void manejar() {
+		System.out.println("El auto ya se esta moviendo!");
+	}
+	
+	public void apagar() {
+		System.out.println("El auto esta apagado!");
+		auto.setEstadoActual(auto.getAutoApagado());
+	}
+	
+}
+
+public class Auto implements IEstadoAuto {
+  
+  private IEstadoAuto autoEncendio;
+  private IEstadoAuto autoMovimiento;
+  private IEstadoAuto autoApagado;
+  
+  IEstadoAuto estadoActual;
+  
+  public Auto() {
+    this.autoEncendio = new AutoEncender(this);
+    this.autoApagado = new AutoApagar(this);
+    this.autoMovimiento = new AutoManejar(this);
+    
+    this.estadoActual = this.autoApagado;
+  }
+  
+  public void encender() {
+    this.estadoActual.encender();
+  }
+  
+  public void manejar() {
+    this.estadoActual.manejar();
+  }
+  
+  public void apagar() {
+    this.estadoActual.apagar();
+  }
+
+  public IEstadoAuto getAutoEncendio() {
+    return autoEncendio;
+  }
+
+  public void setAutoEncendio(IEstadoAuto autoEncendio) {
+    this.autoEncendio = autoEncendio;
+  }
+
+  public IEstadoAuto getAutoMovimiento() {
+    return autoMovimiento;
+  }
+
+  public void setAutoMovimiento(IEstadoAuto autoMovimiento) {
+    this.autoMovimiento = autoMovimiento;
+  }
+
+  public IEstadoAuto getAutoApagado() {
+    return autoApagado;
+  }
+
+  public void setAutoApagado(IEstadoAuto autoApagado) {
+    this.autoApagado = autoApagado;
+  }
+
+  public IEstadoAuto getEstadoActual() {
+    return estadoActual;
+  }
+
+  public void setEstadoActual(IEstadoAuto estadoActual) {
+    this.estadoActual = estadoActual;
+  }
+  
+}
+
+public class Main {
+
+	public static void main(String[] args) {
+		Auto auto = new Auto();
+	    
+		auto.apagar();
+		auto.encender();
+		auto.manejar();
+		
+	    /*
+	     * Encendido
+	     * En Movimiento
+	     * Apagado
+	     * */
+	}
+
+}
+```
+### Strategy
+Define a family of algorithms, encapsulate each one, and make then interchangeable. Strategy lets the algorithm vary independently from clients that use it.
+
+Nos permite encapsular algoritmos en clases, de tal manera que nosotros podamos utilizar diferentes algoritmos en tiempo de ejecución, podemos verlo como una caja de lego, donde cada pieza es un algoritmo y dependiendo de nuestras necesidades en tiempo de ejecución nosotros podremos utiizar una pieza u otra.
+
+Este patron es muy usado cuando nuestra aplicación tiene muchas varientes en los algoritmos. Como por ejemplo un sistema de comisiones.
+
+Veamos un ejemplo con dos tipo de algoritmos(dos clases), deposito y retiro:
+
+1. Se crea la interfaz base.
+2. Se crean las clases por algoritmo.
+3. Se crea una clase contexto.
+
+``` java
+public interface IEstrategia {
+
+	float realizarOperacion(float balance, float cantidad);
+	
+}
+
+public class Retiro implements IEstrategia {
+
+	public float realizarOperacion(float balance, float cantidad) {
+		return balance - cantidad;
+	}
+	
+}
+
+public class Deposito implements IEstrategia {
+
+	public float realizarOperacion(float balance, float cantidad) {
+		return balance + cantidad;
+	}
+	
+}
+
+public class Transaccion {
+
+	private IEstrategia estrategia;//algoritmo
+	
+	public Transaccion(IEstrategia estrategia) {
+		this.estrategia = estrategia;
+	}
+	
+	public float ejecutarTransaccion(float balance, float cantidad) {
+		return this.estrategia.realizarOperacion(balance, cantidad);
+	}
+	
+	
+}
+
+public class Main {
+
+	public static void main(String[] args) {
+
+		Transaccion transaccion1 = new Transaccion( new Deposito() );
+		System.out.println(transaccion1.ejecutarTransaccion(100, 20));
+		
+		
+		Transaccion transaccion2 = new Transaccion( new Retiro() );
+		System.out.println(transaccion2.ejecutarTransaccion(100, 20));
+		
+	}
+
+}
+```
+
+### Template Method
+Define the skeleton of an algorithm in an operation, deferring some steps to subclasses. Template Method lets subclasses redefine certain steps of an algorithm without changing the algorithm's structure.
+
+``` java
+public abstract class Usuario {
+
+	public void autenticacion() {
+		System.out.println("TODOS los usuarios necesitan autenticarse!");
+	}
+	
+	abstract void formaTrabajar();
+	
+}
+
+public class Administrador extends Usuario {
+
+	public void formaTrabajar() {
+		System.out.println("La forma de trabajar de un Administrador!");
+	}
+	
+}
+
+public class Gerente extends Usuario {
+
+	public void formaTrabajar() {
+		System.out.println("La forma de trabajar de un Gerente!");
+	}
+	
+}
+
+public class Main {
+
+	public static void main(String[] args) {
+		
+		Usuario gerente = new Gerente();
+		Usuario administrador = new Administrador();
+		
+		gerente.autenticacion();
+		gerente.formaTrabajar();
+		
+		administrador.autenticacion();
+		administrador.formaTrabajar();
+
+	}
+
+}
+```
+
+Este patron basicamente trata en abstraer los metodos en comun de los objetos relacionados.
+
+En este caso el tipo de usuario Admin y Manager, heredan de la clase abstracta User, que viene siendo el Template.
+
+### Visitor
+Represent an operation to be performed on the elements of an object structure. Visitor lets you define a new operation without changing the classes of the elements on which it operates.
+
+Si un objeto es el responsable de mantener cierto tipo de información, entonces, es logico asignarle tambien todas las operaciones que manipulen esa información.
+
+Para esto generaremos dos interfaces:
+- una Visitor: Sera la encargada de gestionar los distintos tipo de algoritmos, esta interfaz tendra una sobre carga de metodos usualmente.
+- una Visitable: Sera la encargada de llamar a algoritmo perse.
+
+``` java
+public interface IFruta {
+
+	float getPrecio();
+
+}
+
+public interface ILineaBlanca {
+
+	float getPrecio();
+	
+}
+
+public interface IVisitor {
+
+	float descuento(IFruta fruta);//descuento
+	
+	float descuento(ILineaBlanca lineaBlanca);
+	
+}
+
+public interface IVisitable {
+
+	float aplicarDescuento(IVisitor visitor);
+	
+}
+
+public class Lavadora implements IFruta, IVisitable {
+
+	public float getPrecio() {
+		return 20f;
+	}
+	
+	public float aplicarDescuento(IVisitor visitor) {
+		return visitor.descuento(this);
+	}
+	
+}
+
+public class Manzana implements IFruta, IVisitable {
+
+	public float getPrecio() {
+		return 2f;
+	}
+	
+	public float aplicarDescuento(IVisitor visitor) {
+		return visitor.descuento(this);
+	}
+	
+}
+
+public class Main {
+	
+	public static void main(String[] args) {
+		
+		//Fruta 10% de descuento
+		//LíneBlanca 5% de descuento
+		
+		
+		Manzana manzana = new Manzana();
+		Lavadora lavadora = new Lavadora();
+		
+		IVisitor descuento = new DescuentoComun();
+		
+		System.out.println(manzana.aplicarDescuento(  descuento ));
+		System.out.println(lavadora.aplicarDescuento(  descuento));
+		
+	}
+}
+```
 
 # Documentacion
 

@@ -30,4 +30,5 @@ Estos nos permiten definir la funcionabilidad basica de Nginx. Aquí algunos de 
 
 # Gestion
 Indicarle a Nginx que cargue una nueva configuración. `nginx -s reload`.
+Testear los ficheros de configuración. `nginx -t`.
 

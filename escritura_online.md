@@ -99,3 +99,16 @@ Estos son usados para denotar una expresión dubitativa o interrogativa. De la m
 # Proceso de la escritura.
 
 # Preescritura
+
+
+# Aspectos a tomar en cuenta al escribir un texto
+## CLaridad
+## Brevedad
+Debemos tratar de ser lo mas breves posible, sin llegar a omitir informacion importante pero tampoco llenando el texto de palabras innecesarias, como por ejemplo:
+    Se realizo un deploy con 27 nuevos cambios, estos no causaron ningun tipo de conflicto ni error con el codigo existente en el proyecto hasta entonces.
+    VS
+    Se realizo un diploy de 27 cambios, sin errores.
+## Presición
+Al escribir un texto deber tener en cuanta a nuestro lector. Y crear un texto que el pueda entender, sin dejar espacio para ambiguedades. Como podria serlo: "Con este cambio el codigo queda mejor". En esa oración, ¿que significa 'mejor'?.
+## Corrección
+Despues de escribir, debemos verificar que este es adecuado para nuestros lectores. Debemos preguntarnos, ¿Esto es realmente entendible para nuestro lector?
