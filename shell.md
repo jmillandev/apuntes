@@ -5,6 +5,8 @@ representación del disco duro en el sistema operativo
 ## Comandos (y algunas banderas)
 - **whoami**: Imprime en el output el identificador de usuario.
 
+- **sed**: Sirve para modificar texto por streaming. Para mas info consulta `man sed`. El comando mas comun es reemplazar texto en todo un fichero, esto con: `sed s/viejo/nuevo/g`.
+
 - **id**: Imprime en el output el identificador de usuario  grupos.
 
 - **who/finger**: Quien esta registrado.
@@ -364,3 +366,10 @@ Podemos hacer uso de un grupo de variables especiales:
 La primera de las lineas del script es muy especial, esta contiene en path del interprete de dicho script precedido por los caracteres '#!'.
 
 `#!/bin/bash`
+
+# Tricks
+
+## Ficheros
+- Atajo para el directorio `cd /home/$USER`: `cd ~`.
+- Atajo para el directorio donde estabamos ubicados anteriormente: `cd -`.
+
