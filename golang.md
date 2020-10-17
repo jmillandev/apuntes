@@ -3,7 +3,7 @@ title: "Golang - Go"
 slug: "golang"
 description: "🐹"
 keywords: [programacion, desarrollo, software, go, golang]
-draft: true
+draft: false
 tags: []
 math: false
 toc: false

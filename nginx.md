@@ -3,7 +3,7 @@ title: "Nginx"
 slug: "nginx"
 description: "📭"
 keywords: [programacion, desarrollo, software, servidores, nginx, devops]
-draft: true
+draft: false
 tags: []
 math: false
 toc: false

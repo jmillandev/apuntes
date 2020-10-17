@@ -3,7 +3,7 @@ title: "Programación orientada a objetos"
 slug: "OOP"
 description: "🚙"
 keywords: [programacion, desarrollo, software, oop, buenas practicas, objetos]
-draft: true
+draft: false
 tags: []
 math: false
 toc: false

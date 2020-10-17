@@ -3,7 +3,7 @@ title: "Vim"
 slug: "vim"
 description: "💪"
 keywords: [programacion, desarrollo, software, vim, editor de codigo, ide]
-draft: true
+draft: false
 tags: []
 math: false
 toc: false

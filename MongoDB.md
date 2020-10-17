@@ -3,7 +3,7 @@ title: "MongoDB"
 slug: "mongo-db"
 description: "🍃"
 keywords: [programacion, desarrollo, software, mongodb, nosql, base de datos, db]
-draft: true
+draft: false
 tags: []
 math: false
 toc: false

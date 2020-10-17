@@ -3,7 +3,7 @@ title: "Python"
 slug: "python"
 description: "🐍"
 keywords: [programacion, desarrollo, software, python]
-draft: true
+draft: false
 tags: []
 math: false
 toc: false

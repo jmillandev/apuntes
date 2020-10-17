@@ -3,7 +3,7 @@ title: "Buenas practicas en programación"
 slug: "buenas-practicas"
 description: "👍"
 keywords: [programacion, desarrollo, software, buenas practicas]
-draft: true
+draft: false
 tags: []
 math: false
 toc: false

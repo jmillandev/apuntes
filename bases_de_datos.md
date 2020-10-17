@@ -3,7 +3,7 @@ title: "Bases de Datos"
 slug: "bases-de-datos"
 description: "🗄"
 keywords: [programacion, desarrollo, software, sql, bases de datos, relacional, mysql]
-draft: true
+draft: false
 tags: []
 math: false
 toc: false

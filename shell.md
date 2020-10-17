@@ -3,7 +3,7 @@ title: "Linea de comandos"
 slug: "shell"
 description: "💻"
 keywords: [programacion, desarrollo, software, shell, terminal, linea de comandos]
-draft: true
+draft: false
 tags: []
 math: false
 toc: false

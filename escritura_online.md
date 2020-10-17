@@ -3,7 +3,7 @@ title: "Escritura Online"
 slug: "escritura-online"
 description: "✍️"
 keywords: [escritura, writing, creacion de contenido]
-draft: true
+draft: false
 tags: []
 math: false
 toc: false

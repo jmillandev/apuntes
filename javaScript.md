@@ -3,7 +3,7 @@ title: "Javascript"
 slug: "Javascript"
 description: "💛"
 keywords: [programacion, desarrollo, software, javascript, js]
-draft: true
+draft: false
 tags: []
 math: false
 toc: false

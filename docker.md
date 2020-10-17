@@ -3,7 +3,7 @@ title: "Docker"
 slug: "Docker"
 description: "🐳"
 keywords: [programacion, desarrollo, software, docker, contenedores]
-draft: true
+draft: false
 tags: []
 math: false
 toc: false
