@@ -1,3 +1,13 @@
+---
+title: "Nginx"
+slug: "nginx"
+description: "📭"
+keywords: [programacion, desarrollo, software, servidores, nginx, devops]
+draft: true
+tags: []
+math: false
+toc: false
+---
 Nginx es un servidor WEB, que de igual forma nos sirve como Proxy Inverso, Balanceador de carga, Sevidor de Emails, etc.
 
 Una de las principales caracteristicas de Nginx es que funciona de manera Asincrona y basada en Eventos.

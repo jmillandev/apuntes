@@ -1,3 +1,13 @@
+---
+title: "Linea de comandos"
+slug: "shell"
+description: "💻"
+keywords: [programacion, desarrollo, software, shell, terminal, linea de comandos]
+draft: true
+tags: []
+math: false
+toc: false
+---
 # Lista de comandos más usados
 ## Conceptos
 - PROMPT: Donde se encuentra el cursor, un lugar en el árbol de nodos que es la

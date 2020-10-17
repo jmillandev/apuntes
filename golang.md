@@ -1,3 +1,13 @@
+---
+title: "Golang - Go"
+slug: "golang"
+description: "🐹"
+keywords: [programacion, desarrollo, software, go, golang]
+draft: true
+tags: []
+math: false
+toc: false
+---
 # Caracteristicas pricipales
 
 * Performant

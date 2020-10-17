@@ -1,3 +1,13 @@
+---
+title: "MongoDB"
+slug: "mongo-db"
+description: "🍃"
+keywords: [programacion, desarrollo, software, mongodb, nosql, base de datos, db]
+draft: true
+tags: []
+math: false
+toc: false
+---
 # Bases de datos NoSQL
 Las bases de datos NoSQL tienen 4 grandes familias: Key Value Stores, basadas en grafos, columnares y basadas en documentos. 
 

@@ -1,3 +1,13 @@
+---
+title: "CSS - Response Desing"
+slug: "css-response-desing"
+description: "👨‍🎨"
+keywords: [programacion, desarrollo, software, css, frontend, response desing]
+draft: true
+tags: []
+math: false
+toc: false
+---
 # 1 Conceptos de RWD
 ## 1.1 Viewport
 Es toda la parte visible de nuestro navegador que podemos utilizar para mostral nuestra pagina(NO incluye al scroll).

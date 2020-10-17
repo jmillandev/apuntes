@@ -1,3 +1,13 @@
+---
+title: "Buenas practicas en programación"
+slug: "buenas-practicas"
+description: "👍"
+keywords: [programacion, desarrollo, software, buenas practicas]
+draft: true
+tags: []
+math: false
+toc: false
+---
 # ¿A quién beneficia contar con código bien escrito?
 El código bien escrito beneficia a todos los involucrados en el proyecto.
 

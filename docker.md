@@ -1,3 +1,13 @@
+---
+title: "Docker"
+slug: "Docker"
+description: "🐳"
+keywords: [programacion, desarrollo, software, docker, contenedores]
+draft: true
+tags: []
+math: false
+toc: false
+---
 # Imagenes
 Haciendo una analogia con OPP. Las imagenes son clases, en esta estan todas la configuraciones deun contenerdor.
 

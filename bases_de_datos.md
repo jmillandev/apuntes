@@ -1,3 +1,13 @@
+---
+title: "Bases de Datos"
+slug: "bases-de-datos"
+description: "🗄"
+keywords: [programacion, desarrollo, software, sql, bases de datos, relacional, mysql]
+draft: true
+tags: []
+math: false
+toc: false
+---
 # Importante
 La gran parte de esta notas asi como la mayoria de sus ejemplo estan en español. 
 

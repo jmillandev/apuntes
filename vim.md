@@ -1,3 +1,13 @@
+---
+title: "Vim"
+slug: "vim"
+description: "💪"
+keywords: [programacion, desarrollo, software, vim, editor de codigo, ide]
+draft: true
+tags: []
+math: false
+toc: false
+---
 Es un editor desarrolado para CLI, es decir que solo podemos interactuar con el por medio del teclado. O al menos ese es el objetivo.
 
 **NOTA:** Cuando hacemos referencia a algo como [i]. Nos referimos a que debe teclear la letra i desde el modo comando.

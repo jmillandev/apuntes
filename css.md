@@ -1,3 +1,13 @@
+---
+title: "CSS - Hojas de estilo en cascada"
+slug: "css"
+description: "👩‍🎨"
+keywords: [programacion, desarrollo, software, css, frontend]
+draft: true
+tags: []
+math: false
+toc: false
+---
 # 1 Fundamentos
 
 ## 1.1 Sintaxis

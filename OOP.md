@@ -1,3 +1,13 @@
+---
+title: "Programación orientada a objetos"
+slug: "OOP"
+description: "🚙"
+keywords: [programacion, desarrollo, software, oop, buenas practicas, objetos]
+draft: true
+tags: []
+math: false
+toc: false
+---
 # Paradigma Orientado a Objetos
 La **Programación Orientada a Ojetos** viene de una filosofía o forma de pensar que es la Orientación a Objetos y esto surge a partir de los problemas que necesitamos plasmar en código.
 

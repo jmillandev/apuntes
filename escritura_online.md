@@ -1,3 +1,13 @@
+---
+title: "Escritura Online"
+slug: "escritura-online"
+description: "✍️"
+keywords: [escritura, writing, creacion de contenido]
+draft: true
+tags: []
+math: false
+toc: false
+---
 # Tecnicas base para la redaccion:
 - *Esquema*: Para darle orden a nuestras ideas y saber hacia a donde vamos llevando el texto.
 - Manejar *una sola idea* por parrafo.

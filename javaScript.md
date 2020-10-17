@@ -1,3 +1,13 @@
+---
+title: "Javascript"
+slug: "Javascript"
+description: "💛"
+keywords: [programacion, desarrollo, software, javascript, js]
+draft: true
+tags: []
+math: false
+toc: false
+---
 # Aspectos Basicos
 
 ## Como llega y corre un script en el navegador

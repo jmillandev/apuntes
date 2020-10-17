@@ -1,3 +1,13 @@
+---
+title: "Python"
+slug: "python"
+description: "🐍"
+keywords: [programacion, desarrollo, software, python]
+draft: true
+tags: []
+math: false
+toc: false
+---
 # ¿Qué es Python?
 Python es un lenguaje de programación creado por [Guido Van Rossum](https://en.wikipedia.org/wiki/Guido_van_Rossum), con una sintaxis muy limpia, ideado para enseñar a la gente a programar bien. Se trata de un lenguaje interpretado o de script.
 

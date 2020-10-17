@@ -1,3 +1,13 @@
+---
+title: "APIs REST"
+slug: "api-rest"
+description: "👩‍🔧"
+keywords: [programacion, desarrollo, software ,API, REST]
+draft: true
+tags: []
+math: false
+toc: false
+---
 # Conceptos Basico para manejar un API
 
 ## HTTP
